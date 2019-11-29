@@ -75,3 +75,22 @@
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
 }
+
+
+/*其中的 --ion-color-base 为主颜色 ，--ion-color-contrast为对照颜色。
+
+用在底部tabs菜单中的话 ion-color-base为背景颜色，ion-color-contrast为图标和文字颜色。比如底部tabs的颜色是#69bb7b 则里面按钮的颜色是#ffffff*/
+.ion-color-favorite {
+  --ion-color-base: #69bb7b;
+  --ion-color-base-rgb: 105,187,123;
+  --ion-color-contrast: #ffffff;
+  --ion-color-contrast-rgb: 255,255,255;
+  --ion-color-shade: #5ca56c;
+  --ion-color-tint: #78c288;
+}
+
+@media screen and (min-width: 1000px) {
+  ion-header {
+    display: none;
+  }
+}

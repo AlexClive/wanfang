@@ -1,1 +1,17 @@
+.select {
+  div {
+    width: 100px;
+    height: 30px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+  }
 
+  ul {
+    margin: 0;
+    padding: 0;
+    li {
+      list-style: none;
+      cursor: pointer;
+    }
+  }
+}
