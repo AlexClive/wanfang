@@ -7,7 +7,7 @@ import {StorageService} from "../service/storage.service";
     styleUrls: ['tabs.page.scss']
 })
 export class TabsPage {
-    public IsHide: boolean = false;
+    public IsHide = '';
 
     // tslint:disable-next-line:no-shadowed-variable
     constructor(public StorageService: StorageService) {
@@ -17,10 +17,10 @@ export class TabsPage {
     initialize() {
         let wasp: number = Number(this.StorageService.getStorage('wasp'));
         console.log(this.StorageService.getStorage('wasp'));
-        if (wasp == 1) {
-            this.IsHide = true;
-        }else {
-            this.IsHide = false;
+        if (wasp === 1) {
+            this.IsHide = 'tabs-Is-Hide';
+        } else {
+            this.IsHide = '';
         }
     }
 }

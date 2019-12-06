@@ -1,0 +1,128 @@
+{
+  "id": "1534810",
+  "name": "精准文献库",
+  "font_family": "iconfont",
+  "css_prefix_text": "ion-ios-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "339566",
+      "name": "服务热线",
+      "font_class": "icon",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
+      "icon_id": "953600",
+      "name": "分享",
+      "font_class": "fenxiang",
+      "unicode": "e616",
+      "unicode_decimal": 58902
+    },
+    {
+      "icon_id": "968468",
+      "name": "机构",
+      "font_class": "organization",
+      "unicode": "e61f",
+      "unicode_decimal": 58911
+    },
+    {
+      "icon_id": "1047308",
+      "name": "消费次数",
+      "font_class": "number1",
+      "unicode": "e6f8",
+      "unicode_decimal": 59128
+    },
+    {
+      "icon_id": "1146281",
+      "name": "iconfont_up",
+      "font_class": "icon11",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "1294838",
+      "name": "热门",
+      "font_class": "remen",
+      "unicode": "e633",
+      "unicode_decimal": 58931
+    },
+    {
+      "icon_id": "1613593",
+      "name": "邮箱",
+      "font_class": "youxiang",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
+      "icon_id": "2129687",
+      "name": "特色专题",
+      "font_class": "tesezhuanti",
+      "unicode": "e617",
+      "unicode_decimal": 58903
+    },
+    {
+      "icon_id": "3216591",
+      "name": "人像",
+      "font_class": "renxiang",
+      "unicode": "e686",
+      "unicode_decimal": 59014
+    },
+    {
+      "icon_id": "3287476",
+      "name": "导出",
+      "font_class": "icon-",
+      "unicode": "e6de",
+      "unicode_decimal": 59102
+    },
+    {
+      "icon_id": "5034919",
+      "name": "搜索",
+      "font_class": "sousuo",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "6270979",
+      "name": "加-full",
+      "font_class": "jia-full",
+      "unicode": "e6bd",
+      "unicode_decimal": 59069
+    },
+    {
+      "icon_id": "6270981",
+      "name": "减-full",
+      "font_class": "jian-full",
+      "unicode": "e6be",
+      "unicode_decimal": 59070
+    },
+    {
+      "icon_id": "7516893",
+      "name": "客流趋势",
+      "font_class": "keliuqushi",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "8348163",
+      "name": "下载",
+      "font_class": "xiazai",
+      "unicode": "e723",
+      "unicode_decimal": 59171
+    },
+    {
+      "icon_id": "9674106",
+      "name": "决策",
+      "font_class": "juece",
+      "unicode": "e62c",
+      "unicode_decimal": 58924
+    },
+    {
+      "icon_id": "9968235",
+      "name": "pdf",
+      "font_class": "pdf",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    }
+  ]
+}

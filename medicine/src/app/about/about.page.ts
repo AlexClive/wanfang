@@ -18,7 +18,6 @@ export class AboutPage implements OnInit {
         const option = {
             title: {
                 text: '词云展示',
-                // link: 'https://www.baidu.com/s?wd=' + encodeURIComponent('ECharts'),
                 x: 'left',
                 textStyle: {
                     fontSize: 23,
@@ -33,16 +32,6 @@ export class AboutPage implements OnInit {
             toolbox: {
                 show: true,
                 showTitle: false, // 隐藏默认文字，否则两者位置会重叠
-                feature: {
-                    saveAsImage: {
-                        show: true,
-                        title: 'Save As Image'
-                    },
-                    dataView: {
-                        show: true,
-                        title: 'Data View'
-                    },
-                },
                 tooltip: { // 和 option.tooltip 的配置项相同
                     show: true,
                     formatter(param) {
@@ -90,7 +79,8 @@ export class AboutPage implements OnInit {
                         shadowBlur: 10,
                     }
                 },
-                data: [{
+                data: [
+                    {
                     name: '没有',
                     value: 30,
                 },

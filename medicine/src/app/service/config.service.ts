@@ -4,8 +4,10 @@ import {Injectable} from '@angular/core';
     providedIn: 'root'
 })
 export class ConfigService {
-    public baseAddress = 'http://127.0.0.1:3000';
-    public doLogin = this.baseAddress + '/doLogin';
+    public baseAddress = 'http://localhost:32542';
+    public doLogin = this.baseAddress + '/api/search/get';
+    public search = this.baseAddress + '/api/paper/search';
+    public details = this.baseAddress + '/api/paper/detail';
 
     constructor() {
     }

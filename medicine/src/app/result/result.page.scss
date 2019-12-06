@@ -1,0 +1,471 @@
+@media screen and (min-width: 1200px) {
+  ion-content {
+    min-width: 1200px;
+
+    .header_item {
+      position: relative;
+
+      .header_item_bg {
+        width: 100%;
+        height: 386px;
+        background: url("../../assets/image/header/bg.jpg") no-repeat center;
+        background-size: 100% 100%;
+
+        .logo_item {
+          width: 1200px;
+          margin: 0 auto;
+          overflow: hidden;
+
+          .logo {
+            float: left;
+            margin: 43px 0 0 0;
+          }
+
+          .sign {
+            float: right;
+
+            .btn {
+              margin: 60px 0 0 15px;
+              width: 85px !important;
+              height: 35px !important;
+              background-color: transparent;
+              border: 1px solid #fff;
+              border-radius: 50px;
+              font-size: 16px;
+              color: #fff;
+            }
+
+            .login {
+              font-family: Microsoft YaHei Bold;
+              color: rgba(1, 183, 108, 1);
+              background: #fff;
+            }
+          }
+        }
+
+        .search_item {
+          width: 930px;
+          margin: 90px auto 0 auto;
+
+          ul {
+            height: 31px;
+            margin: 0 0 16px 10px;
+            padding: 0;
+
+            li {
+              width: 83px;
+              list-style: none;
+              float: left;
+              height: 31px;
+
+              a {
+                display: inline-block;
+                height: 100%;
+                color: #fff;
+                text-decoration: none;
+              }
+
+              a.active {
+                font-weight: bolder;
+                border-bottom: 4px solid #01CB7F;
+              }
+
+            }
+          }
+
+          .search_input {
+            padding: 0;
+            height: 56px;
+            margin: -16px 0 0 0;
+
+            input {
+              width: 709px;
+              padding: 0 20px;
+              height: 40px;
+              opacity: 0.77;
+              background: rgba(255, 255, 255, 0.77);
+              border: 1px solid #fff;
+            }
+
+            button {
+              width: 100px;
+              height: 40px;
+              opacity: 1;
+              border-radius: 5px;
+              font-size: 16px;
+              color: #01B76C;
+              background: #FFFFFF;
+              margin: 0 0 0 10px;
+
+              i {
+                font-size: 21px;
+              }
+
+              span {
+                vertical-align: baseline;
+                display: inline-block;
+                margin: 0 0 0 8px;
+              }
+            }
+
+            button:hover {
+              background: #00c574;
+              color: #fff;
+            }
+
+            ion-text {
+              text-decoration: none;
+              font-size: 16px;
+              font-family: Microsoft YaHei Regular;
+              color: rgba(247, 255, 250, 1);
+              line-height: 72px;
+              margin: 0 0 0 10px;
+              cursor: pointer;
+            }
+          }
+        }
+      }
+
+      ion-card {
+        width: 1200px;
+        margin: 0 auto;
+        position: relative;
+        bottom: 62px;
+        background: #fff;
+
+        .bg {
+          padding: 5px;
+
+          .left-card-item, .right-card-item {
+            padding: 5px;
+            background: #F3F8FC;
+
+            h5 {
+              font-size: 14px;
+              font-family: Microsoft YaHei;
+              font-weight: bold;
+              color: rgba(51, 51, 51, 1);
+              margin: 0;
+              padding: 12px 5px;
+            }
+
+            ul {
+              margin: 0;
+              padding: 0;
+
+              li {
+                list-style: none;
+                padding: 14px 10px;
+                background: #fff;
+                cursor: pointer;
+                border-top: 1px solid #fff;
+                border-bottom: 1px solid #fff;
+
+                span {
+                  font-size: 14px;
+                  font-family: Microsoft YaHei Regular;
+                  color: rgba(102, 102, 102, 1);
+                }
+
+                em {
+                  font-style: normal;
+                  float: right;
+                }
+              }
+
+              .active {
+                color: #01B76C;
+                background: #E5F8EB;
+                border-top: 1px solid #CCF1DB;
+                border-bottom: 1px solid #CCF1DB;
+
+                span {
+                  color: #01B76C;
+                }
+              }
+            }
+          }
+
+          .col-right {
+            width: 143px;
+
+            .right-card-item {
+
+
+              h5 {
+                padding: 7px 5px;
+              }
+
+              ul {
+                li {
+                  background: transparent;
+                  padding: 7px 5px;
+                  border-top: 1px solid #F3F8FC;
+                  border-bottom: 1px solid #F3F8FC;
+
+                  em {
+                    float: unset;
+                    margin: 0 10px;
+                  }
+                }
+              }
+            }
+          }
+
+          .content {
+            .item-header {
+              ion-text {
+                font-size: 14px;
+                font-family: Microsoft YaHei Regular;
+                color: #666666;
+                margin: 0 12px 0 0;
+              }
+
+              .search_text {
+                max-width: 505px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+              }
+
+              .link {
+                font-size: 14px;
+                color: #01B76C;
+                cursor: pointer;
+              }
+            }
+
+            .item-secondary {
+              margin: 10px 0 10px 16px;
+              border-bottom: 1px solid #ccc;
+              padding: 0 0 15px 0;
+
+              ion-text {
+                font-size: 14px;
+                color: #333333;
+              }
+
+              ion-checkbox {
+                width: 14px;
+                height: 14px;
+                margin: 0 0 0 0;
+                vertical-align: middle;
+              }
+
+              button {
+                padding: 6px 8px;
+                background: #fff;
+                color: #01B76C;
+                border: 1px solid #01B76C;
+                border-radius: 3px;
+                margin: 0 16px 0 0;
+              }
+
+              .mark {
+                margin: 0 15px;
+              }
+
+              .item-secondary-right {
+                float: right;
+
+                margin: 0 15px 0 0;
+
+                div {
+                  display: inline-block;
+                  border: 1px solid #CCCCCC;
+                  padding: 6px 10px;
+                  margin: 0 0 15px 0;
+                  position: relative;
+
+                  ion-text {
+                    margin: 0 15px 0 0;
+                  }
+
+                  i {
+                    margin: 0 0 0 -6px;
+                  }
+
+                  ul {
+                    padding: 0;
+                    margin: 0;
+                    position: absolute;
+                    top: 31px;
+                    left: -1px;
+                    background: #fff;
+                    border-left: 1px solid #CCCCCC;
+                    border-right: 1px solid #CCCCCC;
+                    border-bottom: 1px solid #CCCCCC;
+                    z-index: 10;
+
+                    li {
+                      padding: 0;
+                      margin: 0;
+                      list-style: none;
+                      width: 75px;
+                      height: 24px;
+                      text-indent: 0.8em;
+                      cursor: pointer;
+                    }
+                  }
+                }
+
+                button {
+                  color: #000;
+                  border: 1px solid #CCCCCC;
+                  border-radius: unset;
+                }
+
+                button.active {
+                  background: #fff;
+                  color: #01B76C;
+                  border: 1px solid #01B76C;
+                }
+              }
+
+            }
+
+            .item-context {
+              display: flex;
+
+              .checkbox {
+                width: 28px;
+              }
+
+              .item-text {
+                flex: 1;
+                position: relative;
+
+                p {
+                  margin: 0 0 18px 0;
+                }
+
+                .title {
+                  font-size: 16px;
+                  color: #01B76C;
+                  font-family: Microsoft YaHei;
+                  font-weight: bold;
+                  cursor: pointer;
+                }
+
+                .subtitle {
+                  font-size: 14px;
+                  color: #999999;
+                  font-family: Microsoft YaHei Regular;
+                }
+
+                .journal {
+                  font-size: 14px;
+                  color: #999999;
+                  font-family: Microsoft YaHei Regular;
+
+                  span {
+                    color: #01B76C;
+                  }
+                }
+
+                .summary {
+                  line-height: 30px;
+                  color: #999999;
+
+                  span {
+                    color: #000;
+                    font-weight: bold;
+                  }
+                }
+
+                .keyword {
+                  color: #000;
+                  padding: 10px 0 0 0;
+                  margin: 0;
+                }
+
+                .buttons {
+                  position: absolute;
+                  right: 0;
+                  bottom: -8px;
+
+                  span {
+                    padding: 0 10px;
+                  }
+                }
+
+              }
+            }
+
+
+            .pagination {
+              float: right;
+              display: flex;
+              font-family: Microsoft YaHei Regular;
+              font-size: 12px;
+              line-height: 25px;
+
+              ion-text {
+                color: #333333;
+                margin: 0 5px;
+              }
+
+              .pageNum {
+                border: 1px solid #CBCCCC;
+                width: 54px;
+                height: 25px;
+                line-height: 25px;
+                text-align: center;
+                cursor: pointer;
+                position: relative;
+
+                i {
+                  margin: 0 0 0 5px;
+                }
+
+                ul {
+                  display: block;
+                  border-left: 1px solid #CBCCCC;
+                  border-right: 1px solid #CBCCCC;
+                  border-bottom: 1px solid #CBCCCC;
+                  margin: 0;
+                  background: #fff;
+                  width: 54px;
+                  position: absolute;
+                  left: -1px;
+                  top: 23px;
+
+                  li {
+                    width: 100%;
+                    list-style: none;
+                    height: 25px;
+                    line-height: 25px;
+                    text-indent: -1.3em;
+                  }
+                }
+              }
+
+              ul {
+                display: flex;
+                margin: 3px 10px;
+                padding: 0;
+
+                li {
+                  list-style: none;
+                  width: 18px;
+                  height: 18px;
+                  line-height: 18px;
+                  text-align: center;
+                  cursor: pointer;
+                }
+
+                .active {
+                  color: #fff;
+                  background: #BDC0C6;
+                }
+              }
+            }
+          }
+
+        }
+
+      }
+    }
+  }
+
+}

@@ -1,0 +1,120 @@
+<ion-header class="mobile">
+    <ion-toolbar>
+        <ion-title>details</ion-title>
+    </ion-toolbar>
+</ion-header>
+<app-header-t></app-header-t>
+
+<ion-content>
+    <div class="content">
+        <div class="breadcrumb">
+            <ion-text [routerLink]="['/tabs/tab1']" color="primary">首页</ion-text>
+            <span> > </span>
+            <ion-text [routerLink]="['/tabs/tab1']" color="primary">检索结果</ion-text>
+            <span> > </span>文献详情
+        </div>
+        <div class="card">
+            <ion-card-content>
+                <p class="title">{{Data.Title[0]}}</p>
+                <p class="subtitle"> {{Data.Title[1]}}</p>
+                <div class="tabs">
+                    <button><i class="iconfont ion-ios-icon-"></i>导出</button>
+                    <button><i class="iconfont ion-ios-pdf"></i>PDF阅读</button>
+                    <button><i class="iconfont ion-ios-xiazai"></i>下载全文</button>
+                </div>
+                <div class="summary">
+                    <span>摘要：</span>
+                    <ion-text>
+                      {{Data.Abstract}}
+                    </ion-text>
+                </div>
+                <ul class="info">
+                    <li>
+                        <span class="autograph">作者：</span><span class="cont-text">中华医学会心血管病学医学分会   中华心血管病杂志编辑委员会</span>
+                    </li>
+                    <li>
+                        <span class="autograph">期刊：</span><span class="cont-text"><small>《中华心血管病杂志》</small><small>2007年35卷12期</small>   1076-1095页</span>
+                    </li>
+                    <li><span class="autograph">主题词：</span><span
+                            class="cont-text"><small>指南(Guidebooks)诊断(Diagnosis)</small></span>
+                    </li>
+                    <li><span class="autograph">分类号：</span><span class="cont-text"><small>R5</small></span></li>
+                    <li><span class="autograph">栏目名称：</span><span class="cont-text">对策研究</span></li>
+                    <li><span class="autograph">DOI：</span><span
+                            class="cont-text">{{Data.DOI}}</span></li>
+                    <li><span class="autograph">发布时间：</span><span class="cont-text">2008-04-01</span></li>
+                </ul>
+                <div class="chart">
+                    <div class="chart-label chart-state-all"
+                         [ngClass]="{'chart-state-left':position=='left','chart-state-right':position=='right'}">
+                        <div class="chart-label-item chart-label-ref">
+                            <h3 class="chart-label-title">参考文献</h3>
+                            <span class="chart-line"></span>
+                            <span class="chart-line-left"></span>
+                            <span class="chart-line-right"></span>
+                        </div>
+                        <div class="chart-label-item chart-label-qot">
+                            <h3 class="chart-label-title">引证文献</h3>
+                            <span class="chart-line"></span>
+                            <span class="chart-line-left"></span>
+                            <span class="chart-line-right"></span>
+                        </div>
+                    </div>
+                    <div class="chart-group">
+                        <div class="chart-group-item chart-group-all" *ngIf="position==''">
+                            <span class="chart-button-left" (click)="openFn('left')">展开</span>
+                            <span class="chart-button-right" (click)="openFn('right')">展开</span>
+                            <span class="chart-button-center">本文</span>
+                            <ul class="chart-ref">
+                                <li style="width: 89px; background-color: rgb(212, 55, 55); display: list-item;">
+                                    <span>2</span><em>2009</em></li>
+                                <li style="width: 49px;background-color: rgb(220, 92, 62);display: list-item;">
+                                    <span>1</span><em>2014</em></li>
+                                <li style="width: 132px; background-color: rgb(224, 131, 81); display: list-item;">
+                                    <span>3</span><em>2015</em></li>
+                            </ul>
+                            <ul class="chart-qot">
+                                <li style="width: 5px; background-color: rgb(119, 199, 255); display: list-item;"><span
+                                        style="display: none;">21</span><em style="display: none;">2019</em></li>
+                                <li style="width: 72px; background-color: rgb(91, 179, 210); display: list-item;"><span>290</span><em>2018</em>
+                                </li>
+                                <li style="width: 123px; background-color: rgb(134, 203, 238); display: list-item;">
+                                    <span>494</span><em>2017</em></li>
+                                <li style="width: 70px; background-color: rgb(76, 173, 224); display: list-item;"><span>277</span><em>2016</em>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="chart-group-item chart-group-ref" *ngIf="position=='left'">
+                            <span class="chart-button-center" (click)="openFn('')">返回</span>
+                            <ul class="chart-ref">
+                                <li style="width: 215px; background-color: rgb(212, 55, 55); display: list-item;"><span>2</span><em>2009</em>
+                                </li>
+                                <li style="width: 117px; background-color: rgb(220, 92, 62); display: list-item;"><span>1</span><em>2014</em>
+                                </li>
+                                <li style="width: 314px; background-color: rgb(224, 131, 81); display: list-item;">
+                                    <span>3</span><em>2015</em></li>
+                            </ul>
+                        </div>
+                        <div class="chart-group-item chart-group-qot" *ngIf="position=='right'">
+                            <span class="chart-button-center" (click)="openFn('')">返回</span>
+                            <ul class="chart-qot">
+                                <li style="width: 12px; background-color: rgb(119, 199, 255); display: list-item;"><span
+                                        style="display: none;">21</span><em style="display: none;">2019</em></li>
+                                <li style="width: 173px; background-color: rgb(91, 179, 210); display: list-item;">
+                                    <span>290</span><em>2018</em></li>
+                                <li style="width: 294px; background-color: rgb(134, 203, 238); display: list-item;">
+                                    <span>494</span><em>2017</em></li>
+                                <li style="width: 167px; background-color: rgb(76, 173, 224); display: list-item;">
+                                    <span>277</span><em>2016</em></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </ion-card-content>
+        </div>
+    </div>
+    <app-footer></app-footer>
+
+</ion-content>
+

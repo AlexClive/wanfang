@@ -1,0 +1,162 @@
+<ion-header class="mobile">
+    <ion-toolbar>
+        <ion-title>result</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-content>
+        <div class="header_item">
+            <div class="header_item_bg">
+                <div class="logo_item">
+                    <div class="logo" [routerLink]="['/tabs/tab1']"><img src="../../assets/image/header/logo.png"
+                                                                         alt=""></div>
+                    <div class="sign">
+                        <button class="btn login">登录</button>
+                        <button class="btn registered">注册</button>
+                    </div>
+                </div>
+                <div class="search_item">
+                    <ul>
+                        <li *ngFor="let item of sort"><a [ngClass]="{'active':item.initial==true}"
+                                                         (click)="Clisore(item)"
+                                                         href="javascript:void 0">{{item.text}}</a></li>
+                    </ul>
+                    <div class="search_input">
+                        <input type="text" [(ngModel)]="search.text">
+                        <button (click)="advancedSearch()"><i
+                                class="iconfont ion-ios-sousuo"></i><span>检索</span></button>
+                        <ion-text [routerLink]="['/search']">高级检索</ion-text>
+                    </div>
+
+                </div>
+            </div>
+
+            <ion-card>
+                <div class="bg">
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col size="2">
+                                <div class="left-card-item" *ngFor="let item of contentDate.LeftData; let num = index">
+                                    <h5>{{item.Title}}</h5>
+                                    <ul>
+                                        <ng-container *ngFor="let Citem of item.ListItem; let i = index">
+                                            <li *ngIf="i < contentMore.leftArry[num]"
+                                                [ngClass]="{'active':leftArryActive[num] === num+'-'+i}"
+                                                (click)="leftSelect(num,i,item.Title,Citem)">
+                                                <span>{{Citem.Text}}</span><em>{{Citem.Count}}</em>
+                                            </li>
+                                        </ng-container>
+                                        <li *ngIf="item.ListItem.length>3"
+                                            (click)="more(item.ListItem.length,num)">{{contentMore.leftStr[num]}}</li>
+                                    </ul>
+                                </div>
+                            </ion-col>
+                            <ion-col class="content">
+                                <ion-item class="item-header">
+                                    <ion-text>当前检索式</ion-text>
+                                    <ion-text class="search_text"
+                                              title="{{search_text}}{{dateOfPublish}}">{{search_text}}{{dateOfPublish}}</ion-text>
+                                    <ion-text>共{{search_Num}}个结果</ion-text>
+
+                                    <ion-text slot="end" class="link" (click)="GOAbout()">计量分析>></ion-text>
+                                </ion-item>
+                                <div class="item-secondary">
+                                    <ion-text>
+                                        <ion-checkbox mode="md" [(ngModel)]="form.isChecked"
+                                                      (click)="allIsCheck()"></ion-checkbox>
+                                        全部
+                                    </ion-text>
+                                    <ion-text class="mark">已选{{form.num}}/{{search_Num}}</ion-text>
+                                    <button>批量导出</button>
+                                    <div class="item-secondary-right">
+                                        <ion-text>每页显示：</ion-text>
+                                        <div (click)="Amount()">
+                                            <ion-text>{{AmountText}}篇</ion-text>
+                                            <i class="iconfont ion-ios-icon11"></i>
+                                            <ul *ngIf="AmountSelect">
+                                                <li *ngFor="let item of AmountTextArry"
+                                                    (click)="AmountSelectText(item,$event)">{{item}}篇
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <ion-text class="mark">|</ion-text>
+                                        <ion-text>排序方式：</ion-text>
+                                        <button (click)="sortGo('0')" [ngClass]="{'active':Parametric.sort!==''}">时间
+                                        </button>
+                                        <button (click)="sortGo('1')" [ngClass]="{'active':Parametric.sort===''}">相关度
+                                        </button>
+                                    </div>
+
+                                </div>
+                                <div class="item-secondary item-context"
+                                     *ngFor="let item of contentDate.ListItem; let i = index">
+                                    <div class="checkbox">
+                                        <ion-checkbox mode="md" class="item-checkbox"
+                                                      [(ngModel)]="form.entry[i]"
+                                                      (click)="itemCheck(form.entry[i],i)"></ion-checkbox>
+                                    </div>
+                                    <div class="item-text">
+                                        <p class="title" [routerLink]="['/details']"
+                                           [queryParams]="{Id:item.Id,DBID:item.DBID}">
+                                            {{i + 1}}.{{item.Title}}</p>
+                                        <p class="subtitle">{{Creator(item.Creator)}}</p>
+                                        <p class="journal"><span>{{item.Source}}.</span> {{item.Year}}；{{item.Volume}}
+                                            ({{item.Issue}})：{{item.Page}} </p>
+                                        <div class="summary"><span>摘要：</span>
+                                            {{AbstractFn(item.Abstract)}}
+                                        </div>
+                                        <p class="keyword"><span>关键词：</span>
+                                            <span *ngFor="let keyword of item.Keyword; let i = index"><span
+                                                    *ngIf="i < 5">{{keyword}}；</span></span>
+                                        </p>
+                                        <div class="buttons">
+                                            <button><i class="iconfont ion-ios-fenxiang"></i><span>分享</span></button>
+                                            <button><i class="iconfont ion-ios-icon-"></i><span>导出</span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="pagination" *ngIf="pageNumArry.length !== 1">
+                                    <ion-text>共{{pageNumArry.length}}页</ion-text>
+                                    <ion-text>跳转：</ion-text>
+                                    <div class="pageNum" (click)="pageFn()"><span>{{pageNum}}</span><i
+                                            class="iconfont ion-ios-icon11"></i>
+                                        <ul *ngIf="pageBoo">
+                                            <li *ngFor="let num of pageNumArry;"
+                                                (click)="pageGo(num,$event)">{{num}}</li>
+                                        </ul>
+                                    </div>
+                                    <ul>
+                                        <li (click)="leftCut()"><<</li>
+                                        <li *ngFor="let num of pageNumArry"
+                                            [ngClass]="{'active': num===pageNum}" (click)="pageNumGO(num)">{{num}}</li>
+                                        <li (click)="rightAdd()">>></li>
+                                    </ul>
+                                </div>
+                            </ion-col>
+                            <div class="col-right" style="width: 143px">
+                                <div class="right-card-item"
+                                     *ngFor="let item of contentDate.navRightDate;let num = index">
+                                    <h5>{{item.Title}}</h5>
+                                    <ul>
+                                        <ng-container *ngFor="let Citem of item.ListItem; let i = index">
+                                            <li *ngIf="i < contentMore.RightArry[num]">
+                                                <span>{{Citem.Text}}</span><em>({{Citem.Count}})</em>
+                                            </li>
+                                        </ng-container>
+                                        <li *ngIf="item.ListItem.length>3"
+                                            (click)="moreRight(item.ListItem.length,num)">{{contentMore.RightStr[num]}}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </ion-row>
+                    </ion-grid>
+                </div>
+            </ion-card>
+        </div>
+
+
+        <app-footer></app-footer>
+    </ion-content>
+</ion-content>

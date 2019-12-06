@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 
 import {Platform} from '@ionic/angular';
-import {NavigationEnd, Router} from "@angular/router";
+import {NavigationEnd, Router} from '@angular/router';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {UniqueDeviceID} from '@ionic-native/unique-device-id/ngx';
@@ -23,7 +23,7 @@ export class AppComponent {
         private splashScreen: SplashScreen,
         private statusBar: StatusBar,
         private uniqueDeviceID: UniqueDeviceID,
-        private StorageService: StorageService,
+        private storageService: StorageService,
         private appMinimize: AppMinimize
     ) {
         this.initializeApp();
@@ -53,16 +53,18 @@ export class AppComponent {
                 console.log(uuid);
             })
             .catch((error: any) => {
-                this.StorageService.setStorage('wasp', 0);
+                this.storageService.setStorage('wasp', 1);
             });
     }
 
     physicalReturn() {
         /*物理按键返回*/
-        if (this.url == '/tabs/tab1' || this.url == '/tabs/tab2' || this.url == '/tabs/tab3' || this.url == '/tabs/tab4') {
+        if (this.url === '/tabs/tab1' || this.url === '/tabs/tab2' || this.url === '/tabs/tab3' || this.url === '/tabs/tab4') {
             this.appMinimize.minimize();
         } else {
             window.history.back();
         }
     }
+
+
 }

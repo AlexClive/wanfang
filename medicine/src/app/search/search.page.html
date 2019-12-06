@@ -1,0 +1,98 @@
+<ion-header class="mobile">
+    <ion-toolbar>
+        <ion-title>
+            search
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+<app-header-t></app-header-t>
+
+<ion-content class="pc" (click)="init()">
+    <div class="content">
+        <div class="breadcrumb">
+            <ion-text [routerLink]="['/tabs/tab1']" color="primary">首页</ion-text>
+            <span> > </span>高级检索
+        </div>
+        <div [ngStyle]="{height:height}">
+            <div class="card">
+                <ion-card-content>
+                    <div class="basis">
+                        <div class="condition">
+                            <div class="item" *ngFor="let item of condition let i = index">
+                                <div class="logic" *ngIf="i!= 0" (click)="qualificationISShow(i,'logic',$event)">
+                                    <div>
+                                        <ion-text>{{consequence.qualification[i].logic}}</ion-text>
+                                        <i class="iconfont ion-ios-icon11"></i>
+                                    </div>
+                                    <ul *ngIf="conditionISHide[i].logic">
+                                        <li *ngFor="let logicT of item.logic"
+                                            (click)="qualificationconfirm(i,logicT,'logic',$event)">{{logicT}}</li>
+                                    </ul>
+                                </div>
+                                <div class="field" [ngClass]="{'active': i=== 0}"
+                                     (click)="qualificationISShow(i,'field',$event)">
+                                    <div>
+                                        <ion-text>{{consequence.qualification[i].field}}</ion-text>
+                                        <i class="iconfont ion-ios-icon11"></i></div>
+                                    <ul *ngIf="conditionISHide[i].field">
+                                        <li *ngFor="let fieldT of item.field"
+                                            (click)="qualificationconfirm(i,fieldT,'field',$event)">{{fieldT}}</li>
+                                    </ul>
+                                </div>
+                                <div class="search"><input type="text" [(ngModel)]="consequence.qualification[i].input">
+                                </div>
+                                <div class="fuzzy" (click)="qualificationISShow(i,'fuzzy',$event)">
+                                    <div>
+                                        <ion-text>{{consequence.qualification[i].fuzzy}}</ion-text>
+                                        <i class="iconfont ion-ios-icon11"></i></div>
+                                    <ul *ngIf="conditionISHide[i].fuzzy">
+                                        <li *ngFor="let fuzzyT of item.fuzzy"
+                                            (click)="qualificationconfirm(i,fuzzyT,'fuzzy',$event)">{{fuzzyT}}</li>
+                                    </ul>
+                                </div>
+                                <div class="add">
+                                    <i class="iconfont ion-ios-jian-full" (click)='jian(i)'></i>
+                                    <i class="iconfont ion-ios-jia-full" *ngIf="i == condition.length-1"
+                                       (click)="add()"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="search-btn">
+                            <button (click)="search()">检索
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="limited">
+                        <div class="cutUp">----------
+                            <ion-text>检索限定</ion-text>
+                            ----------------------------------------------------------------------------------------------------------------------------------
+                        </div>
+                        <div class="item">
+                            <ion-text>出版时间：</ion-text>
+                            <div class="start" (click)="chooseToTime(0,$event)">
+                                <ion-text>{{consequence.time.start}}</ion-text>
+                                <i class="iconfont ion-ios-icon11"></i>
+                                <ul *ngIf="IsHideTime.start">
+                                    <li (click)="Timeconfirm(0,2019,$event)">2019</li>
+                                </ul>
+                            </div>
+                            <span>-</span>
+                            <div class="end" (click)="chooseToTime(1,$event)">
+                                <ion-text>{{consequence.time.end}}</ion-text>
+                                <i class="iconfont ion-ios-icon11"></i>
+                                <ul *ngIf="IsHideTime.end">
+                                    <li (click)="Timeconfirm(1,2019,$event)">2019</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </ion-card-content>
+            </div>
+        </div>
+    </div>
+
+
+    <app-footer></app-footer>
+
+</ion-content>

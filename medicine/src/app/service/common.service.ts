@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {ToastController} from '@ionic/angular';
 
 @Injectable({
     providedIn: 'root'
@@ -7,13 +8,33 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 export class CommonService {
 
     constructor(
-        public http: HttpClient
+        public http: HttpClient,
+        public toastController: ToastController
     ) {
+    }
+
+    async presentToast(massage, seat) {
+        const toast = await this.toastController.create({
+            message: massage,
+            duration: 2000,
+            buttons: [
+                {
+                    side: 'start',
+                    icon: 'alert',
+                    text: '错误提示',
+                }
+            ],
+            color: 'danger',
+            position: seat
+        });
+        await toast.present();
     }
 
     serveGet(api, callback) {
         this.http.get(api).subscribe(respones => {
             callback(respones);
+        }, error => {
+            this.presentToast(error.message, 'bottom').then(r => {});
         });
     }
 
@@ -22,8 +43,11 @@ export class CommonService {
             headers: new HttpHeaders({'Content-Type': 'application/json'})
         };
         this.http.post(api, data, httpOptions).subscribe(respones => {
-            console.log(respones);
+            callback(respones);
+        }, error => {
+            this.presentToast(error.message, 'bottom').then(r => {});
         });
     }
+
 
 }

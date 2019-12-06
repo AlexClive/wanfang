@@ -1,36 +1,85 @@
-<ion-header>
+<ion-header class="mobile">
     <ion-toolbar>
         <ion-title>
-            Tab One
+            首页
         </ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <!--默认刷新器 -->
-    <!--    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-          <ion-refresher-content></ion-refresher-content>
-        </ion-refresher>-->
-    <!--自定义刷新器-->
-    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-        <ion-refresher-content
-                pullingIcon="arrow-dropdown"
-                pullingText="下拉刷新"
-                refreshingSpinner="circles"
-                refreshingText="刷新中...">
-        </ion-refresher-content>
-    </ion-refresher>
+    <div class="header_item">
+        <div class="header_item_bg">
+            <div class="logo_item">
+                <div class="logo"><img src="../../assets/image/header/logo.png" alt=""></div>
+                <div class="sign">
+                    <button class="btn login">登录</button>
+                    <button class="btn registered">注册</button>
+                </div>
+            </div>
+            <div class="search_item">
+                <ul>
+                    <li *ngFor="let item of sort"><a [ngClass]="{'active':item.initial==true}" (click)="Clisore(item)"
+                                                     href="javascript:void 0">{{item.text}}</a></li>
+                </ul>
+                <div class="search_input">
+                    <input type="text" [(ngModel)]="search.text">
+                    <button (click)="advancedSearch()"><i
+                            class="iconfont ion-ios-sousuo"></i><span>检索</span></button>
+                    <ion-text [routerLink]="['/search']">高级检索</ion-text>
+                </div>
 
-  <ion-list>
-    <ion-item *ngFor="let item of list" (click)="GOdetail()">
-      {{item}}   <i class="iconfont ion-ios-remen"></i>
-    </ion-item>
-  </ion-list>
-  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
-    <ion-infinite-scroll-content
-            loadingSpinner="bubbles"
-            loadingText="加载中...">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+            </div>
+        </div>
 
+        <ion-card>
+            <div class="bg">
+                <div class="item_inner">
+                    <ion-label><i class="iconfont ion-ios-remen"></i> <span class="title">热门</span><span
+                            class="subtitle">HOT</span>
+                    </ion-label>
+                </div>
+
+                <ion-card-content>
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col *ngFor=" let item of HOT">
+                                <span (click)="Goresult(item)">{{item}}</span>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-card-content>
+
+                <div class="item_inner">
+                    <ion-label><i class="iconfont ion-ios-tesezhuanti"></i> <span class="title">专题</span><span
+                            class="subtitle">SPECIAL SUBJECT</span>
+                    </ion-label>
+                </div>
+
+                <ion-card-content>
+                    <ion-row>
+                        <ion-col *ngFor=" let item of thematic">
+                            <span (click)="Goresult(item)">{{item}}</span>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col *ngFor=" let item of thematic1">
+                            <span (click)="Goresult(item)">{{item}}</span>
+                        </ion-col>
+                    </ion-row>
+                </ion-card-content>
+            </div>
+        </ion-card>
+    </div>
+
+
+    <app-footer></app-footer>
 </ion-content>
+
+
+
+
+
+
+
+
+

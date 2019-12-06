@@ -1,0 +1,45 @@
+ion-footer {
+  min-width: 1000px;
+  padding: 30px;
+  background: #192340;
+  overflow: hidden;
+
+  .bar-assertive {
+    width: 1200px;
+    margin: 0 auto;
+    font-size: 14px;
+    color: #B7BEC0;
+    font-family: Microsoft YaHei Regular;
+
+    .foot_left, .foot_middle, .foot_right {
+      float: left;
+      padding: 0 20px;
+
+      a {
+        color: #B7BEC0;
+        text-decoration: none;
+      }
+    }
+
+    .foot_left {
+      width: 292px;
+      border-right: 1px solid #7888B9;
+
+      p:first-child, p:nth-child(2) {
+        background: #fff;
+        width: 114px;
+        height: 32px;
+        overflow: hidden;
+
+        img {
+          display: block;
+          margin: 2px auto;
+        }
+      }
+    }
+
+    .foot_middle {
+      padding: 0 60px 0 70px;
+    }
+  }
+}

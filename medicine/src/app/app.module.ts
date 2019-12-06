@@ -33,6 +33,8 @@ import {FileTransfer} from '@ionic-native/file-transfer/ngx';
 import {File} from '@ionic-native/file/ngx';
 import {DocumentViewer} from '@ionic-native/document-viewer/ngx';
 import {AppMinimize} from '@ionic-native/app-minimize/ngx';
+import {FooterModule} from './module/footer/footer.module';
+import {HeaderTModule} from './module/header-t/header-t.module';
 
 @NgModule({
     declarations: [AppComponent],
@@ -40,7 +42,7 @@ import {AppMinimize} from '@ionic-native/app-minimize/ngx';
     imports: [BrowserModule, IonicModule.forRoot({
         mode: 'ios',
         backButtonText: ''
-    }), AppRoutingModule, HttpClientModule],
+    }), AppRoutingModule, HttpClientModule, FooterModule, HeaderTModule],
     providers: [
         StatusBar,
         SplashScreen,
