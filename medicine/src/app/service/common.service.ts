@@ -16,7 +16,7 @@ export class CommonService {
     async presentToast(massage, seat) {
         const toast = await this.toastController.create({
             message: massage,
-            duration: 2000,
+            duration: 50000,
             buttons: [
                 {
                     side: 'start',

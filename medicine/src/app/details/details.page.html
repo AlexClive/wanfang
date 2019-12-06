@@ -25,24 +25,26 @@
                 <div class="summary">
                     <span>摘要：</span>
                     <ion-text>
-                      {{Data.Abstract}}
+                        {{Data.Abstract}}
                     </ion-text>
                 </div>
                 <ul class="info">
                     <li>
-                        <span class="autograph">作者：</span><span class="cont-text">中华医学会心血管病学医学分会   中华心血管病杂志编辑委员会</span>
+                        <span class="autograph">作者：</span><span class="cont-text">{{Data.Creator}}</span>
                     </li>
                     <li>
-                        <span class="autograph">期刊：</span><span class="cont-text"><small>《中华心血管病杂志》</small><small>2007年35卷12期</small>   1076-1095页</span>
+                        <span class="autograph">期刊：</span><span
+                            class="cont-text"><small>《{{Data.PeriodicalIssue}}》</small>
+                        <small style="margin: 0 10px">{{Data.ISSN}}卷{{Data.Volume}}期</small>  {{Data.Page}}页</span>
                     </li>
                     <li><span class="autograph">主题词：</span><span
-                            class="cont-text"><small>指南(Guidebooks)诊断(Diagnosis)</small></span>
+                            class="cont-text"><small>{{Data.Keyword}}</small></span>
                     </li>
                     <li><span class="autograph">分类号：</span><span class="cont-text"><small>R5</small></span></li>
-                    <li><span class="autograph">栏目名称：</span><span class="cont-text">对策研究</span></li>
+                    <li><span class="autograph">栏目名称：</span><span class="cont-text">{{Data.Column}}</span></li>
                     <li><span class="autograph">DOI：</span><span
                             class="cont-text">{{Data.DOI}}</span></li>
-                    <li><span class="autograph">发布时间：</span><span class="cont-text">2008-04-01</span></li>
+                    <li><span class="autograph">发布时间：</span><span class="cont-text">{{PeriodFn(Data.WFPublishDate)}}</span></li>
                 </ul>
                 <div class="chart">
                     <div class="chart-label chart-state-all"

@@ -36,4 +36,9 @@ export class DetailsPage implements OnInit {
         this.position = val;
     }
 
+    PeriodFn(time) {
+        time = new Date(time);
+        return time.getFullYear() + '-' + (time.getMonth() + 1) + '-' + time.getDate();
+    }
+
 }

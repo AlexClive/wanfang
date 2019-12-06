@@ -94,14 +94,14 @@ export class ResultPage implements OnInit {
                     }
                 }
                 if (expressionSearch.time.start !== '开始' || expressionSearch.time.end !== '结束') {
-                    this.dateOfPublish = '&出版时间_fl=' + expressionSearch.time.start + '-' + expressionSearch.time.end;
+                    this.dateOfPublish = '&出版时间_f=' + expressionSearch.time.start + '-' + expressionSearch.time.end;
                 }
             } else {
                 this.search = JSON.parse(data.search);  /*//此时的search存的就是上个页面传过来的值*/
                 this.Clisore(JSON.parse(data.search).type);
                 let type = JSON.parse(data.search).type;
                 if (type !== '') {
-                    this.search_text = '(' + type.text + '=' + JSON.parse(data.search).text + ')';
+                    this.search_text = '(' + type.text + '_f=' + JSON.parse(data.search).text + ')';
                 } else {
                     this.search_text = JSON.parse(data.search).text;
                 }
@@ -113,26 +113,32 @@ export class ResultPage implements OnInit {
 
     dataServe(Value) {
         this.common.serverPost(this.config.search + '?q=' + Value, {}, (data) => {
-            if (data.Data.ListItem.length > 0) {
-                this.contentDate.ListItem = data.Data.ListItem;
-                this.search_Num = data.Data.TotalCount;
-                this.pageNumArry = [];
-                for (let i = 0; i < Math.ceil(this.search_Num / this.AmountText); i++) {
-                    this.pageNumArry.push(i + 1);
-                }
-                let leftBtn = 0;
-                for (let key in data.Data) {
-                    // tslint:disable-next-line:max-line-length
-                    if (key === 'DBIDCluster' || key === 'CLCShortCluster' || key === 'DateCluster' || key === 'PeriodicalCluster' || key === 'CreatorCluster' || key === 'OrganCluster') {
-                        this.contentDate.LeftData.push(data.Data[key]);
-                        this.leftArryActive.push(leftBtn++);
-                    } else if (key !== 'ListItem' && key !== 'TotalCount' && key !== 'Pager') {
-                        this.contentDate.navRightDate.push(data.Data[key]);
+            if (data.Massage === null) {
+                if (data.Data.ListItem.length > 0) {
+                    this.contentDate.ListItem = data.Data.ListItem;
+                    this.search_Num = data.Data.TotalCount;
+                    this.pageNumArry = [];
+                    for (let i = 0; i < Math.ceil(this.search_Num / this.AmountText); i++) {
+                        this.pageNumArry.push(i + 1);
+                    }
+                    let leftBtn = 0;
+                    for (let key in data.Data) {
+                        // tslint:disable-next-line:max-line-length
+                        if (key === 'DBIDCluster' || key === 'CLCShortCluster' || key === 'DateCluster' || key === 'PeriodicalCluster' || key === 'CreatorCluster' || key === 'OrganCluster') {
+                            this.contentDate.LeftData.push(data.Data[key]);
+                            this.leftArryActive.push(leftBtn++);
+                        } else if (key !== 'ListItem' && key !== 'TotalCount' && key !== 'Pager') {
+                            this.contentDate.navRightDate.push(data.Data[key]);
+                        }
+                    }
+                    for (let i = 0; i < this.contentDate.ListItem.length; i++) {
+                        this.form.entry.push(false);
                     }
                 }
-                for (let i = 0; i < this.contentDate.ListItem.length; i++) {
-                    this.form.entry.push(false);
-                }
+
+            } else {
+                this.common.presentToast(data.Massage, 'top');
+                this.contentDate.ListItem = [];
             }
 
         });
@@ -252,11 +258,11 @@ export class ResultPage implements OnInit {
             this.leftArryActive[num] = num + '-' + index;
         }
         if (title !== '出版时间') {
-            let Value = '&' + title + '_fl' + '=' + item.Text;
+            let Value = '&' + title + '_f' + '=' + item.Text;
             console.log(this.searchobj);
             this.searchobj[title] = Value;
         } else {
-            this.dateOfPublish = '&' + title + '_fl' + '=' + item.Key;
+            this.dateOfPublish = '&' + title + '_f' + '=' + item.Key;
         }
         for (let key in this.searchobj) {
             this.search_text += this.searchobj[key];

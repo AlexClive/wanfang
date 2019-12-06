@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {RouteReuseStrategy} from '@angular/router';
-/*import {registerLocaleData,LocationStrategy,HashLocationStrategy} from "@angular/common";*/
+import {registerLocaleData,LocationStrategy,HashLocationStrategy} from "@angular/common";
 
 import {IonicModule, IonicRouteStrategy, IonInfiniteScrollContent} from '@ionic/angular';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
@@ -54,9 +54,9 @@ import {HeaderTModule} from './module/header-t/header-t.module';
         File,
         DocumentViewer,
         AppMinimize,
-        {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
+    /*    {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}*/
         /*url中带有#*/
-        /*{provide: LocationStrategy, useClass: HashLocationStrategy}*/
+        {provide: LocationStrategy, useClass: HashLocationStrategy}
     ],
     bootstrap: [AppComponent]
 })
