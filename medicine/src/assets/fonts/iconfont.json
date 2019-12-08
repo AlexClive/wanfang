@@ -13,6 +13,13 @@
       "unicode_decimal": 58888
     },
     {
+      "icon_id": "741862",
+      "name": "个人 (5)",
+      "font_class": "geren5",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    },
+    {
       "icon_id": "953600",
       "name": "分享",
       "font_class": "fenxiang",
@@ -60,6 +67,13 @@
       "font_class": "tesezhuanti",
       "unicode": "e617",
       "unicode_decimal": 58903
+    },
+    {
+      "icon_id": "2406058",
+      "name": "更多",
+      "font_class": "gengduo",
+      "unicode": "e618",
+      "unicode_decimal": 58904
     },
     {
       "icon_id": "3216591",

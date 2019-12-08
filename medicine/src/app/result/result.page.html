@@ -127,10 +127,10 @@
                                         </ul>
                                     </div>
                                     <ul>
-                                        <li (click)="leftCut()"><<</li>
+                                        <li (click)="leftCut()" class="iconfont ion-ios-gengduo leftBtn"></li>
                                         <li *ngFor="let num of pageNumArry"
                                             [ngClass]="{'active': num===pageNum}" (click)="pageNumGO(num)">{{num}}</li>
-                                        <li (click)="rightAdd()">>></li>
+                                        <li (click)="rightAdd()"  class="iconfont ion-ios-gengduo"></li>
                                     </ul>
                                 </div>
                             </ion-col>

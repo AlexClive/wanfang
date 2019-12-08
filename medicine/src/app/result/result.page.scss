@@ -414,8 +414,11 @@
                 cursor: pointer;
                 position: relative;
 
-                i {
-                  margin: 0 0 0 5px;
+                span {
+                  margin: 0 10px 0 0;
+                }
+                i{
+                  vertical-align: sub;
                 }
 
                 ul {
@@ -435,7 +438,7 @@
                     list-style: none;
                     height: 25px;
                     line-height: 25px;
-                    text-indent: -1.3em;
+                    text-indent: -2em;
                   }
                 }
               }
@@ -452,6 +455,14 @@
                   line-height: 18px;
                   text-align: center;
                   cursor: pointer;
+                }
+
+                .leftBtn{
+                  transform:rotate(180deg);
+                  -ms-transform:rotate(180deg);
+                  -webkit-transform:rotate(180deg);
+                  -o-transform:rotate(180deg);
+                  -moz-transform:rotate(180deg)
                 }
 
                 .active {
