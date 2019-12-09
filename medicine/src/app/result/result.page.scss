@@ -417,7 +417,8 @@
                 span {
                   margin: 0 10px 0 0;
                 }
-                i{
+
+                i {
                   vertical-align: sub;
                 }
 
@@ -457,12 +458,12 @@
                   cursor: pointer;
                 }
 
-                .leftBtn{
-                  transform:rotate(180deg);
-                  -ms-transform:rotate(180deg);
-                  -webkit-transform:rotate(180deg);
-                  -o-transform:rotate(180deg);
-                  -moz-transform:rotate(180deg)
+                .leftBtn {
+                  transform: rotate(180deg);
+                  -ms-transform: rotate(180deg);
+                  -webkit-transform: rotate(180deg);
+                  -o-transform: rotate(180deg);
+                  -moz-transform: rotate(180deg)
                 }
 
                 .active {
@@ -470,6 +471,22 @@
                   background: #BDC0C6;
                 }
               }
+            }
+          }
+
+          .sky {
+            color: #A0A0A0;
+            width: 200px;
+            margin: 50px auto 0 auto;
+            text-align: center;
+
+            i {
+              display: block;
+              font-size: 60px;
+            }
+
+            p {
+              font-size: 16px;
             }
           }
 

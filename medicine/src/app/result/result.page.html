@@ -32,9 +32,9 @@
                 </div>
             </div>
 
-            <ion-card *ngIf="contentDate.ListItem.length > 0">
+            <ion-card>
                 <div class="bg">
-                    <ion-grid>
+                    <ion-grid *ngIf="contentDate.ListItem.length > 0">
                         <ion-row>
                             <ion-col size="2">
                                 <div class="left-card-item" *ngFor="let item of contentDate.LeftData; let num = index">
@@ -130,7 +130,7 @@
                                         <li (click)="leftCut()" class="iconfont ion-ios-gengduo leftBtn"></li>
                                         <li *ngFor="let num of pageNumArry"
                                             [ngClass]="{'active': num===pageNum}" (click)="pageNumGO(num)">{{num}}</li>
-                                        <li (click)="rightAdd()"  class="iconfont ion-ios-gengduo"></li>
+                                        <li (click)="rightAdd()" class="iconfont ion-ios-gengduo"></li>
                                     </ul>
                                 </div>
                             </ion-col>
@@ -152,8 +152,15 @@
                             </div>
                         </ion-row>
                     </ion-grid>
+                    <div *ngIf="contentDate.ListItem.length === 0">
+                        <div class="sky" [ngStyle]="{'height':height}">
+                            <i class="iconfont ion-ios-wushuju"></i>
+                            <p>未检索到相关记录</p>
+                        </div>
+                    </div>
                 </div>
             </ion-card>
+
         </div>
 
 

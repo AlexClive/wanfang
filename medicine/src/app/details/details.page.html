@@ -44,7 +44,8 @@
                     <li><span class="autograph">栏目名称：</span><span class="cont-text">{{Data.Column}}</span></li>
                     <li><span class="autograph">DOI：</span><span
                             class="cont-text">{{Data.DOI}}</span></li>
-                    <li><span class="autograph">发布时间：</span><span class="cont-text">{{PeriodFn(Data.WFPublishDate)}}</span></li>
+                    <li><span class="autograph">发布时间：</span><span
+                            class="cont-text">{{PeriodFn(Data.WFPublishDate)}}</span></li>
                 </ul>
                 <div class="chart">
                     <div class="chart-label chart-state-all"
@@ -68,46 +69,35 @@
                             <span class="chart-button-right" (click)="openFn('right')">展开</span>
                             <span class="chart-button-center">本文</span>
                             <ul class="chart-ref">
-                                <li style="width: 89px; background-color: rgb(212, 55, 55); display: list-item;">
-                                    <span>2</span><em>2009</em></li>
-                                <li style="width: 49px;background-color: rgb(220, 92, 62);display: list-item;">
-                                    <span>1</span><em>2014</em></li>
-                                <li style="width: 132px; background-color: rgb(224, 131, 81); display: list-item;">
-                                    <span>3</span><em>2015</em></li>
+                                <li style="display: list-item;"
+                                    *ngFor="let item of literature['RefYears']['years']; let i =index"
+                                    [ngStyle]="{'width': WidthFn(literature['RefYears']['date'][i],i,'left'),'background-color':refPalette[i]}">
+                                    <span>{{literature['RefYears']['date'][i]}}</span><em>{{item}}</em></li>
                             </ul>
                             <ul class="chart-qot">
-                                <li style="width: 5px; background-color: rgb(119, 199, 255); display: list-item;"><span
-                                        style="display: none;">21</span><em style="display: none;">2019</em></li>
-                                <li style="width: 72px; background-color: rgb(91, 179, 210); display: list-item;"><span>290</span><em>2018</em>
-                                </li>
-                                <li style="width: 123px; background-color: rgb(134, 203, 238); display: list-item;">
-                                    <span>494</span><em>2017</em></li>
-                                <li style="width: 70px; background-color: rgb(76, 173, 224); display: list-item;"><span>277</span><em>2016</em>
-                                </li>
+                                <li style="width: 5px; background-color: rgb(119, 199, 255); display: list-item;"
+                                    *ngFor="let item of literature['CiteYears']['years']; let i =index"
+                                    [ngStyle]="{'width': WidthFn(literature['CiteYears']['date'][i],i,'right'),'background-color':qotPalette[i]}">
+                                    <span>{{literature['CiteYears']['date'][i]}}</span><em>{{item}}</em></li>
                             </ul>
                         </div>
                         <div class="chart-group-item chart-group-ref" *ngIf="position=='left'">
                             <span class="chart-button-center" (click)="openFn('')">返回</span>
                             <ul class="chart-ref">
-                                <li style="width: 215px; background-color: rgb(212, 55, 55); display: list-item;"><span>2</span><em>2009</em>
+                                <li  style="display: list-item;"
+                                     *ngFor="let item of literature['RefYears']['years']; let i =index"
+                                     [ngStyle]="{'width': WidthFn(literature['RefYears']['date'][i],i,'left'),'background-color':refPalette[i]}">
+                                    <span>{{literature['RefYears']['date'][i]}}</span><em>{{item}}</em>
                                 </li>
-                                <li style="width: 117px; background-color: rgb(220, 92, 62); display: list-item;"><span>1</span><em>2014</em>
-                                </li>
-                                <li style="width: 314px; background-color: rgb(224, 131, 81); display: list-item;">
-                                    <span>3</span><em>2015</em></li>
                             </ul>
                         </div>
                         <div class="chart-group-item chart-group-qot" *ngIf="position=='right'">
                             <span class="chart-button-center" (click)="openFn('')">返回</span>
                             <ul class="chart-qot">
-                                <li style="width: 12px; background-color: rgb(119, 199, 255); display: list-item;"><span
-                                        style="display: none;">21</span><em style="display: none;">2019</em></li>
-                                <li style="width: 173px; background-color: rgb(91, 179, 210); display: list-item;">
-                                    <span>290</span><em>2018</em></li>
-                                <li style="width: 294px; background-color: rgb(134, 203, 238); display: list-item;">
-                                    <span>494</span><em>2017</em></li>
-                                <li style="width: 167px; background-color: rgb(76, 173, 224); display: list-item;">
-                                    <span>277</span><em>2016</em></li>
+                                <li style="width: 5px; background-color: rgb(119, 199, 255); display: list-item;"
+                                    *ngFor="let item of literature['CiteYears']['years']; let i =index"
+                                    [ngStyle]="{'width': WidthFn(literature['CiteYears']['date'][i],i,'right'),'background-color':qotPalette[i]}">
+                                    <span>{{literature['CiteYears']['date'][i]}}</span><em>{{item}}</em></li>
                             </ul>
                         </div>
                     </div>

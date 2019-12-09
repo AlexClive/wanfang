@@ -22,7 +22,7 @@
                                                      href="javascript:void 0">{{item.text}}</a></li>
                 </ul>
                 <div class="search_input">
-                    <input type="text" [(ngModel)]="search.text">
+                    <input type="text" [(ngModel)]="search.text" (keypress)="($event.keyCode === 13)?advancedSearch():0">
                     <button (click)="advancedSearch()"><i
                             class="iconfont ion-ios-sousuo"></i><span>检索</span></button>
                     <ion-text [routerLink]="['/search']">高级检索</ion-text>
@@ -34,7 +34,8 @@
         <ion-card>
             <div class="bg">
                 <div class="item_inner">
-                    <ion-label [routerLink]="['/disease']"><i class="iconfont ion-ios-remen"></i> <span class="title">热门</span><span
+                    <ion-label [routerLink]="['/disease']"><i class="iconfont ion-ios-remen"></i> <span
+                            class="title">热门</span><span
                             class="subtitle">HOT</span>
                     </ion-label>
                 </div>

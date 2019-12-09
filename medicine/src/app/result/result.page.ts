@@ -56,6 +56,8 @@ export class ResultPage implements OnInit {
         num: 0
     };
 
+    public height: any;
+
     constructor(
         public route: Router,
         public activatedRoute: ActivatedRoute,
@@ -63,6 +65,9 @@ export class ResultPage implements OnInit {
         public common: CommonService,
         public config: ConfigService
     ) {
+        if (document.body.clientHeight > 788) {
+            this.height = document.body.clientHeight - 386 - 179 - 120 + 'px';
+        }
     }
 
     ngOnInit() {
@@ -94,14 +99,14 @@ export class ResultPage implements OnInit {
                     }
                 }
                 if (expressionSearch.time.start !== '开始' || expressionSearch.time.end !== '结束') {
-                    this.dateOfPublish = '&出版时间_f=' + expressionSearch.time.start + '-' + expressionSearch.time.end;
+                    this.dateOfPublish = '&出版时间=' + expressionSearch.time.start + '-' + expressionSearch.time.end;
                 }
             } else {
                 this.search = JSON.parse(data.search);  /*//此时的search存的就是上个页面传过来的值*/
                 this.Clisore(JSON.parse(data.search).type);
                 let type = JSON.parse(data.search).type;
-                if (type !== '') {
-                    this.search_text = '(' + type.text + '_f=' + JSON.parse(data.search).text + ')';
+                if (type !== '' && type.text !== '全部') {
+                    this.search_text = '(' + type.text + '=' + JSON.parse(data.search).text + ')';
                 } else {
                     this.search_text = JSON.parse(data.search).text;
                 }
@@ -113,6 +118,7 @@ export class ResultPage implements OnInit {
 
     dataServe(Value) {
         this.common.serverPost(this.config.search + '?q=' + Value, {}, (data) => {
+            console.log(data.Massage)
             if (data.Massage === null) {
                 if (data.Data.ListItem.length > 0) {
                     this.contentDate.ListItem = data.Data.ListItem;
@@ -122,6 +128,10 @@ export class ResultPage implements OnInit {
                         this.pageNumArry.push(i + 1);
                     }
                     let leftBtn = 0;
+                    this.contentDate.LeftData = [];
+                    this.leftArryActive = [];
+                    this.contentDate.navRightDate = [];
+                    this.form.entry = [];
                     for (let key in data.Data) {
                         // tslint:disable-next-line:max-line-length
                         if (key === 'DBIDCluster' || key === 'CLCShortCluster' || key === 'DateCluster' || key === 'PeriodicalCluster' || key === 'CreatorCluster' || key === 'OrganCluster') {
@@ -134,11 +144,22 @@ export class ResultPage implements OnInit {
                     for (let i = 0; i < this.contentDate.ListItem.length; i++) {
                         this.form.entry.push(false);
                     }
+                } else {
+                    this.common.presentToast('抱歉系统没有检索到相关记录！', 'top');
+                    this.contentDate.ListItem = [];
+                    this.contentDate.LeftData = [];
+                    this.leftArryActive = [];
+                    this.contentDate.navRightDate = [];
+                    this.form.entry = [];
                 }
 
             } else {
                 this.common.presentToast(data.Massage, 'top');
                 this.contentDate.ListItem = [];
+                this.contentDate.LeftData = [];
+                this.leftArryActive = [];
+                this.contentDate.navRightDate = [];
+                this.form.entry = [];
             }
 
         });
@@ -258,11 +279,11 @@ export class ResultPage implements OnInit {
             this.leftArryActive[num] = num + '-' + index;
         }
         if (title !== '出版时间') {
-            let Value = '&' + title + '_f' + '=' + item.Text;
+            let Value = '&' + title + '=' + item.Text;
             console.log(this.searchobj);
             this.searchobj[title] = Value;
         } else {
-            this.dateOfPublish = '&' + title + '_f' + '=' + item.Key;
+            this.dateOfPublish = '&' + title + '=' + item.Key;
         }
         for (let key in this.searchobj) {
             this.search_text += this.searchobj[key];

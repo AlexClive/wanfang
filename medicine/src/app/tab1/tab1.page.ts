@@ -56,6 +56,8 @@ export class Tab1Page {
         if (this.search.text !== '') {
             this.navCtrl.navigateForward(['/result'], {queryParams: {search: JSON.stringify(this.search)}}).then(r => {
             });
+            this.search.text = '';
+            this.search.type = '';
             return;
         }
         this.common.presentToast('请输入搜索关键词', 'top').then(r => {
