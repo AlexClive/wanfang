@@ -1,0 +1,168 @@
+.content {
+  width: 1200px;
+  margin: 0 auto;
+
+  .breadcrumb {
+    padding: 14px 0 0 0;
+  }
+
+  ion-card {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    margin-top: 17px !important;
+
+    ion-card-content {
+      padding-top: 30px !important;
+
+      .item_header {
+        margin: 0;
+        padding: 10px 20px;
+        background: #EDFAF6;
+        font-size: 14px;
+        font-family: "Microsoft YaHei Regular";
+        color: #000000;
+
+        li {
+          padding: 10px 0;
+          list-style: none;
+          display: flex;
+
+          span {
+            display: block;
+          }
+
+          span:first-child {
+            width: 70px;
+          }
+
+          span:last-child {
+            flex: 1;
+          }
+        }
+      }
+
+      .item_list {
+        display: flex;
+        font-size: 14px;
+        font-family: "Microsoft YaHei Regular";
+        color: #000000;
+        padding: 10px;
+
+        .nominate {
+          width: 79px;
+          padding: 10px 0 0 0;
+        }
+
+        .list{
+          flex: 1;
+          .item_list_ion {
+            color: #999999;
+            border-bottom: 1px double #E0E0E0;
+            padding: 10px 0 0 0;
+            p{
+              padding: 0 0 8px 0;
+            }
+            .title{
+              font-size: 16px;
+              font-weight: bold;
+              color: #01B76C;
+              cursor: pointer;
+            }
+
+            .subtitle{
+              font-size: 14px;
+            }
+
+            .name{
+              color: #01B76C;
+            }
+
+            span{
+              margin: 0 5px 0 0;
+            }
+          }
+        }
+      }
+
+      .pagination {
+        float: right;
+        display: flex;
+        font-family: Microsoft YaHei Regular;
+        font-size: 12px;
+        line-height: 25px;
+        padding: 20px 0;
+
+        ion-text {
+          color: #333333;
+          margin: 0 5px;
+        }
+
+        .pageNum {
+          border: 1px solid #CBCCCC;
+          width: 54px;
+          height: 25px;
+          line-height: 25px;
+          text-align: center;
+          cursor: pointer;
+          position: relative;
+
+          span {
+            margin: 0 10px 0 0;
+          }
+          i{
+            vertical-align: sub;
+          }
+
+          ul {
+            display: block;
+            border-left: 1px solid #CBCCCC;
+            border-right: 1px solid #CBCCCC;
+            border-bottom: 1px solid #CBCCCC;
+            margin: 0;
+            background: #fff;
+            width: 54px;
+            position: absolute;
+            left: -1px;
+            top: 23px;
+
+            li {
+              width: 100%;
+              list-style: none;
+              height: 25px;
+              line-height: 25px;
+              text-indent: -2em;
+            }
+          }
+        }
+
+        ul {
+          display: flex;
+          margin: 3px 10px;
+          padding: 0;
+
+          li {
+            list-style: none;
+            width: 18px;
+            height: 18px;
+            line-height: 18px;
+            text-align: center;
+            cursor: pointer;
+          }
+
+          .leftBtn{
+            transform:rotate(180deg);
+            -ms-transform:rotate(180deg);
+            -webkit-transform:rotate(180deg);
+            -o-transform:rotate(180deg);
+            -moz-transform:rotate(180deg)
+          }
+
+          .active {
+            color: #fff;
+            background: #BDC0C6;
+          }
+        }
+      }
+    }
+  }
+}
