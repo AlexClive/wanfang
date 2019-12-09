@@ -50,7 +50,7 @@ export class AppComponent {
     UUID() {
         this.uniqueDeviceID.get()
             .then((uuid: any) => {
-                console.log(uuid);
+                console.log('我的唯一编码是：'+uuid);
             })
             .catch((error: any) => {
                 this.storageService.setStorage('wasp', 1);

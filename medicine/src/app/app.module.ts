@@ -33,8 +33,13 @@ import {FileTransfer} from '@ionic-native/file-transfer/ngx';
 import {File} from '@ionic-native/file/ngx';
 import {DocumentViewer} from '@ionic-native/document-viewer/ngx';
 import {AppMinimize} from '@ionic-native/app-minimize/ngx';
+import {FileOpener} from '@ionic-native/file-opener/ngx';
+/*公共组件*/
 import {FooterModule} from './module/footer/footer.module';
 import {HeaderTModule} from './module/header-t/header-t.module';
+
+/*调用内置浏览器*/
+import {BrowserTab} from '@ionic-native/browser-tab/ngx';
 
 @NgModule({
     declarations: [AppComponent],
@@ -52,11 +57,13 @@ import {HeaderTModule} from './module/header-t/header-t.module';
         ConfigService,
         FileTransfer,
         File,
+        FileOpener,
         DocumentViewer,
         AppMinimize,
-    /*    {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}*/
+        BrowserTab,
+        {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
         /*url中带有#*/
-        {provide: LocationStrategy, useClass: HashLocationStrategy}
+        /*{provide: LocationStrategy, useClass: HashLocationStrategy}*/
     ],
     bootstrap: [AppComponent]
 })
