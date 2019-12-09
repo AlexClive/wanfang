@@ -34,18 +34,20 @@ export class CommonService {
         this.http.get(api).subscribe(respones => {
             callback(respones);
         }, error => {
-            this.presentToast(error.message, 'bottom').then(r => {});
+            this.presentToast(error.message, 'bottom').then(r => {
+            });
         });
     }
 
     serverPost(api, data, callback) {
         const httpOptions = {
-            headers: new HttpHeaders({'Content-Type': 'application/json'})
+            headers: new HttpHeaders({'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'})
         };
         this.http.post(api, data, httpOptions).subscribe(respones => {
             callback(respones);
         }, error => {
-            this.presentToast(error.message, 'bottom').then(r => {});
+            this.presentToast(error.message, 'bottom').then(r => {
+            });
         });
     }
 

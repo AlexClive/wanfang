@@ -13,4 +13,7 @@ export class HeaderTComponent implements OnInit {
     ngOnInit() {
     }
 
+    registered() {
+        window.location.href = 'http://login.med.wanfangdata.com.cn/Account/Register';
+    }
 }

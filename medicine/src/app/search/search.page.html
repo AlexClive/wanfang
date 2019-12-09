@@ -74,7 +74,8 @@
                                 <ion-text>{{consequence.time.start}}</ion-text>
                                 <i class="iconfont ion-ios-icon11"></i>
                                 <ul *ngIf="IsHideTime.start">
-                                    <li (click)="Timeconfirm(0,2019,$event)">2019</li>
+                                    <li *ngFor="let item of while"
+                                        (click)="Timeconfirm(0,item,$event)">{{item}}</li>
                                 </ul>
                             </div>
                             <span>-</span>
@@ -82,7 +83,7 @@
                                 <ion-text>{{consequence.time.end}}</ion-text>
                                 <i class="iconfont ion-ios-icon11"></i>
                                 <ul *ngIf="IsHideTime.end">
-                                    <li (click)="Timeconfirm(1,2019,$event)">2019</li>
+                                    <li *ngFor="let item of while" (click)="Timeconfirm(1,item,$event)">{{item}}</li>
                                 </ul>
                             </div>
                         </div>

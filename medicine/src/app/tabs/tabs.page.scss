@@ -1,3 +1,18 @@
-.tabs-Is-Hide{
+.tabs-Is-Hide {
   display: none;
 }
+ion-icon {
+  font-size: 22px;
+}
+
+.tab-selected{
+  color: #01B76C !important;
+  ion-icon{
+    width: 22px;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-image: -webkit-gradient(linear, left top, right top, from(#35CAED), to(#83F379));
+    background-image: linear-gradient(90deg, #35CAED, #83F379);
+  }
+}
+

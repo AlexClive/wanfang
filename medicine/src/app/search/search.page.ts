@@ -10,12 +10,12 @@ import {CommonService} from "../service/common.service";
 export class SearchPage implements OnInit {
     public condition: object[] = [{
         logic: ['与', '或', '非'],
-        field: ['基因', '表型', '疾病', '药物', '作者', '刊名', '机构名'],
+        field: ['全部字段', '基因', '表型', '疾病', '药物', '作者', '刊名', '机构名'],
         input: '',
         fuzzy: ['模糊', '精确'],
     }, {
         logic: ['与', '或', '非'],
-        field: ['基因', '表型', '疾病', '药物', '作者', '刊名', '机构名'],
+        field: ['全部字段', '基因', '表型', '疾病', '药物', '作者', '刊名', '机构名'],
         input: '',
         fuzzy: ['模糊', '精确'],
     }];
@@ -67,12 +67,19 @@ export class SearchPage implements OnInit {
     /*最终结果*/
     public effect: string = '';
 
+    /*时间*/
+    public while: any[] = [];
+
     constructor(
         public navCtrl: NavController,
         public Common: CommonService
     ) {
         if (document.body.clientHeight > 788) {
             this.height = document.body.clientHeight - 104 - 179 - 107 + 'px';
+        }
+
+        for (let i = new Date().getFullYear(); i >= 1998; i--) {
+            this.while.push(i);
         }
     }
 
@@ -92,7 +99,7 @@ export class SearchPage implements OnInit {
         } else {
             let list: any = {
                 logic: ['与', '或', '非'],
-                field: ['基因', '表型', '疾病', '药物', '作者', '刊名', '机构名'],
+                field: ['全部字段', '基因', '表型', '疾病', '药物', '作者', '刊名', '机构名'],
                 input: '',
                 fuzzy: ['模糊', '精确'],
             };
@@ -106,7 +113,7 @@ export class SearchPage implements OnInit {
         if (this.condition.length < 5) {
             this.condition.push({
                 logic: ['与', '或', '非'],
-                field: ['基因', '表型', '疾病', '药物', '作者', '刊名', '机构名'],
+                field: ['全部字段', '基因', '表型', '疾病', '药物', '作者', '刊名', '机构名'],
                 input: '',
                 fuzzy: ['模糊', '精确'],
             });
@@ -207,11 +214,13 @@ export class SearchPage implements OnInit {
             }
         }
         if (mark === this.consequence.qualification.length) {
-            this.Common.presentToast('请输入搜索关键词', 'top').then(r => {});
+            this.Common.presentToast('请输入搜索关键词', 'top').then(r => {
+            });
             return;
         }
         this.effect = JSON.stringify(this.consequence);
-        this.navCtrl.navigateForward(['/result'], {queryParams: {'expressionSearch': this.effect}}).then(r => {});
+        this.navCtrl.navigateForward(['/result'], {queryParams: {'expressionSearch': this.effect}}).then(r => {
+        });
 
     }
 

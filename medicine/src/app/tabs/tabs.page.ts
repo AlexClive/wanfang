@@ -17,7 +17,7 @@ export class TabsPage {
     initialize() {
         let wasp: number = Number(this.StorageService.getStorage('wasp'));
         console.log(this.StorageService.getStorage('wasp'));
-        if (wasp === 1) {
+        if (wasp !== 1) {
             this.IsHide = 'tabs-Is-Hide';
         } else {
             this.IsHide = '';

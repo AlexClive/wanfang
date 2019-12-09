@@ -1,7 +1,7 @@
 <ion-header class="mobile">
-    <ion-toolbar>
+    <ion-toolbar color="primary" class="Textbg">
         <ion-title>
-            首页
+            万方医学
         </ion-title>
     </ion-toolbar>
 </ion-header>
@@ -9,7 +9,7 @@
 <ion-content>
     <div class="header_item">
         <div class="header_item_bg">
-            <div class="logo_item">
+            <div class="logo_item pc">
                 <div class="logo"><img src="../../assets/image/header/logo.png" alt=""></div>
                 <div class="sign">
                     <button class="btn login">登录</button>
@@ -17,15 +17,18 @@
                 </div>
             </div>
             <div class="search_item">
+                <p class="mobile title">精准肿瘤文献库</p>
                 <ul>
                     <li *ngFor="let item of sort"><a [ngClass]="{'active':item.initial==true}" (click)="Clisore(item)"
                                                      href="javascript:void 0">{{item.text}}</a></li>
                 </ul>
                 <div class="search_input">
-                    <input type="text" [(ngModel)]="search.text" (keypress)="($event.keyCode === 13)?advancedSearch():0">
-                    <button (click)="advancedSearch()"><i
+                    <input type="text" [(ngModel)]="search.text"
+                           (keypress)="($event.keyCode === 13)?advancedSearch():0">
+                    <button (click)="advancedSearch()" class="pc"><i
                             class="iconfont ion-ios-sousuo"></i><span>检索</span></button>
-                    <ion-text [routerLink]="['/search']">高级检索</ion-text>
+                    <ion-text [routerLink]="['/search']" class="pc">高级检索</ion-text>
+                    <ion-text class="iconfont ion-ios-sousuo mobile"></ion-text>
                 </div>
 
             </div>
@@ -42,21 +45,38 @@
 
                 <ion-card-content>
                     <ion-grid>
-                        <ion-row>
+                        <ion-row class="pc">
                             <ion-col *ngFor=" let item of HOT">
                                 <span (click)="Goresult(item)">{{item}}</span>
                             </ion-col>
                         </ion-row>
+
+                        <ion-row class="mobile">
+                            <ng-container *ngFor=" let item of HOT; let i = index">
+                                <ion-col *ngIf="i<3">
+                                    <span (click)="Goresult(item)">{{item}}</span>
+                                </ion-col>
+                            </ng-container>
+
+                        </ion-row>
+
+                        <ion-row class="mobile">
+                            <ng-container *ngFor=" let item of HOT; let i = index">
+                                <ion-col *ngIf="i>=3 && i<6">
+                                    <span (click)="Goresult(item)">{{item}}</span>
+                                </ion-col>
+                            </ng-container>
+                        </ion-row>
                     </ion-grid>
                 </ion-card-content>
 
-                <div class="item_inner">
+                <div class="item_inner pc">
                     <ion-label><i class="iconfont ion-ios-tesezhuanti"></i> <span class="title">专题</span><span
                             class="subtitle">SPECIAL SUBJECT</span>
                     </ion-label>
                 </div>
 
-                <ion-card-content>
+                <ion-card-content class="pc">
                     <ion-row>
                         <ion-col *ngFor=" let item of thematic">
                             <span (click)="Goresult(item)">{{item}}</span>

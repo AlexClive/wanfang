@@ -13,6 +13,13 @@
       "unicode_decimal": 58888
     },
     {
+      "icon_id": "667135",
+      "name": "首页",
+      "font_class": "1",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
       "icon_id": "741862",
       "name": "个人 (5)",
       "font_class": "geren5",
@@ -97,11 +104,32 @@
       "unicode_decimal": 59102
     },
     {
+      "icon_id": "4646388",
+      "name": "导出",
+      "font_class": "daochu",
+      "unicode": "e7ea",
+      "unicode_decimal": 59370
+    },
+    {
       "icon_id": "5034919",
       "name": "搜索",
       "font_class": "sousuo",
       "unicode": "e60c",
       "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "5509870",
+      "name": "查看",
+      "font_class": "chakan",
+      "unicode": "e6ad",
+      "unicode_decimal": 59053
+    },
+    {
+      "icon_id": "5924421",
+      "name": "新建专题",
+      "font_class": "xinjianzhuanti",
+      "unicode": "e640",
+      "unicode_decimal": 58944
     },
     {
       "icon_id": "6270979",
@@ -123,6 +151,13 @@
       "font_class": "keliuqushi",
       "unicode": "e60d",
       "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "8262062",
+      "name": "文献编目",
+      "font_class": "wenxianbianmu",
+      "unicode": "e624",
+      "unicode_decimal": 58916
     },
     {
       "icon_id": "8348163",

@@ -152,10 +152,126 @@
                         </ion-row>
                     </ion-grid>
                     <div *ngIf="contentDate.ListItem.length === 0">
-                        <div class="sky" [ngStyle]="{'height':height}">
-                            <i class="iconfont ion-ios-wushuju"></i>
-                            <p>未检索到相关记录</p>
-                        </div>
+                        <ion-grid class="sky">
+                            <ion-row>
+                                <ion-col size="2">
+                                    <div class="left-card-item">
+                                        <h5>文献类型</h5>
+                                        <ul>
+                                                <li>
+                                                    <span>该项聚类结果为0</span>
+                                                </li>
+                                        </ul>
+                                    </div>
+                                    <div class="left-card-item">
+                                        <h5>学科分类</h5>
+                                        <ul>
+                                            <li>
+                                                <span>该项聚类结果为0</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="left-card-item">
+                                        <h5>出版时间</h5>
+                                        <ul>
+                                            <li>
+                                                <span>该项聚类结果为0</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="left-card-item">
+                                        <h5>期刊名称</h5>
+                                        <ul>
+                                            <li>
+                                                <span>该项聚类结果为0</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="left-card-item">
+                                        <h5>作者</h5>
+                                        <ul>
+                                            <li>
+                                                <span>该项聚类结果为0</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="left-card-item">
+                                        <h5>机构</h5>
+                                        <ul>
+                                            <li>
+                                                <span>该项聚类结果为0</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </ion-col>
+                                <ion-col class="content">
+                                    <ion-item class="item-header">
+                                        <ion-text>当前检索式</ion-text>
+                                        <ion-text class="search_text"
+                                                  title="{{search_text}}{{dateOfPublish}}">{{search_text}}{{dateOfPublish}}</ion-text>
+                                        <ion-text>共{{search_Num}}个结果</ion-text>
+
+                                        <ion-text slot="end" class="link" (click)="GOAbout()">计量分析>></ion-text>
+                                    </ion-item>
+                                    <div class="item-secondary">
+                                        <ion-text>
+                                            <ion-checkbox mode="md" [(ngModel)]="form.isChecked"
+                                                          (click)="allIsCheck()"></ion-checkbox>
+                                            全部
+                                        </ion-text>
+                                        <ion-text class="mark">已选{{form.num}}/{{search_Num}}</ion-text>
+                                        <button>批量导出</button>
+                                        <div class="item-secondary-right">
+                                            <ion-text>每页显示：</ion-text>
+                                            <div (click)="Amount()">
+                                                <ion-text>{{AmountText}}篇</ion-text>
+                                                <i class="iconfont ion-ios-icon11"></i>
+                                                <ul *ngIf="AmountSelect">
+                                                    <li *ngFor="let item of AmountTextArry"
+                                                        (click)="AmountSelectText(item,$event)">{{item}}篇
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <ion-text class="mark">|</ion-text>
+                                            <ion-text>排序方式：</ion-text>
+                                            <button (click)="sortGo('0')" [ngClass]="{'active':Parametric.sort!==''}">时间
+                                            </button>
+                                            <button (click)="sortGo('1')" [ngClass]="{'active':Parametric.sort===''}">相关度
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                    <i class="iconfont ion-ios-wushuju skyText"></i>
+                                    <p>未检索到相关记录</p>
+                                </ion-col>
+                                <div class="col-right" style="width: 143px">
+                                    <div class="right-card-item">
+                                        <h5>相关基因</h5>
+                                        <ul>
+                                                <li>
+                                                    <span>该项聚类结果为0</span>
+                                                </li>
+                                        </ul>
+                                    </div>
+                                    <div class="right-card-item">
+                                        <h5>相关疾病</h5>
+                                        <ul>
+                                            <li>
+                                                <span>该项聚类结果为0</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="right-card-item">
+                                        <h5>相关病物</h5>
+                                        <ul>
+                                            <li>
+                                                <span>该项聚类结果为0</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </ion-row>
+                        </ion-grid>
                     </div>
                 </div>
             </ion-card>

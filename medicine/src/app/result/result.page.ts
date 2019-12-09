@@ -56,8 +56,6 @@ export class ResultPage implements OnInit {
         num: 0
     };
 
-    public height: any;
-
     constructor(
         public route: Router,
         public activatedRoute: ActivatedRoute,
@@ -65,9 +63,6 @@ export class ResultPage implements OnInit {
         public common: CommonService,
         public config: ConfigService
     ) {
-        if (document.body.clientHeight > 788) {
-            this.height = document.body.clientHeight - 386 - 179 - 120 + 'px';
-        }
     }
 
     ngOnInit() {
@@ -95,7 +90,12 @@ export class ResultPage implements OnInit {
                         } else {
                             this.search_text += '(';
                         }
-                        this.search_text += expressionSearch.qualification[i].input + ')';
+                        if (expressionSearch.qualification[i].fuzzy === "精确") {
+                            this.search_text += '"' + expressionSearch.qualification[i].input + '")';
+                        } else {
+                            this.search_text += expressionSearch.qualification[i].input + ')';
+                        }
+
                     }
                 }
                 if (expressionSearch.time.start !== '开始' || expressionSearch.time.end !== '结束') {

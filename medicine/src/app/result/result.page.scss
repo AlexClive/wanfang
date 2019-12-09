@@ -475,17 +475,17 @@
           }
 
           .sky {
-            color: #A0A0A0;
-            width: 200px;
-            margin: 50px auto 0 auto;
-            text-align: center;
-
-            i {
+            i.skyText {
+              margin: 50px 0 0 0;
+              color: #A0A0A0;
+              text-align: center;
               display: block;
               font-size: 60px;
             }
 
             p {
+              color: #A0A0A0;
+              text-align: center;
               font-size: 16px;
             }
           }
