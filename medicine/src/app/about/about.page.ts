@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import * as echarts from 'echarts';
+
 import('echarts-wordcloud');
 
 @Component({
@@ -13,8 +14,9 @@ export class AboutPage implements OnInit {
     }
 
     ionViewDidEnter() {
+        /*关键词热度*/
         const ec = echarts as any;
-        const myChart = ec.init(document.getElementById('chart'));
+        const myChart = ec.init(document.getElementById('keyWords'));
         const option = {
             title: {
                 text: '词云展示',
@@ -25,7 +27,13 @@ export class AboutPage implements OnInit {
                 }
 
             },
-            //      backgroundColor: '#131f56',
+            grid: {
+                top: 0,
+                left: '3%',
+                right: '3%',
+                bottom: 0,
+                containLabel: true
+            },
             tooltip: {
                 show: true
             },
@@ -46,7 +54,7 @@ export class AboutPage implements OnInit {
                 }
             },
             series: [{
-                name: '热点分析',
+                name: '关键词',
                 type: 'wordCloud',
                 size: ['9%', '80%'],
                 sizeRange: [6, 66],
@@ -81,9 +89,9 @@ export class AboutPage implements OnInit {
                 },
                 data: [
                     {
-                    name: '没有',
-                    value: 30,
-                },
+                        name: '没有',
+                        value: 30,
+                    },
                     {
                         name: ' 屏幕',
                         value: 24
@@ -1264,6 +1272,494 @@ export class AboutPage implements OnInit {
             }]
         };
         myChart.setOption(option);
+        /*发文趋势*/
+        const myPostTrends = ec.init(document.getElementById('postTrends'));
+        const postTrendsOption = {
+            // backgroundColor: '#0f375f',
+            grid: {
+                top: '5%',
+                left: 0,
+                right: 0,
+                bottom: '10%'
+            },
+            xAxis: {
+                data: [
+                    '1月',
+                    '2月',
+                    '3月',
+                    '4月',
+                    '5月',
+                    '6月',
+                    '7月',
+                    '8月',
+                    '9月',
+                    '10月',
+                    '11月',
+                    '12月'
+                ],
+                axisLine: {
+                    show: false
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLabel: {
+                    show: true,
+                    textStyle: {
+                        color: '#333333'
+                    }
+                }
+            },
+            yAxis: [{
+                type: 'value',
+                name: '',
+                nameTextStyle: {
+                    color: '#999999'
+                },
+                splitLine: {
+                    show: true
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLine: {
+                    show: false
+                },
+                axisLabel: {
+                    show: true,
+                    textStyle: {
+                        color: '#333333'
+                    }
+                }
+            },
+                {
+                    type: 'value',
+                    name: '',
+                    nameTextStyle: {
+                        color: '#333333'
+                    },
+                    position: 'right',
+                    splitLine: {
+                        show: false
+                    },
+                    axisTick: {
+                        show: false
+                    },
+                    axisLine: {
+                        show: false
+                    },
+                    axisLabel: {
+                        show: false,
+                        formatter: '{value} %',
+                        textStyle: {
+                            color: '#333333'
+                        }
+                    }
+                },
+                {
+                    type: 'value',
+                    gridIndex: 0,
+                    min: 50,
+                    max: 100,
+                    splitNumber: 8,
+                    splitLine: {
+                        show: false
+                    },
+                    axisLine: {
+                        show: false
+                    },
+                    axisTick: {
+                        show: false
+                    },
+                    axisLabel: {
+                        show: false
+                    },
+                    splitArea: {
+                        show: true,
+                        areaStyle: {
+                            color: ['rgba(250,250,250,0.0)', 'rgba(250,250,250,0.05)']
+                        }
+                    }
+                }
+            ],
+            series: [{
+                name: '',
+                type: 'line',
+                yAxisIndex: 1,
+                smooth: true,
+                showAllSymbol: false,
+                symbol: 'circle',
+                symbolSize: 0,
+                itemStyle: {
+                    color: 'rgba(5,140,255, 0.1)'
+                },
+                lineStyle: {
+                    // color: '#058cff'
+                },
+                areaStyle: {
+                    color: 'rgba(5,140,255, 0.2)'
+                },
+                data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+            },
+                {
+                    name: '',
+                    type: 'bar',
+                    barWidth: 15,
+                    itemStyle: {
+                        normal: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                offset: 0,
+                                color: '#29B6F6'
+                            },
+                                {
+                                    offset: 1,
+                                    color: '#29B6F6'
+                                }
+                            ])
+                        }
+                    },
+                    data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                }
+            ]
+        };
+        myPostTrends.setOption(postTrendsOption);
+        /*作者分析*/
+        const myWriter = ec.init(document.getElementById('writer'));
+        const Writeroption = {
+            tooltip: {
+                trigger: 'axis',
+                showDelay: 0,
+                axisPointer: {
+                    show: true,
+                    type: 'cross',
+                    lineStyle: {
+                        type: 'dashed',
+                        width: 1
+                    }
+                },
+                zlevel: 1
+            },
+            grid: {
+                top: '10px',
+                right: '10px',
+                bottom: '30px',
+                left: '100px'
+            },
+            xAxis: [
+                {
+                    type: 'value',
+                    scale: true
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    scale: true
+                }
+            ],
+            series: [
+                {
+                    name: 'sin',
+                    type: 'scatter',
+                    large: true,
+                    symbolSize: 3,
+                    data: (() => {
+                        let d = [];
+                        let len = 10000;
+                        let x = 0;
+                        while (len--) {
+                            x = (Math.random() * 10).toFixed(3) - 0;
+                            d.push([
+                                x,
+                                (Math.sin(x) - x * (len % 2 ? 0.1 : -0.1) * Math.random()).toFixed(3) - 0
+                            ]);
+                        }
+                        return d;
+                    })()
+                },
+            ]
+        };
+        myWriter.setOption(Writeroption);
+        /*机构分析*/
+        const myagency = ec.init(document.getElementById('agency'));
+        const agencyOption = {
+            // backgroundColor: '#0f375f',
+            grid: {
+                top: '5%',
+                left: 0,
+                right: 0,
+                bottom: '10%'
+            },
+            xAxis: {
+                data: [
+                    '1月',
+                    '2月',
+                    '3月',
+                    '4月',
+                    '5月',
+                    '6月',
+                    '7月',
+                    '8月',
+                    '9月',
+                    '10月',
+                    '11月',
+                    '12月'
+                ],
+                axisLine: {
+                    show: false
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLabel: {
+                    show: true,
+                    textStyle: {
+                        color: '#333333'
+                    }
+                }
+            },
+            yAxis: [{
+                type: 'value',
+                name: '',
+                nameTextStyle: {
+                    color: '#999999'
+                },
+                splitLine: {
+                    show: true
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLine: {
+                    show: false
+                },
+                axisLabel: {
+                    show: true,
+                    textStyle: {
+                        color: '#333333'
+                    }
+                }
+            },
+                {
+                    type: 'value',
+                    name: '',
+                    nameTextStyle: {
+                        color: '#333333'
+                    },
+                    position: 'right',
+                    splitLine: {
+                        show: false
+                    },
+                    axisTick: {
+                        show: false
+                    },
+                    axisLine: {
+                        show: false
+                    },
+                    axisLabel: {
+                        show: false,
+                        formatter: '{value} %',
+                        textStyle: {
+                            color: '#333333'
+                        }
+                    }
+                },
+                {
+                    type: 'value',
+                    gridIndex: 0,
+                    min: 50,
+                    max: 100,
+                    splitNumber: 8,
+                    splitLine: {
+                        show: false
+                    },
+                    axisLine: {
+                        show: false
+                    },
+                    axisTick: {
+                        show: false
+                    },
+                    axisLabel: {
+                        show: false
+                    },
+                    splitArea: {
+                        show: true,
+                        areaStyle: {
+                            color: ['rgba(250,250,250,0.0)', 'rgba(250,250,250,0.05)']
+                        }
+                    }
+                }
+            ],
+            series: [{
+                name: '',
+                type: 'line',
+                yAxisIndex: 1,
+                smooth: true,
+                showAllSymbol: false,
+                symbol: 'circle',
+                symbolSize: 0,
+                itemStyle: {
+                    color: 'rgba(5,140,255, 0.1)'
+                },
+                lineStyle: {
+                    // color: '#058cff'
+                },
+                areaStyle: {
+                    color: 'rgba(5,140,255, 0.2)'
+                },
+                data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+            },
+                {
+                    name: '',
+                    type: 'bar',
+                    barWidth: 15,
+                    itemStyle: {
+                        normal: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                offset: 0,
+                                color: '#29B6F6'
+                            },
+                                {
+                                    offset: 1,
+                                    color: '#29B6F6'
+                                }
+                            ])
+                        }
+                    },
+                    data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                }
+            ]
+        };
+        myagency.setOption(agencyOption);
+        /*期刊发表频次*/
+        const mypublication = ec.init(document.getElementById('publication'));
+        const publicationOption = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    lineStyle: {
+                        color: '#57617B'
+                    }
+                }
+            },
+            legend: {
+                icon: 'rect',
+                itemWidth: 14,
+                itemHeight: 5,
+                itemGap: 13,
+                data: ['期刊', '期刊一', '哈哈哈'],
+                right: '4%',
+                textStyle: {
+                    fontSize: 12,
+                    color: '#999'
+                }
+            },
+            grid: {
+                top: '20px',
+                left: '3%',
+                right: '3%',
+                bottom: 0,
+                containLabel: true
+            },
+            xAxis: [{
+                type: 'category',
+                boundaryGap: false,
+                axisLine: {
+                    lineStyle: {
+                        color: '#57617B'
+                    }
+                },
+                data: ['13:00', '13:05', '13:10', '13:15', '13:20', '13:25', '13:30', '13:35', '13:40', '13:45', '13:50', '13:55']
+            }],
+            yAxis: [{
+                type: 'value',
+                name: '',
+                axisTick: {
+                    show: false
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: '#57617B'
+                    }
+                },
+                axisLabel: {
+                    margin: 10,
+                    textStyle: {
+                        fontSize: 14
+                    }
+                },
+                splitLine: {
+                    lineStyle: {
+                        color: '#57617B'
+                    }
+                }
+            }],
+            series: [{
+                name: '期刊',
+                type: 'line',
+                smooth: true,
+                symbol: 'circle',
+                symbolSize: 5,
+                showSymbol: false,
+                lineStyle: {
+                    normal: {
+                        width: 2
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        color: 'rgb(137,189,27)',
+                        borderColor: 'rgba(137,189,2,0.27)',
+                        borderWidth: 12
+
+                    }
+                },
+                data: [220, 182, 191, 134, 150, 120, 110, 125, 145, 122, 165, 122]
+            }, {
+                name: '期刊一',
+                type: 'line',
+                smooth: true,
+                symbol: 'circle',
+                symbolSize: 5,
+                showSymbol: false,
+                lineStyle: {
+                    normal: {
+                        width: 1
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        color: 'rgb(0,136,212)',
+                        borderColor: 'rgba(0,136,212,0.2)',
+                        borderWidth: 12
+
+                    }
+                },
+                data: [120, 110, 125, 145, 122, 165, 122, 220, 182, 191, 134, 150]
+            }, {
+                name: '哈哈哈',
+                type: 'line',
+                smooth: true,
+                symbol: 'circle',
+                symbolSize: 5,
+                showSymbol: false,
+                lineStyle: {
+                    normal: {
+                        width: 2
+                    }
+                },
+                itemStyle: {
+                    normal: {
+
+                        color: 'rgb(219,50,51)',
+                        borderColor: 'rgba(219,50,51,0.2)',
+                        borderWidth: 12
+                    }
+                },
+                data: [220, 182, 125, 145, 122, 191, 134, 150, 120, 110, 165, 122]
+            }]
+        };
+        mypublication.setOption(publicationOption);
     }
 
     ngOnInit() {

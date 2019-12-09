@@ -1,15 +1,153 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-button [routerLink]="['/tabs/tab1']">
-        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-title>about</ion-title>
-  </ion-toolbar>
+<ion-header class="mobile">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-button [routerLink]="['/tabs/tab1']">
+                <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title>about</ion-title>
+    </ion-toolbar>
 </ion-header>
-
+<app-header-t></app-header-t>
 <ion-content>
-  <ion-progress-bar value="0.5"></ion-progress-bar>
-  <div id="chart"></div>
+    <div class="content">
+        <div class="breadcrumb">
+            <ion-text [routerLink]="['/tabs/tab1']" color="primary">首页</ion-text>
+            <span> > </span>感冒
+        </div>
+
+        <ion-card>
+            <ion-card-content>
+                <div class="item">
+                    <div class="title">
+                        <i class="iconfont ion-ios-keliuqushi"></i>
+                        <span>发文趋势</span>
+                    </div>
+                    <div id="postTrends" class="chart"></div>
+                </div>
+                <div class="item">
+                    <div class="title">
+                        <i class="iconfont ion-ios-renxiang"></i>
+                        <span>作者分析</span>
+                    </div>
+                    <div class="item_chart_flex">
+                        <div id="writer" class="chart"></div>
+                        <div class="table">
+                            <table>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>学者</th>
+                                    <th>总发文数</th>
+                                    <th>总被引用数</th>
+                                </tr>
+                            </table>
+                            <div class="cont_table">
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>张旭</td>
+                                    <td>355</td>
+                                    <td>1333</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>张旭</td>
+                                    <td>355</td>
+                                    <td>1333</td>
+                                </tr><tr>
+                                    <td>1</td>
+                                    <td>张旭</td>
+                                    <td>355</td>
+                                    <td>1333</td>
+                                </tr><tr>
+                                    <td>1</td>
+                                    <td>张旭</td>
+                                    <td>355</td>
+                                    <td>1333</td>
+                                </tr><tr>
+                                    <td>1</td>
+                                    <td>张旭</td>
+                                    <td>355</td>
+                                    <td>1333</td>
+                                </tr><tr>
+                                    <td>1</td>
+                                    <td>张旭</td>
+                                    <td>355</td>
+                                    <td>1333</td>
+                                </tr><tr>
+                                    <td>1</td>
+                                    <td>张旭</td>
+                                    <td>355</td>
+                                    <td>1333</td>
+                                </tr><tr>
+                                    <td>1</td>
+                                    <td>张旭</td>
+                                    <td>355</td>
+                                    <td>1333</td>
+                                </tr><tr>
+                                    <td>1</td>
+                                    <td>张旭</td>
+                                    <td>355</td>
+                                    <td>1333</td>
+                                </tr><tr>
+                                    <td>1</td>
+                                    <td>张旭</td>
+                                    <td>355</td>
+                                    <td>1333</td>
+                                </tr><tr>
+                                    <td>1</td>
+                                    <td>张旭</td>
+                                    <td>355</td>
+                                    <td>1333</td>
+                                </tr><tr>
+                                    <td>1</td>
+                                    <td>张旭</td>
+                                    <td>355</td>
+                                    <td>1333</td>
+                                </tr><tr>
+                                    <td>1</td>
+                                    <td>张旭</td>
+                                    <td>355</td>
+                                    <td>1333</td>
+                                </tr><tr>
+                                    <td>1</td>
+                                    <td>张旭</td>
+                                    <td>355</td>
+                                    <td>1333</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="item">
+                    <div class="title">
+                        <i class="iconfont ion-ios-organization"></i>
+                        <span>机构分析</span>
+                    </div>
+                    <div id="agency" class="chart"></div>
+                </div>
+                <div class="item">
+                    <div class="title">
+                        <i class="iconfont ion-ios-remen"></i>
+                        <span>期刊发表频次</span>
+                    </div>
+                    <div id="publication" class="chart"></div>
+                </div>
+                <div class="item">
+                    <div class="title">
+                        <i class="iconfont ion-ios-remen"></i>
+                        <span>关键词热度</span>
+                    </div>
+                    <div id="keyWords" class="chart"></div>
+                </div>
+
+            </ion-card-content>
+        </ion-card>
+
+    </div>
+    <app-footer></app-footer>
 </ion-content>
