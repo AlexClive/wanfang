@@ -41,7 +41,9 @@ export class CommonService {
 
     serverPost(api, data, callback) {
         const httpOptions = {
-            headers: new HttpHeaders({'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'})
+            headers: new HttpHeaders({
+                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+            })
         };
         this.http.post(api, data, httpOptions).subscribe(respones => {
             callback(respones);

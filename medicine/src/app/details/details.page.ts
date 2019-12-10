@@ -42,12 +42,14 @@ export class DetailsPage implements OnInit {
                 this.Data = data.Data;
             });
             this.common.serverPost(this.config.refandciteyears + '?id=' + id, {}, (data) => {
-                console.log(data);
+                this.literature.RefYears.years = [];
+                this.literature.RefYears.date = [];
                 for (let key in data.Data.RefYears) {
                     this.literature.RefYears.years.push(key);
                     this.literature.RefYears.date.push(data.Data.RefYears[key]);
                 }
-                console.log(this.literature.RefYears);
+                this.literature.CiteYears.years = [];
+                this.literature.CiteYears.date = [];
                 for (let Key2 in data.Data.CiteYears) {
                     this.literature.CiteYears.years.push(Key2);
                     this.literature.CiteYears.date.push(data.Data.CiteYears[Key2]);
@@ -65,23 +67,33 @@ export class DetailsPage implements OnInit {
         return time.getFullYear() + '-' + (time.getMonth() + 1) + '-' + time.getDate();
     }
 
-    WidthFn(item, index, event) {
-        console.log(event);
+    WidthFn(item, index, event, judge) {
         let StrWidth = 0;
         let num = 0;
         if (event === 'left') {
             for (let i = 0; i < this.literature.RefYears.date.length; i++) {
                 num += this.literature.RefYears.date[i];
             }
-            StrWidth = this.literature.RefYears.date[index] / num * 100;
-        }else {
+            console.log(judge);
+            if (judge === '0') {
+                StrWidth = Math.floor(this.literature.RefYears.date[index] / num * 100 + 2);
+                if (StrWidth > 40) {
+                    StrWidth = StrWidth - 9;
+                }
+            } else {
+                StrWidth = Math.floor(this.literature.RefYears.date[index] / num * 100);
+            }
+
+        } else {
             for (let i = 0; i < this.literature.CiteYears.date.length; i++) {
                 num += this.literature.CiteYears.date[i];
             }
-            StrWidth = this.literature.CiteYears.date[index] / num * 100;
+            if (judge === '0') {
+                StrWidth = Math.floor(this.literature.CiteYears.date[index] / num * 100 + 2);
+            } else {
+                StrWidth = Math.floor(this.literature.CiteYears.date[index] / num * 100);
+            }
         }
-
-        console.log(StrWidth);
 
         return StrWidth + '%';
     }

@@ -90,8 +90,9 @@ export class SearchPage implements OnInit {
         /*减去*/
         let lavishly: object[] = [];
         if (this.condition.length > 2) {
+            this.consequence.qualification.splice(index, 1);
             for (let i = 0; i < this.condition.length; i++) {
-                if (index != i) {
+                if (index !== i) {
                     lavishly.push(this.condition[i]);
                 }
             }
@@ -103,9 +104,14 @@ export class SearchPage implements OnInit {
                 input: '',
                 fuzzy: ['模糊', '精确'],
             };
+            this.consequence.qualification[index] = {
+                logic: '与',
+                field: '全部字段',
+                input: '',
+                fuzzy: '模糊'
+            };
             this.condition[index] = list;
         }
-
     }
 
     add() {

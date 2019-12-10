@@ -58,18 +58,18 @@
 
             table {
               width: 100%;
-              background: #EDFAF6;
+              background: #eeeeee;
 
               tr {
-                border: 1px solid #999999;
+                border: 1px solid #ccc;
 
                 th {
-                  border: 1px solid #999999;
+                  border: 1px solid #ccc;
                 }
 
                 td {
                   text-align: center;
-                  border-bottom: 1px solid #999999;
+                  border-bottom: 1px solid #ccc;
                 }
               }
             }
@@ -78,7 +78,7 @@
               width: 100%;
               height: 177px;
               overflow-y: scroll;
-              border-bottom: 1px solid #999999;
+              border-bottom: 1px solid #ccc;
             }
           }
         }

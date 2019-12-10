@@ -1,8 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {NavController} from '@ionic/angular';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CommonService} from "../service/common.service";
 import {ConfigService} from "../service/config.service";
+import {IonInfiniteScroll} from '@ionic/angular';
+import {ActionSheetController} from '@ionic/angular';
 
 @Component({
     selector: 'app-result',
@@ -10,6 +12,8 @@ import {ConfigService} from "../service/config.service";
     styleUrls: ['./result.page.scss'],
 })
 export class ResultPage implements OnInit {
+    // @ts-ignore
+    @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
     public sort: object[] = [{text: '全部', initial: true}, {text: '基因', initial: false}, {
         text: '表型',
         initial: false
@@ -61,7 +65,8 @@ export class ResultPage implements OnInit {
         public activatedRoute: ActivatedRoute,
         public navCtrl: NavController,
         public common: CommonService,
-        public config: ConfigService
+        public config: ConfigService,
+        public actionSheetController: ActionSheetController
     ) {
     }
 
@@ -118,7 +123,6 @@ export class ResultPage implements OnInit {
 
     dataServe(Value) {
         this.common.serverPost(this.config.search + '?q=' + Value, {}, (data) => {
-            console.log(data.Massage)
             if (data.Massage === null) {
                 if (data.Data.ListItem.length > 0) {
                     this.contentDate.ListItem = data.Data.ListItem;
@@ -223,7 +227,7 @@ export class ResultPage implements OnInit {
     }
 
     rightAdd() {
-        if (this.pageNum > this.search_Num) {
+        if (this.pageNum > this.search_Num - 10) {
             this.pageNum++;
             this.dataServe(this.search_text + this.dateOfPublish + '&p=' + this.pageNum);
         }
@@ -354,4 +358,63 @@ export class ResultPage implements OnInit {
             this.dataServe(this.search_text + this.dateOfPublish + this.Parametric.sort + this.Parametric.AmountText);
         }
     }
+
+    typeFn(text) {
+        let str = ''
+        if (text !== 'JZ_WF_QK') {
+            str = '外文期刊'
+        } else {
+            str = '中文期刊'
+        }
+        return str
+    }
+
+    loadData(event) {
+        if (this.pageNum >= this.search_Num - 10) {
+            event.target.disabled = true;
+            setTimeout(() => {
+                event.target.disabled = false;
+            }, 2000)
+            return;
+        }
+        this.dataServe(this.search_text + this.dateOfPublish + '&p=' + this.pageNum);
+    }
+
+    doRefresh(event) {
+        this.pageNum = 1;
+        this.dataServe(this.search_text + this.dateOfPublish + '&p=' + this.pageNum);
+        setTimeout(() => {
+            console.log('Async operation has ended');
+            event.target.complete();
+        }, 2000);
+    }
+
+    async presentActionSheet() {
+        const actionSheet = await this.actionSheetController.create({
+            header: '分享',
+            buttons: [{
+                text: 'QQ空间',
+                handler: () => {
+                    console.log('QQ空间');
+                }
+            }, {
+                text: '朋友圈',
+                handler: () => {
+                    console.log('朋友圈');
+                }
+            }, {
+                text: '微博',
+                handler: () => {
+                    console.log('微博');
+                }
+            }, {
+                text: '取消',
+                handler: () => {
+                    console.log('Cancel clicked');
+                }
+            }]
+        });
+        await actionSheet.present();
+    }
+
 }

@@ -1,4 +1,4 @@
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 1000px) {
   ion-content {
     min-width: 1200px;
 
@@ -477,14 +477,14 @@
           .sky {
             i.skyText {
               margin: 50px 0 0 0;
-              color: #A0A0A0;
+              color: #cccccc;
               text-align: center;
               display: block;
               font-size: 60px;
             }
 
             p {
-              color: #A0A0A0;
+              color: #cccccc;
               text-align: center;
               font-size: 16px;
             }
@@ -492,6 +492,125 @@
 
         }
 
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  ion-content {
+    background-color: #EFF7FF !important;
+
+    .content {
+      background-color: #EFF7FF !important;
+      padding: 8px 0;
+
+      .tabs {
+        width: 100%;
+        margin: 0;
+        display: flex;
+        padding: 0;
+        border-bottom: 1px solid #EEEEEE;
+        background-color: #ffffff;
+
+        li {
+          flex: 1;
+          text-align: center;
+          list-style: none;
+          height: 40pt;
+          color: #CFCFD6;
+          line-height: 40pt;
+
+          ion-text {
+            display: inline-block;
+            height: 40pt;
+          }
+        }
+
+        li.active {
+          color: #01B76C;
+
+          ion-text {
+            border-bottom: 2px solid #01B76C;
+          }
+        }
+      }
+
+      .item_list {
+        padding: 13px;
+        background-color: #ffffff;
+        border-bottom: 1px solid #eeeeee;
+        overflow: hidden;
+
+        .title {
+          font-size: 15px;
+          color: #000;
+          font-family: "PingFang SC Bold";
+          font-weight: bold;
+
+          span {
+            background-color: #01B76C;
+            color: #ffffff;
+            border-radius: 3px;
+            display: inline-block;
+            width: 40px;
+            height: 22px;
+            text-align: center;
+            line-height: 22px;
+            margin: 0 5px;
+          }
+        }
+
+        p {
+          font-size: 12px;
+          padding: 5px 0;
+          margin: 0;
+        }
+
+        .name {
+          color: #A7A7A7;
+
+          ion-text {
+            color: #333333;
+            font-weight: bold;
+          }
+        }
+
+        .journal {
+          color: #666666;
+        }
+
+        .keyword {
+          small {
+            margin: 0 8px 0 0;
+            border: 1px solid #34c589;
+            color: #34c589;
+            display: inline-block;
+            padding: 3px;
+          }
+        }
+
+        .summary {
+          font-family: 'PingFang SC Bold';
+          line-height: 22px;
+
+          ion-text {
+            color: #333333;
+            font-weight: bold;
+          }
+        }
+
+        .buttons {
+          float: right;
+          button {
+            padding: 6px 8px;
+            background: #fff;
+            color: #01B76C;
+            border: 1px solid #01B76C;
+            border-radius: 3px;
+            margin: 0 16px 0 0;
+          }
+        }
       }
     }
   }

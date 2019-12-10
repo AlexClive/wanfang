@@ -13,7 +13,7 @@
     <div class="content">
         <div class="breadcrumb">
             <ion-text [routerLink]="['/tabs/tab1']" color="primary">首页</ion-text>
-            <span> > </span>感冒
+            <span> > </span>计量分析
         </div>
 
         <ion-card>
@@ -35,89 +35,23 @@
                         <div class="table">
                             <table>
                                 <tr>
-                                    <th>序号</th>
-                                    <th>学者</th>
+                                    <th style="width:50px">序号</th>
+                                    <th style="width:100px">学者</th>
                                     <th>总发文数</th>
                                     <th>总被引用数</th>
                                 </tr>
                             </table>
                             <div class="cont_table">
-                            <table>
-                                <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>张旭</td>
-                                    <td>355</td>
-                                    <td>1333</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>张旭</td>
-                                    <td>355</td>
-                                    <td>1333</td>
-                                </tr><tr>
-                                    <td>1</td>
-                                    <td>张旭</td>
-                                    <td>355</td>
-                                    <td>1333</td>
-                                </tr><tr>
-                                    <td>1</td>
-                                    <td>张旭</td>
-                                    <td>355</td>
-                                    <td>1333</td>
-                                </tr><tr>
-                                    <td>1</td>
-                                    <td>张旭</td>
-                                    <td>355</td>
-                                    <td>1333</td>
-                                </tr><tr>
-                                    <td>1</td>
-                                    <td>张旭</td>
-                                    <td>355</td>
-                                    <td>1333</td>
-                                </tr><tr>
-                                    <td>1</td>
-                                    <td>张旭</td>
-                                    <td>355</td>
-                                    <td>1333</td>
-                                </tr><tr>
-                                    <td>1</td>
-                                    <td>张旭</td>
-                                    <td>355</td>
-                                    <td>1333</td>
-                                </tr><tr>
-                                    <td>1</td>
-                                    <td>张旭</td>
-                                    <td>355</td>
-                                    <td>1333</td>
-                                </tr><tr>
-                                    <td>1</td>
-                                    <td>张旭</td>
-                                    <td>355</td>
-                                    <td>1333</td>
-                                </tr><tr>
-                                    <td>1</td>
-                                    <td>张旭</td>
-                                    <td>355</td>
-                                    <td>1333</td>
-                                </tr><tr>
-                                    <td>1</td>
-                                    <td>张旭</td>
-                                    <td>355</td>
-                                    <td>1333</td>
-                                </tr><tr>
-                                    <td>1</td>
-                                    <td>张旭</td>
-                                    <td>355</td>
-                                    <td>1333</td>
-                                </tr><tr>
-                                    <td>1</td>
-                                    <td>张旭</td>
-                                    <td>355</td>
-                                    <td>1333</td>
-                                </tr>
-                                </tbody>
-                            </table>
+                                <table>
+                                    <tbody>
+                                    <tr *ngFor="let item of tableData;let i = index">
+                                        <td style="width:50px">{{i + 1}}</td>
+                                        <td style="width:100px">{{item.Name}}</td>
+                                        <td>{{item.Count}}</td>
+                                        <td>{{item.CitedCount}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
