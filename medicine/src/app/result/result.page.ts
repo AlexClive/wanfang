@@ -48,7 +48,7 @@ export class ResultPage implements OnInit {
         RightStr: ['更多>>', '更多>>', '更多>>', '更多>>']
     };
     public pageNumArry: number[] = [];
-    public leftArryActive = [];
+    public leftArryActive: any = [0, 1, 2, 3, 4, 5, 6, 7];
     public Parametric = {
         sort: '',
         AmountText: ''
@@ -59,6 +59,11 @@ export class ResultPage implements OnInit {
         isChecked: false,
         num: 0
     };
+
+    public time = {
+        start: '1998',
+        end: new Date().getFullYear()
+    }
 
     constructor(
         public route: Router,
@@ -104,7 +109,7 @@ export class ResultPage implements OnInit {
                     }
                 }
                 if (expressionSearch.time.start !== '开始' || expressionSearch.time.end !== '结束') {
-                    this.dateOfPublish = '&出版时间=' + expressionSearch.time.start + '-' + expressionSearch.time.end;
+                    this.dateOfPublish = '&出版时间_f=' + expressionSearch.time.start + '-' + expressionSearch.time.end;
                 }
             } else {
                 this.search = JSON.parse(data.search);  /*//此时的search存的就是上个页面传过来的值*/
@@ -131,16 +136,13 @@ export class ResultPage implements OnInit {
                     for (let i = 0; i < Math.ceil(this.search_Num / this.AmountText); i++) {
                         this.pageNumArry.push(i + 1);
                     }
-                    let leftBtn = 0;
                     this.contentDate.LeftData = [];
-                    this.leftArryActive = [];
                     this.contentDate.navRightDate = [];
                     this.form.entry = [];
                     for (let key in data.Data) {
                         // tslint:disable-next-line:max-line-length
                         if (key === 'DBIDCluster' || key === 'CLCShortCluster' || key === 'DateCluster' || key === 'PeriodicalCluster' || key === 'CreatorCluster' || key === 'OrganCluster') {
                             this.contentDate.LeftData.push(data.Data[key]);
-                            this.leftArryActive.push(leftBtn++);
                         } else if (key !== 'ListItem' && key !== 'TotalCount' && key !== 'Pager') {
                             this.contentDate.navRightDate.push(data.Data[key]);
                         }
@@ -152,7 +154,6 @@ export class ResultPage implements OnInit {
                     this.common.presentToast('抱歉系统没有检索到相关记录！', 'top');
                     this.contentDate.ListItem = [];
                     this.contentDate.LeftData = [];
-                    this.leftArryActive = [];
                     this.contentDate.navRightDate = [];
                     this.form.entry = [];
                 }
@@ -161,7 +162,6 @@ export class ResultPage implements OnInit {
                 this.common.presentToast(data.Massage, 'top');
                 this.contentDate.ListItem = [];
                 this.contentDate.LeftData = [];
-                this.leftArryActive = [];
                 this.contentDate.navRightDate = [];
                 this.form.entry = [];
             }
@@ -282,13 +282,22 @@ export class ResultPage implements OnInit {
         if (make === 0) {
             this.leftArryActive[num] = num + '-' + index;
         }
-        if (title !== '出版时间') {
-            let Value = '&' + title + '=' + item.Text;
-            console.log(this.searchobj);
-            this.searchobj[title] = Value;
+        //判读是否存在
+        if (this.dateOfPublish.indexOf(title) === -1) {
+            this.dateOfPublish += '&' + title + '_f=' + item.Key;
         } else {
-            this.dateOfPublish = '&' + title + '=' + item.Key;
+
         }
+        for (let key in this.searchobj) {
+            this.search_text += this.searchobj[key];
+        }
+        this.dataServe(this.search_text + this.dateOfPublish + this.Parametric.sort + this.Parametric.AmountText);
+    }
+
+    selectionPeriod(num, title) {
+        console.log(num)
+        this.leftArryActive[num] = num;
+        this.dateOfPublish += '&' + title + '_f=' + this.time.start + '-' + this.time.end;
         for (let key in this.searchobj) {
             this.search_text += this.searchobj[key];
         }
@@ -393,19 +402,85 @@ export class ResultPage implements OnInit {
         const actionSheet = await this.actionSheetController.create({
             header: '分享',
             buttons: [{
+                text: 'QQ好友',
+                handler: () => {
+                    console.log('QQ好友');
+                    var test = window.location.href;
+                    console.log(test);
+                    let p = {
+                        url: test,/*获取URL，可加上来自分享到QQ标识，方便统计*/
+                        desc: '精准肿瘤知识库', /*分享理由(风格应模拟用户对话),支持多分享语随机展现（使用|分隔）*/
+                        title: '精准肿瘤知识库',/*分享标题(可选)*/
+                        summary: '精准肿瘤知识库',/*分享描述(可选)*/
+                        pics: 'http://med.wanfangdata.com.cn/Content/Images/rwd/hf/logo-MED-lg-top.png',/*分享图片(可选)*/
+                        flash: '', /*视频地址(可选)*/
+                        //commonClient : true, /*客户端嵌入标志*/
+                        site: '精准肿瘤知识库'/*分享来源 (可选) ，如：QQ分享*/
+                    };
+
+
+                    let s = [];
+                    for (let i in p) {
+                        s.push(i + '=' + encodeURIComponent(p[i] || ''));
+                    }
+                    let target_url = "http://connect.qq.com/widget/shareqq/iframe_index.html?" + s.join('&');
+                    window.open(target_url, 'qq',
+                        'height=520, width=720');
+                }
+            }, {
                 text: 'QQ空间',
                 handler: () => {
                     console.log('QQ空间');
+                    var test = window.location.href;
+                    var p = {
+                        url: test,
+                        showcount: '1',/*是否显示分享总数,显示：'1'，不显示：'0' */
+                        desc: '这篇文章不错,分享一下~~',/*默认分享理由(可选)*/
+                        summary: '',/*分享摘要(可选)*/
+                        title: '汽车氪',/*分享标题(可选)*/
+                        site: '汽车氪',/*分享来源 如：腾讯网(可选)summary*/
+                        pics: 'http://med.wanfangdata.com.cn/Content/Images/rwd/hf/logo-MED-lg-top.png', /*分享图片的路径(可选)*/
+                        style: '101',
+                        width: 199,
+                        height: 30
+                    };
+                    var s = [];
+                    for (var i in p) {
+                        s.push(i + '=' + encodeURIComponent(p[i] || ''));
+                    }
+                    var target_url = "http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?" + s.join('&');
+                    window.open(target_url, 'qZone',
+                        'height=430, width=400');
                 }
             }, {
                 text: '朋友圈',
                 handler: () => {
                     console.log('朋友圈');
+                    var target_url = "http://qr.liantu.com/api.php?text=http://med.wanfangdata.com.cn";
+                    window.open(target_url, 'weixin',
+                        'height=320, width=320');
                 }
             }, {
                 text: '微博',
                 handler: () => {
                     console.log('微博');
+                    var test = window.location.href;
+                    var param = {
+                        url: test,
+                        type: '3',
+                        count: '1', /** 是否显示分享数，1显示(可选)*/
+                        appkey: '汽车氪', /** 您申请的应用appkey,显示分享来源(可选)*/
+                        title: 'title', /** 分享的文字内容(可选，默认为所在页面的title)*/
+                        pic: 'pic', /**分享图片的路径(可选)*/ ralateUid: '', /**关联用户的UID，分享微博会@该用户(可选)*/
+                        rnd: new Date().valueOf()
+                    }
+                    var temp = [];
+                    for (var p in param) {
+                        temp.push(p + '=' + encodeURIComponent(param[p] || ''))
+                    }
+                    var target_url = "http://service.weibo.com/share/share.php?" + temp.join('&');
+                    window.open(target_url, 'sinaweibo',
+                        'height=430, width=400');
                 }
             }, {
                 text: '取消',
