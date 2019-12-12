@@ -3,6 +3,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ConfigService} from "../service/config.service";
 import {CommonService} from "../service/common.service";
 
+declare var domainconfig;
+
 @Component({
     selector: 'app-details',
     templateUrl: './details.page.html',
@@ -28,6 +30,10 @@ export class DetailsPage implements OnInit {
         } /*印证文献*/
     };
 
+    public address = domainconfig.domain.f;
+    public Id = '';
+    public dbid = '';
+
     constructor(
         public activatedRoute: ActivatedRoute,
         public config: ConfigService,
@@ -37,11 +43,12 @@ export class DetailsPage implements OnInit {
 
     ngOnInit() {
         this.activatedRoute.queryParams.subscribe((data: any) => {
-            let id = data.Id, dbid = data.DBID;
-            this.common.serverPost(this.config.details + '?id=' + id + '&dbid=' + dbid, {}, (data) => {
+            this.Id = data.Id;
+            this.dbid = data.DBID;
+            this.common.serverPost(this.config.details + '?id=' + this.Id + '&dbid=' + this.dbid, {}, (data) => {
                 this.Data = data.Data;
             });
-            this.common.serverPost(this.config.refandciteyears + '?id=' + id, {}, (data) => {
+            this.common.serverPost(this.config.refandciteyears + '?id=' + this.Id, {}, (data) => {
                 this.literature.RefYears.years = [];
                 this.literature.RefYears.date = [];
                 for (let key in data.Data.RefYears) {
@@ -74,7 +81,6 @@ export class DetailsPage implements OnInit {
             for (let i = 0; i < this.literature.RefYears.date.length; i++) {
                 num += this.literature.RefYears.date[i];
             }
-            console.log(judge);
             if (judge === '0') {
                 StrWidth = Math.floor(this.literature.RefYears.date[index] / num * 100 + 2);
                 if (StrWidth > 40) {
@@ -96,6 +102,18 @@ export class DetailsPage implements OnInit {
         }
 
         return StrWidth + '%';
+    }
+
+    download() {
+        window.location.href = this.address + 'PercisionArticleFullText?inline=True&Id=PeriodicalPaper_' + this.Id;
+    }
+
+    reading() {
+        window.location.href = this.address + 'PercisionArticleFullText?Id=PeriodicalPaper_' + this.Id;
+    }
+
+    goBack() {
+        history.back();
     }
 
 }

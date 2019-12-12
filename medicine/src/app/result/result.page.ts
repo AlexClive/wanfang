@@ -65,6 +65,9 @@ export class ResultPage implements OnInit {
         end: new Date().getFullYear()
     }
 
+    public export = false;
+    public isPC = false;
+
     constructor(
         public route: Router,
         public activatedRoute: ActivatedRoute,
@@ -73,6 +76,11 @@ export class ResultPage implements OnInit {
         public config: ConfigService,
         public actionSheetController: ActionSheetController
     ) {
+        if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
+            this.isPC = true;
+        }else {
+            this.isPC = false;
+        }
     }
 
     ngOnInit() {
@@ -127,6 +135,9 @@ export class ResultPage implements OnInit {
     }
 
     dataServe(Value) {
+        this.form.entry = [];
+        this.form.isChecked = false;
+        this.form.num = 0;
         this.common.serverPost(this.config.search + '?q=' + Value, {}, (data) => {
             if (data.Massage === null) {
                 if (data.Data.ListItem.length > 0) {
@@ -286,7 +297,14 @@ export class ResultPage implements OnInit {
         if (this.dateOfPublish.indexOf(title) === -1) {
             this.dateOfPublish += '&' + title + '_f=' + item.Key;
         } else {
-
+            let intermediateProcessing = this.dateOfPublish.split('&');
+            this.dateOfPublish = '';
+            for (var i = 0; i < intermediateProcessing.length; i++) {
+                if (intermediateProcessing[i].indexOf(title) === -1 && intermediateProcessing[i] !== '') {
+                    this.dateOfPublish += '&' + intermediateProcessing[i];
+                }
+            }
+            this.dateOfPublish += '&' + title + '_f=' + item.Key;
         }
         for (let key in this.searchobj) {
             this.search_text += this.searchobj[key];
@@ -295,8 +313,15 @@ export class ResultPage implements OnInit {
     }
 
     selectionPeriod(num, title) {
-        console.log(num)
+        //重置选项
         this.leftArryActive[num] = num;
+        let intermediateProcessing = this.dateOfPublish.split('&');
+        this.dateOfPublish = '';
+        for (var i = 0; i < intermediateProcessing.length; i++) {
+            if (intermediateProcessing[i].indexOf(title) === -1 && intermediateProcessing[i] !== '') {
+                this.dateOfPublish += '&' + intermediateProcessing[i];
+            }
+        }
         this.dateOfPublish += '&' + title + '_f=' + this.time.start + '-' + this.time.end;
         for (let key in this.searchobj) {
             this.search_text += this.searchobj[key];
@@ -379,14 +404,19 @@ export class ResultPage implements OnInit {
     }
 
     loadData(event) {
-        if (this.pageNum >= this.search_Num - 10) {
+        if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
+            if (this.pageNum >= this.search_Num - 10) {
+                event.target.disabled = true;
+                setTimeout(() => {
+                    event.target.disabled = false;
+                }, 2000)
+                return;
+            }
+            this.dataServe(this.search_text + this.dateOfPublish + '&p=' + this.pageNum);
+        } else {
             event.target.disabled = true;
-            setTimeout(() => {
-                event.target.disabled = false;
-            }, 2000)
-            return;
         }
-        this.dataServe(this.search_text + this.dateOfPublish + '&p=' + this.pageNum);
+
     }
 
     doRefresh(event) {
@@ -398,7 +428,7 @@ export class ResultPage implements OnInit {
         }, 2000);
     }
 
-    async presentActionSheet() {
+    async presentActionSheet(title) {
         const actionSheet = await this.actionSheetController.create({
             header: '分享',
             buttons: [{
@@ -406,19 +436,16 @@ export class ResultPage implements OnInit {
                 handler: () => {
                     console.log('QQ好友');
                     var test = window.location.href;
-                    console.log(test);
                     let p = {
                         url: test,/*获取URL，可加上来自分享到QQ标识，方便统计*/
                         desc: '精准肿瘤知识库', /*分享理由(风格应模拟用户对话),支持多分享语随机展现（使用|分隔）*/
-                        title: '精准肿瘤知识库',/*分享标题(可选)*/
-                        summary: '精准肿瘤知识库',/*分享描述(可选)*/
+                        title: title,/*分享标题(可选)*/
+                        summary: title,/*分享描述(可选)*/
                         pics: 'http://med.wanfangdata.com.cn/Content/Images/rwd/hf/logo-MED-lg-top.png',/*分享图片(可选)*/
                         flash: '', /*视频地址(可选)*/
                         //commonClient : true, /*客户端嵌入标志*/
                         site: '精准肿瘤知识库'/*分享来源 (可选) ，如：QQ分享*/
                     };
-
-
                     let s = [];
                     for (let i in p) {
                         s.push(i + '=' + encodeURIComponent(p[i] || ''));
@@ -431,24 +458,25 @@ export class ResultPage implements OnInit {
                 text: 'QQ空间',
                 handler: () => {
                     console.log('QQ空间');
-                    var test = window.location.href;
-                    var p = {
+                    let test = window.location.href;
+                    let p = {
                         url: test,
                         showcount: '1',/*是否显示分享总数,显示：'1'，不显示：'0' */
-                        desc: '这篇文章不错,分享一下~~',/*默认分享理由(可选)*/
-                        summary: '',/*分享摘要(可选)*/
-                        title: '汽车氪',/*分享标题(可选)*/
-                        site: '汽车氪',/*分享来源 如：腾讯网(可选)summary*/
+                        desc: title,/*默认分享理由(可选)*/
+                        summary: title,/*分享摘要(可选)*/
+                        title: title,/*分享标题(可选)*/
+                        site: title,/*分享来源 如：腾讯网(可选)summary*/
                         pics: 'http://med.wanfangdata.com.cn/Content/Images/rwd/hf/logo-MED-lg-top.png', /*分享图片的路径(可选)*/
                         style: '101',
                         width: 199,
                         height: 30
                     };
-                    var s = [];
+                    console.log(p);
+                    let s = [];
                     for (var i in p) {
                         s.push(i + '=' + encodeURIComponent(p[i] || ''));
                     }
-                    var target_url = "http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?" + s.join('&');
+                    let target_url = "http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?" + s.join('&');
                     window.open(target_url, 'qZone',
                         'height=430, width=400');
                 }
@@ -456,7 +484,7 @@ export class ResultPage implements OnInit {
                 text: '朋友圈',
                 handler: () => {
                     console.log('朋友圈');
-                    var target_url = "http://qr.liantu.com/api.php?text=http://med.wanfangdata.com.cn";
+                    var target_url = "http://qr.liantu.com/api.php?text=" + window.location.href;
                     window.open(target_url, 'weixin',
                         'height=320, width=320');
                 }
@@ -468,10 +496,15 @@ export class ResultPage implements OnInit {
                     var param = {
                         url: test,
                         type: '3',
-                        count: '1', /** 是否显示分享数，1显示(可选)*/
-                        appkey: '汽车氪', /** 您申请的应用appkey,显示分享来源(可选)*/
-                        title: 'title', /** 分享的文字内容(可选，默认为所在页面的title)*/
-                        pic: 'pic', /**分享图片的路径(可选)*/ ralateUid: '', /**关联用户的UID，分享微博会@该用户(可选)*/
+                        count: '1',
+                        /** 是否显示分享数，1显示(可选)*/
+                        appkey: title,
+                        /** 您申请的应用appkey,显示分享来源(可选)*/
+                        title: title,
+                        /** 分享的文字内容(可选，默认为所在页面的title)*/
+                        pic: 'http://med.wanfangdata.com.cn/Content/Images/rwd/hf/logo-MED-lg-top.png',
+                        /**分享图片的路径(可选)*/ ralateUid: '',
+                        /**关联用户的UID，分享微博会@该用户(可选)*/
                         rnd: new Date().valueOf()
                     }
                     var temp = [];
@@ -492,4 +525,94 @@ export class ResultPage implements OnInit {
         await actionSheet.present();
     }
 
+
+    AllExportFn(Class) {
+        //批量导出
+        console.log(Class);
+        if (this.form.num === 0) {
+            this.common.presentToast('没有选中导出记录', top);
+            return false;
+        }
+    }
+
+    ExportFn() {
+        this.export = true;
+    }
+
+    closeExport() {
+        this.export = false;
+    }
+
+    risk(Class, title) {
+        var test = window.location.href;
+        switch (Class) {
+            case  'QQ好友':
+                var p = {
+                    url: test,/*获取URL，可加上来自分享到QQ标识，方便统计*/
+                    desc: '精准肿瘤知识库', /*分享理由(风格应模拟用户对话),支持多分享语随机展现（使用|分隔）*/
+                    title: title,/*分享标题(可选)*/
+                    summary: title,/*分享描述(可选)*/
+                    pics: 'http://med.wanfangdata.com.cn/Content/Images/rwd/hf/logo-MED-lg-top.png',/*分享图片(可选)*/
+                    flash: '', /*视频地址(可选)*/
+                    //commonClient : true, /*客户端嵌入标志*/
+                    site: '精准肿瘤知识库'/*分享来源 (可选) ，如：QQ分享*/
+                };
+                var s = [];
+                for (let i in p) {
+                    s.push(i + '=' + encodeURIComponent(p[i] || ''));
+                }
+                var target_url = "http://connect.qq.com/widget/shareqq/iframe_index.html?" + s.join('&');
+                window.open(target_url, 'qq',
+                    'height=520, width=720');
+                break;
+            case  'QQ空间':
+                var Qp = {
+                    url: test,
+                    showcount: '1',/*是否显示分享总数,显示：'1'，不显示：'0' */
+                    desc: title,/*默认分享理由(可选)*/
+                    summary: title,/*分享摘要(可选)*/
+                    title: title,/*分享标题(可选)*/
+                    site: title,/*分享来源 如：腾讯网(可选)summary*/
+                    pics: 'http://med.wanfangdata.com.cn/Content/Images/rwd/hf/logo-MED-lg-top.png', /*分享图片的路径(可选)*/
+                    style: '101',
+                    width: 199,
+                    height: 30
+                };
+                var s = [];
+                for (var i in Qp) {
+                    s.push(i + '=' + encodeURIComponent(Qp[i] || ''));
+                }
+                var target_url = "http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?" + s.join('&');
+                window.open(target_url, 'qZone',
+                    'height=430, width=400');
+                break;
+            case  '微博':
+                var param = {
+                    url: test,
+                    type: '3',
+                    count: '1',
+                    /** 是否显示分享数，1显示(可选)*/
+                    appkey: title,
+                    /** 您申请的应用appkey,显示分享来源(可选)*/
+                    title: title,
+                    /** 分享的文字内容(可选，默认为所在页面的title)*/
+                    pic: 'http://med.wanfangdata.com.cn/Content/Images/rwd/hf/logo-MED-lg-top.png',
+                    /**分享图片的路径(可选)*/ ralateUid: '',
+                    /**关联用户的UID，分享微博会@该用户(可选)*/
+                    rnd: new Date().valueOf()
+                }
+                var temp = [];
+                for (var Wp in param) {
+                    temp.push(Wp + '=' + encodeURIComponent(param[Wp] || ''))
+                }
+                var target_url = "http://service.weibo.com/share/share.php?" + temp.join('&');
+                window.open(target_url, 'sinaweibo',
+                    'height=430, width=400');
+                break;
+            default:
+                break;
+        }
+    }
+
 }
+

@@ -10,7 +10,7 @@
         <div class="breadcrumb">
             <ion-text [routerLink]="['/tabs/tab1']" color="primary">首页</ion-text>
             <span> > </span>
-            <ion-text [routerLink]="['/tabs/tab1']" color="primary">检索结果</ion-text>
+            <ion-text (click)="goBack()" color="primary">检索结果</ion-text>
             <span> > </span>文献详情
         </div>
         <div class="card">
@@ -19,8 +19,8 @@
                 <p class="subtitle"> {{Data.Title[1]}}</p>
                 <div class="tabs">
                     <button><i class="iconfont ion-ios-icon-"></i>导出</button>
-                    <button><i class="iconfont ion-ios-pdf"></i>PDF阅读</button>
-                    <button><i class="iconfont ion-ios-xiazai"></i>下载全文</button>
+                    <button (click)="reading()"><i class="iconfont ion-ios-pdf"></i>PDF阅读</button>
+                    <button (click)="download()"><i class="iconfont ion-ios-xiazai"></i>下载全文</button>
                 </div>
                 <div class="summary">
                     <span>摘要：</span>

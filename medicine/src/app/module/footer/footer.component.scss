@@ -19,6 +19,21 @@ ion-footer {
         color: #B7BEC0;
         text-decoration: none;
       }
+
+      .MED, .lg {
+        width: 110px;
+        height: 28px;
+        display: block;
+        margin: 3px auto;
+      }
+
+      .MED {
+        background: url("../../../assets/image/footer/logo-MED-lg.png");
+      }
+
+      .lg {
+        background: url("../../../assets/image/footer/logo-WF-lg.png");
+      }
     }
 
     .foot_left {
@@ -30,11 +45,6 @@ ion-footer {
         width: 114px;
         height: 32px;
         overflow: hidden;
-
-        img {
-          display: block;
-          margin: 2px auto;
-        }
       }
     }
 

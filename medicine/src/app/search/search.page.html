@@ -24,8 +24,8 @@
                                         <ion-text>{{consequence.qualification[i].logic}}</ion-text>
                                         <i class="iconfont ion-ios-icon11"></i>
                                     </div>
-                                    <ul *ngIf="conditionISHide[i].logic">
-                                        <li *ngFor="let logicT of item.logic"
+                                    <ul *ngIf="conditionISHide[i]['logic']">
+                                        <li *ngFor="let logicT of item['logic']"
                                             (click)="qualificationconfirm(i,logicT,'logic',$event)">{{logicT}}</li>
                                     </ul>
                                 </div>
@@ -34,19 +34,19 @@
                                     <div>
                                         <ion-text>{{consequence.qualification[i].field}}</ion-text>
                                         <i class="iconfont ion-ios-icon11"></i></div>
-                                    <ul *ngIf="conditionISHide[i].field">
-                                        <li *ngFor="let fieldT of item.field"
+                                    <ul *ngIf="conditionISHide[i]['field']">
+                                        <li *ngFor="let fieldT of item['field']"
                                             (click)="qualificationconfirm(i,fieldT,'field',$event)">{{fieldT}}</li>
                                     </ul>
                                 </div>
-                                <div class="search"><input type="text" [(ngModel)]="consequence.qualification[i].input">
+                                <div class="search"><input type="text" [(ngModel)]="consequence.qualification[i].input" (focus)="focusFn(i)">
                                 </div>
                                 <div class="fuzzy" (click)="qualificationISShow(i,'fuzzy',$event)">
                                     <div>
                                         <ion-text>{{consequence.qualification[i].fuzzy}}</ion-text>
                                         <i class="iconfont ion-ios-icon11"></i></div>
-                                    <ul *ngIf="conditionISHide[i].fuzzy">
-                                        <li *ngFor="let fuzzyT of item.fuzzy"
+                                    <ul *ngIf="conditionISHide[i]['fuzzy']">
+                                        <li *ngFor="let fuzzyT of item['fuzzy']"
                                             (click)="qualificationconfirm(i,fuzzyT,'fuzzy',$event)">{{fuzzyT}}</li>
                                     </ul>
                                 </div>

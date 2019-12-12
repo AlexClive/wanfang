@@ -61,9 +61,9 @@ import {BrowserTab} from '@ionic-native/browser-tab/ngx';
         DocumentViewer,
         AppMinimize,
         BrowserTab,
-        {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
+      /*  {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}*/
         /*url中带有#*/
-     /*   {provide: LocationStrategy, useClass: HashLocationStrategy}*/
+        {provide: LocationStrategy, useClass: HashLocationStrategy}
     ],
     bootstrap: [AppComponent]
 })

@@ -634,10 +634,10 @@ export class AboutPage implements OnInit {
             series: [{
                 name: '关键词',
                 type: 'wordCloud',
-                size: ['9%', '80%'],
-                sizeRange: [6, 66],
+                size: ['3%', '100%'],
+                sizeRange: [6, 33],
                 textRotation: [0, 45, 90, -45],
-                // rotationRange: [-45, 90],//旋转角度区间
+                rotationRange: [0, 0], //旋转角度区间
                 rotationStep: 90,
                 shape: 'circle',
                 gridSize: 10,

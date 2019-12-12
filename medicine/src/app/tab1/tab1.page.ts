@@ -3,6 +3,8 @@ import {NavController} from '@ionic/angular';
 import {CommonService} from '../service/common.service';
 import {ConfigService} from '../service/config.service';
 
+declare var domainconfig;
+
 @Component({
     selector: 'app-tab1',
     templateUrl: 'tab1.page.html',
@@ -26,11 +28,21 @@ export class Tab1Page {
         public common: CommonService,
         public config: ConfigService
     ) {
+        console.log(config);
         console.log('我进入tab1页面了');
         console.log(this.config.doLogin);
         this.common.serveGet(this.config.doLogin, (data) => {
-            console.log(data);
+            //console.log(data);
         });
+        console.log(domainconfig);
+    }
+
+    login() {
+        window.location.href = domainconfig.domain.login + 'Account/LogOn?ReturnUrl=' + window.location.href;
+    }
+
+    enrol() {
+        window.location.href = domainconfig.domain.login + 'Account/Register?ReturnUrl=' + window.location.href;
     }
 
     GoSearch() {
@@ -53,7 +65,7 @@ export class Tab1Page {
     }
 
     advancedSearch() {
-        if (this.search.text !== '') {
+        if ((this.search.text).trim() !== '') {
             this.navCtrl.navigateForward(['/result'], {queryParams: {search: JSON.stringify(this.search)}}).then(r => {
             });
             this.search.text = '';

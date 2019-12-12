@@ -90,7 +90,8 @@ export class SearchPage implements OnInit {
         /*减去*/
         let lavishly: object[] = [];
         if (this.condition.length > 2) {
-            this.consequence.qualification.splice(index, 1);
+            this.consequence.qualification.splice(index);
+            this.conditionISHide.splice(index);
             for (let i = 0; i < this.condition.length; i++) {
                 if (index !== i) {
                     lavishly.push(this.condition[i]);
@@ -114,28 +115,31 @@ export class SearchPage implements OnInit {
         }
     }
 
+    addField() {
+        this.condition.push({
+            logic: ['与', '或', '非'],
+            field: ['全部字段', '基因', '表型', '疾病', '药物', '作者', '刊名', '机构名'],
+            input: '',
+            fuzzy: ['模糊', '精确'],
+        });
+        this.conditionISHide.push({
+            logic: '与',
+            field: '全部字段',
+            input: '',
+            fuzzy: '模糊'
+        });
+        this.consequence.qualification.push({
+            logic: '与',
+            field: '全部字段',
+            input: '',
+            fuzzy: '模糊'
+        });
+    }
+
     add() {
         /*增加*/
         if (this.condition.length < 5) {
-            this.condition.push({
-                logic: ['与', '或', '非'],
-                field: ['全部字段', '基因', '表型', '疾病', '药物', '作者', '刊名', '机构名'],
-                input: '',
-                fuzzy: ['模糊', '精确'],
-            });
-            this.conditionISHide.push({
-                logic: '与',
-                field: '全部字段',
-                input: '',
-                fuzzy: '模糊'
-            });
-            this.consequence.qualification.push({
-                logic: '与',
-                field: '全部字段',
-                input: '',
-                fuzzy: '模糊'
-            });
-
+            this.addField();
         }
 
     }
@@ -238,6 +242,14 @@ export class SearchPage implements OnInit {
             this.conditionISHide[i]['logic'] = false;
             this.conditionISHide[i]['field'] = false;
             this.conditionISHide[i]['fuzzy'] = false;
+        }
+    }
+
+    focusFn(index) {
+        // 获取焦点
+        console.log(index)
+        if (this.conditionISHide.length - 1 === index && index < 4) {
+            this.addField();
         }
     }
 }

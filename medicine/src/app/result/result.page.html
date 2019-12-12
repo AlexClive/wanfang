@@ -14,8 +14,7 @@
     <div class="header_item pc">
         <div class="header_item_bg pc">
             <div class="logo_item">
-                <div class="logo" [routerLink]="['/tabs/tab1']"><img src="../../assets/image/header/logo.png"
-                                                                     alt=""></div>
+                <div class="logo" [routerLink]="['/tabs/tab1']"></div>
                 <div class="sign">
                     <button class="btn login">登录</button>
                     <button class="btn registered">注册</button>
@@ -78,7 +77,16 @@
                                     全部
                                 </ion-text>
                                 <ion-text class="mark">已选{{form.num}}/{{search_Num}}</ion-text>
-                                <button>批量导出</button>
+                                <div class="AllExport">
+                                    <button>批量导出</button>
+                                    <ul>
+                                        <li (click)="AllExportFn('参考文献')">参考文献</li>
+                                        <li (click)="AllExportFn('NoteExpress')">NoteExpress</li>
+                                        <li (click)="AllExportFn('EndNote')">EndNote</li>
+                                        <li (click)="AllExportFn('RefWorks')">RefWorks</li>
+                                        <li (click)="AllExportFn('NoteFirst')">NoteFirst</li>
+                                    </ul>
+                                </div>
                                 <div class="item-secondary-right">
                                     <ion-text>每页显示：</ion-text>
                                     <div (click)="Amount()">
@@ -121,8 +129,17 @@
                                                 *ngIf="i < 5">{{keyword}}；</span></span>
                                     </p>
                                     <div class="buttons">
-                                        <button><i class="iconfont ion-ios-fenxiang"></i><span>分享</span></button>
-                                        <button><i class="iconfont ion-ios-icon-"></i><span>导出</span></button>
+                                        <div class="risk">
+                                            <button><i class="iconfont ion-ios-fenxiang"></i><span>分享</span></button>
+                                            <ul>
+                                                <li (click)="risk('QQ好友',item.Title)">QQ好友</li>
+                                                <li (click)="risk('QQ空间',item.Title)">QQ空间</li>
+                                                <li (click)="risk('微博',item.Title)">微博</li>
+                                            </ul>
+                                        </div>
+
+                                        <button (click)="ExportFn()"><i
+                                                class="iconfont ion-ios-icon-"></i><span>导出</span></button>
                                     </div>
                                 </div>
                             </div>
@@ -232,6 +249,8 @@
                                     </ion-text>
                                     <ion-text class="mark">已选{{form.num}}/{{search_Num}}</ion-text>
                                     <button>批量导出</button>
+
+
                                     <div class="item-secondary-right">
                                         <ion-text>每页显示：</ion-text>
                                         <div (click)="Amount()">
@@ -297,7 +316,8 @@
                 <ion-text>相关</ion-text>
             </li>
         </ul>
-        <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <!--下拉刷新-->
+        <ion-refresher *ngIf="isPC" slot="fixed" (ionRefresh)="doRefresh($event)">
             <ion-refresher-content>
             </ion-refresher-content>
         </ion-refresher>
@@ -315,21 +335,52 @@
                 {{AbstractFn(item.Abstract)}}
             </p>
             <div class="buttons">
-                <button (click)="presentActionSheet()"><i class="iconfont ion-ios-fenxiang"></i><span>分享</span></button>
+                <button (click)="presentActionSheet(item.Title)"><i
+                        class="iconfont ion-ios-fenxiang"></i><span>分享</span></button>
                 <button [routerLink]="['/details']"
                         [queryParams]="{Id:item.Id,DBID:item.DBID}"><i
                         class="iconfont ion-ios-chakan"></i><span>查看</span></button>
             </div>
         </div>
-
+        <!--上拉加载-->
         <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
             <ion-infinite-scroll-content
                     loadingSpinner="bubbles"
                     loadingText="正在加载数据...">
             </ion-infinite-scroll-content>
         </ion-infinite-scroll>
-
     </div>
+
+    <div class="mode pc" *ngIf="export">
+        <div class="export">
+            <div class="title">导出
+                <svg (click)="closeExport()" t="1576059002552" class="icon"
+                     style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;"
+                     viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2884"
+                     data-spm-anchor-id="a313x.7781069.0.i1">
+                    <path d="M927.435322 1006.57265l-415.903813-415.903814L95.627695 1006.57265a56.013982 56.013982 0 1 1-79.20377-79.231777l415.903814-415.875807L16.423925 95.58926A56.013982 56.013982 0 0 1 95.627695 16.357483l415.903814 415.903813L927.435322 16.357483a55.985975 55.985975 0 1 1 79.175763 79.231777L590.763286 511.465066l415.847799 415.875807a55.985975 55.985975 0 1 1-79.175763 79.231777z"
+                          p-id="2885" fill="#ffffff"></path>
+                </svg>
+            </div>
+            <div class="content">
+                <p>您可以直接复制参考文献内容，或按指定格式导出。</p>
+                <ion-item>
+                    <ion-label>参考文献：</ion-label>
+                    <ion-textarea
+                            value="[1]陈万青,郑荣寿,张思维,曾红梅,左婷婷,贾漫漫,夏昌发,邹小农,赫捷.2012年中国恶性肿瘤发病和死亡分析[J].中国肿瘤,2016,25(1):1-8."></ion-textarea>
+                </ion-item>
+                <div class="buts">
+                    <ion-label>指定格式：</ion-label>
+                    <a href="javascript:void 0">NoteExpress</a>
+                    <a href="javascript:void 0">EndNote</a>
+                    <a href="javascript:void 0">RefWorks</a>
+                    <a href="javascript:void 0">NoteFirst</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <app-footer></app-footer>
 </ion-content>
 
