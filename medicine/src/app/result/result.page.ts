@@ -78,7 +78,7 @@ export class ResultPage implements OnInit {
     ) {
         if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
             this.isPC = true;
-        }else {
+        } else {
             this.isPC = false;
         }
     }
@@ -396,11 +396,11 @@ export class ResultPage implements OnInit {
     typeFn(text) {
         let str = ''
         if (text !== 'JZ_WF_QK') {
-            str = '外文期刊'
+            str = '外文期刊';
         } else {
-            str = '中文期刊'
+            str = '中文期刊';
         }
-        return str
+        return str;
     }
 
     loadData(event) {
@@ -612,6 +612,25 @@ export class ResultPage implements OnInit {
             default:
                 break;
         }
+    }
+
+
+    goBack() {
+        history.back();
+    }
+
+    special(title) {
+        if (title === '相关基因') {
+            this.navCtrl.navigateForward(['/special'], {queryParams: {'expressionSearch': ''}}).then(r => {
+            });
+        } else if (title === '相关疾病') {
+            this.navCtrl.navigateForward(['/disease'], {queryParams: {'expressionSearch': ''}}).then(r => {
+            });
+        } else if (title === '相关药物') {
+            this.navCtrl.navigateForward(['/disease'], {queryParams: {'expressionSearch': ''}}).then(r => {
+            });
+        }
+
     }
 
 }

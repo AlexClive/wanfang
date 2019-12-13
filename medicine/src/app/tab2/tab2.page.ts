@@ -270,6 +270,19 @@ export class Tab2Page {
         }
     }
 
+    /*热门搜索*/
+    Goresult(item) {
+        this.navCtrl.navigateForward(['/result'], {
+            queryParams: {
+                search: JSON.stringify({
+                    text: item,
+                    type: {text: '全部', initial: true}
+                })
+            }
+        }).then(r => {
+        });
+    }
+
 
     goBack() {
         history.back();

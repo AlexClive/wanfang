@@ -1,13 +1,8 @@
-<ion-header class="mobile">
-    <ion-toolbar>
-        <ion-title>disease</ion-title>
-    </ion-toolbar>
-</ion-header>
 <app-header-t></app-header-t>
 
 <ion-content>
     <div class="content">
-        <div class="breadcrumb">
+        <div class="breadcrumb pc">
             <ion-text [routerLink]="['/tabs/tab1']" color="primary">首页</ion-text>
             <span> > </span>感冒
         </div>
@@ -26,7 +21,7 @@
                     <div class="nominate">相关文献：</div>
                     <div class="list">
                         <div class="item_list_ion">
-                            <p class="title">1.不同评分系统对心肌梗死亡</p>
+                            <p class="title">1. <span class="mobile">独家</span> 不同评分系统对心肌梗死亡</p>
                             <p class="subtitle">郭超；罗晓亮；高晓津</p>
                             <p><span class="name">中华性血管杂志.</span><span>2014;42(10)：860-865</span></p>
                             <p><span>摘要：</span><span>甲状腺结节是发生在甲状腺上的一种疾病，甲状腺内有明显的肿块，可随吞咽动作随甲状腺而上下移动，是由于多种病因引起的。临床上有多种甲状腺疾病，如甲状腺退行性变、炎症、自身免疫以及新生物等都可以表现为结节。甲状腺结节可以单发，也可以多发，多发结节比单发结节的发病率高，但单发结节甲状腺癌的发生率较高。</span>
@@ -34,7 +29,7 @@
                             <p>关键词：心肌梗死；休克；</p>
                         </div>
                         <div class="item_list_ion">
-                            <p class="title">1.不同评分系统对心肌梗死亡</p>
+                            <p class="title">1. <span class="mobile">独家</span> 不同评分系统对心肌梗死亡</p>
                             <p class="subtitle">郭超；罗晓亮；高晓津</p>
                             <p><span class="name">中华性血管杂志.</span><span>2014;42(10)：860-865</span></p>
                             <p><span>摘要：</span><span>甲状腺结节是发生在甲状腺上的一种疾病，甲状腺内有明显的肿块，可随吞咽动作随甲状腺而上下移动，是由于多种病因引起的。临床上有多种甲状腺疾病，如甲状腺退行性变、炎症、自身免疫以及新生物等都可以表现为结节。甲状腺结节可以单发，也可以多发，多发结节比单发结节的发病率高，但单发结节甲状腺癌的发生率较高。</span>
@@ -44,7 +39,7 @@
                     </div>
                 </div>
 
-                <div class="pagination" *ngIf="pageNumArry.length !== 1">
+                <div class="pagination pc" *ngIf="pageNumArry.length !== 1">
                     <ion-text>共{{pageNumArry.length}}页</ion-text>
                     <ion-text>跳转：</ion-text>
                     <div class="pageNum" (click)="pageFn()"><span>{{pageNum}}</span><i

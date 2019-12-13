@@ -1,4 +1,10 @@
-<app-header-t></app-header-t>
+<div class="header mobile">
+    <div class="title" lines="none">
+        <ion-icon slot="icon-only" name="arrow-back" (click)="goBack()" class="start"></ion-icon>
+        <ion-text>精准肿瘤文献库</ion-text>
+        <ion-icon class="iconfont ion-ios-geren5" slot="end"></ion-icon>
+    </div>
+</div>
 
 
 <ion-content>
@@ -158,7 +164,7 @@
                                 <h5>{{item.Title}}</h5>
                                 <ul>
                                     <ng-container *ngFor="let Citem of item.ListItem; let i = index">
-                                        <li *ngIf="i < contentMore.RightArry[num]">
+                                        <li *ngIf="i < contentMore.RightArry[num]" (click)="special(item.Title)">
                                             <span>{{Citem.Text}}</span><em>({{Citem.Count}})</em>
                                         </li>
                                     </ng-container>

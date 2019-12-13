@@ -78,16 +78,16 @@
 
 @media screen and (min-width: 1000px) {
   .mobile {
-    display: none;
+    display: none !important;
   }
 }
 
 @media screen and (max-width: 1000px) {
   .pc {
-    display: none;
+    display: none !important;
   }
   ion-footer {
-    display: none;
+    display: none !important;
   }
 
   .header {

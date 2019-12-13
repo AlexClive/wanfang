@@ -1,47 +1,83 @@
-<ion-header class="mobile">
-    <ion-toolbar>
-        <ion-title>special</ion-title>
-    </ion-toolbar>
-</ion-header>
-
 <app-header-t></app-header-t>
 
 <ion-content>
     <div class="content">
-        <div class="breadcrumb">
+        <div class="breadcrumb pc">
             <ion-text [routerLink]="['/tabs/tab1']" color="primary">首页</ion-text>
             <span> > </span>基因证据
         </div>
         <div [ngStyle]="{height:height}">
-                <ion-card>
-                    <ion-card-content>
-                            <p class="title"><span>易感性大肠癌</span><span>基因证据</span></p>
-                            <div class="condition">
-                                <table>
-                                    <thead>
-                                    <tr>
-                                        <th>基因</th>
-                                        <th>关联规则</th>
-                                        <th>数据来源</th>
-                                        <th>在文献摘要中的展示</th>
-                                        <th>发表年份</th>
-                                        <th>文献详情</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>TP53</td>
-                                        <td>遗传变异</td>
-                                        <td>《中国组织工程研究》</td>
-                                        <td>易感性大肠癌XXXXXXXTP53XXXXXXXX遗传变异</td>
-                                        <td>2011</td>
-                                        <td><ion-text [routerLink]="['/details']">查看全文</ion-text></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+            <ion-card>
+                <ion-card-content>
+                    <p class="title"><span>易感性大肠癌</span><span>基因证据</span></p>
+                    <div class="condition pc">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>基因</th>
+                                <th>关联规则</th>
+                                <th>数据来源</th>
+                                <th>在文献摘要中的展示</th>
+                                <th>发表年份</th>
+                                <th>文献详情</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>TP53</td>
+                                <td>遗传变异</td>
+                                <td>《中国组织工程研究》</td>
+                                <td>易感性大肠癌XXXXXXXTP53XXXXXXXX遗传变异</td>
+                                <td>2011</td>
+                                <td>
+                                    <ion-text [routerLink]="['/details']">查看全文</ion-text>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="condition mobile">
+                        <div class="list">
+                            <div class="item_list_ion">
+                                <p class="title">1.不同评分系统对心肌梗死亡</p>
+                                <p class="subtitle">
+                                    <span>基因<small>TP53</small></span><span>关联规则<small>遗传变异</small></span><span>发表年份<small>2011年</small></span>
+                                </p>
+                                <p><span class="name">数据来源：</span>《现代医院》<span></span></p>
+                                <p class="summary"><span>摘要：</span><span>甲状腺结节是发生在甲状腺上的一种疾病，甲状腺内有明显的肿块，可随吞咽动作随甲状腺而上下移动，是由于多种病因引起的。临床上有多种甲状腺疾病，如甲状腺退行性变、炎症、自身免疫以及新生物等都可以表现为结节。甲状腺结节可以单发，也可以多发，多发结节比单发结节的发病率高，但单发结节甲状腺癌的发生率较高。</span>
+                                </p>
+                                <p>
+                                    <button><i class="iconfont ion-ios-chakan"></i>查看全文</button>
+                                </p>
                             </div>
-                    </ion-card-content>
-                </ion-card>
+                            <div class="item_list_ion">
+                                <p class="title">1.不同评分系统对心肌梗死亡</p>
+                                <p class="subtitle">
+                                    <span>基因<small>TP53</small></span><span>关联规则<small>遗传变异</small></span><span>发表年份<small>2011年</small></span>
+                                </p>
+                                <p><span class="name">数据来源：</span>《现代医院》<span></span></p>
+                                <p class="summary"><span>摘要：</span><span>甲状腺结节是发生在甲状腺上的一种疾病，甲状腺内有明显的肿块，可随吞咽动作随甲状腺而上下移动，是由于多种病因引起的。临床上有多种甲状腺疾病，如甲状腺退行性变、炎症、自身免疫以及新生物等都可以表现为结节。甲状腺结节可以单发，也可以多发，多发结节比单发结节的发病率高，但单发结节甲状腺癌的发生率较高。</span>
+                                </p>
+                                <p>
+                                    <button><i class="iconfont ion-ios-chakan"></i>查看全文</button>
+                                </p>
+                            </div>
+                            <div class="item_list_ion">
+                                <p class="title">1.不同评分系统对心肌梗死亡</p>
+                                <p class="subtitle">
+                                    <span>基因<small>TP53</small></span><span>关联规则<small>遗传变异</small></span><span>发表年份<small>2011年</small></span>
+                                </p>
+                                <p><span class="name">数据来源：</span>《现代医院》<span></span></p>
+                                <p class="summary"><span>摘要：</span><span>甲状腺结节是发生在甲状腺上的一种疾病，甲状腺内有明显的肿块，可随吞咽动作随甲状腺而上下移动，是由于多种病因引起的。临床上有多种甲状腺疾病，如甲状腺退行性变、炎症、自身免疫以及新生物等都可以表现为结节。甲状腺结节可以单发，也可以多发，多发结节比单发结节的发病率高，但单发结节甲状腺癌的发生率较高。</span>
+                                </p>
+                                <p>
+                                    <button><i class="iconfont ion-ios-chakan"></i>查看全文</button>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </ion-card-content>
+            </ion-card>
 
 
         </div>

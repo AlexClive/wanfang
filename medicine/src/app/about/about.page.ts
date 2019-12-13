@@ -88,7 +88,6 @@ export class AboutPage implements OnInit {
 
     httpServe(Value) {
         this.common.serverPost(this.config.getchart + '?q=' + Value, {}, (data) => {
-            console.log(data);
             this.TrendsEC(data.Data.Trend);
             this.agencyEC(data.Data.Organ);
             this.publicationEC(data.Data.Periodical);
@@ -263,7 +262,6 @@ export class AboutPage implements OnInit {
                 formatter: function (params, ticket, callback) {
                     let showHtm = '';
                     for (let i = 0; i < params.length; i++) {
-                        console.log(params[i]['data'][2]);
                         //x轴名称
                         let name = params[i]['data'][2];
                         //名称
@@ -450,7 +448,6 @@ export class AboutPage implements OnInit {
     }
 
     publicationEC(data) {
-        console.log(data);
         const ec = echarts as any;
         /*期刊发表频次*/
         const mypublication = ec.init(document.getElementById('publication'));
@@ -620,7 +617,6 @@ export class AboutPage implements OnInit {
                 tooltip: { // 和 option.tooltip 的配置项相同
                     show: true,
                     formatter(param) {
-                        console.log(param);
                         return;
                         return '<div>' + param.title + '</div>'; // 自定义的 DOM 结构
                     },
