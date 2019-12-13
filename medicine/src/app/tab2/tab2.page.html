@@ -1,59 +1,106 @@
-<ion-header>
-    <ion-toolbar>
-        <ion-title>
-            Tab Two
-        </ion-title>
-    </ion-toolbar>
-</ion-header>
+<div class="header mobile">
+    <div class="title" lines="none">
+        <ion-text>精准肿瘤文献库</ion-text>
+        <ion-icon class="iconfont ion-ios-geren5" slot="end"></ion-icon>
+    </div>
+</div>
 
 <ion-content>
-    <ion-item>
-        <ion-label>MM</ion-label>
-        <ion-datetime displayFormat="MM" value="2012-12-15T13:47:20.789"></ion-datetime>
-    </ion-item>
-    <ion-item>
-        <ion-label>MM 月 DD 日 YY 年</ion-label>
-        <ion-datetime displayFormat="MM 月 DD 日 YY 年" placeholder="选择日期"></ion-datetime>
-    </ion-item>
+    <div class="card" (click)="init()">
+        <ion-card-content class="item_card">
+            <p class="title">文献检索</p>
+            <div class="basis">
+                <div class="condition">
+                    <div class="item" *ngFor="let item of condition let i = index">
+                        <div class="logic" *ngIf="i!= 0" (click)="qualificationISShow(i,'logic',$event)">
+                            <div>
+                                <ion-text>{{consequence.qualification[i].logic}}</ion-text>
+                                <i class="iconfont ion-ios-icon11"></i>
+                            </div>
+                            <ul *ngIf="conditionISHide[i]['logic']">
+                                <li *ngFor="let logicT of item['logic']"
+                                    (click)="qualificationconfirm(i,logicT,'logic',$event)">{{logicT}}</li>
+                            </ul>
+                        </div>
+                        <div class="field" [ngClass]="{'active': i=== 0}"
+                             (click)="qualificationISShow(i,'field',$event)">
+                            <div>
+                                <ion-text>{{consequence.qualification[i].field}}</ion-text>
+                                <i class="iconfont ion-ios-icon11"></i></div>
+                            <ul *ngIf="conditionISHide[i]['field']">
+                                <li *ngFor="let fieldT of item['field']"
+                                    (click)="qualificationconfirm(i,fieldT,'field',$event)">{{fieldT}}</li>
+                            </ul>
+                        </div>
+                        <div class="search"><input type="text" [(ngModel)]="consequence.qualification[i].input"
+                                                   (focus)="focusFn(i)">
+                        </div>
+                        <div class="add">
+                            <i class="iconfont ion-ios-jian-full" (click)='jian(i)'
+                               *ngIf="i !== condition.length-1"></i>
+                            <i class="iconfont ion-ios-jia-full" *ngIf="i === condition.length-1"
+                               (click)="add()"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="search-btn">
+                    <ion-checkbox mode="md" [(ngModel)]="ISCheck"></ion-checkbox>
+                    <ion-label>精确匹配</ion-label>
+                    <button (click)="search()">检索</button>
+                </div>
+            </div>
 
-    <ion-item>
-        <ion-label>月-日-年</ion-label>
-        <ion-datetime value="1995-04-15" min="1990-02" max="2000"
-                      displayFormat="MMM-DDD-YYYY"
-                      monthShortNames="一月, 二月, 三月, 四月, 五月, 六月, 七月, 八月, 九月, 十月, 十一月, 十二月"
-                      dayShortNames="周日,周一,周二,周三,周四,周五,周六"
-        ></ion-datetime>
-    </ion-item>
+            <div class="limited">
+                <div class="cutUp">----
+                    <ion-text>检索限定</ion-text>
+                    -----------------------------------------
+                </div>
+                <div class="item">
+                    <ion-text>出版时间：</ion-text>
+                    <div class="start" (click)="chooseToTime(0,$event)">
+                        <ion-text>{{consequence.time.start}}</ion-text>
+                        <i class="iconfont ion-ios-icon11"></i>
+                        <ul *ngIf="IsHideTime.start">
+                            <li *ngFor="let item of while"
+                                (click)="Timeconfirm(0,item,$event)">{{item}}</li>
+                        </ul>
+                    </div>
+                    <span>-</span>
+                    <div class="end" (click)="chooseToTime(1,$event)">
+                        <ion-text>{{consequence.time.end}}</ion-text>
+                        <i class="iconfont ion-ios-icon11"></i>
+                        <ul *ngIf="IsHideTime.end">
+                            <li *ngFor="let item of while" (click)="Timeconfirm(1,item,$event)">{{item}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </ion-card-content>
 
-    <ion-item>
-        <ion-label>确认/取消</ion-label>
-        <ion-datetime cancelText="取消" doneText="确认" yearValues="2014,2015" displayFormat="YYYY" [ngModel]="startingTime"
-                      placeholder="选择"></ion-datetime>
-    </ion-item>
-
-    <div class="select">
-        <div>{{startingTime}}</div>
-        <ul>
-            <li (click)="selectFn('2014')">2014</li>
-            <li (click)="selectFn('2015')">2015</li>
-        </ul>
+        <div class="Hot">
+            <p>热门搜索</p>
+            <ion-grid>
+                <ion-row>
+                    <ion-col *ngFor="let item of thematic.arr1;let i = index" (click)="Goresult(item)">
+                        {{item}}
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col *ngFor="let item of thematic.arr2;let i = index" (click)="Goresult(item)">
+                        {{item}}
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col *ngFor="let item of thematic.arr3;let i = index" (click)="Goresult(item)">
+                        {{item}}
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col *ngFor="let item of thematic.arr4;let i = index" (click)="Goresult(item)">
+                        {{item}}
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </div>
     </div>
-
-    <div>
-        <ion-searchbar (ionChange)="getChange($event)" [ngModel]="searchText"></ion-searchbar>
-        <ion-list>
-            <ion-item (click)="getText('12')">12</ion-item>
-            <ion-item (click)="getText('22')">22</ion-item>
-            <ion-item (click)="getText('34')">34</ion-item>
-        </ion-list>
-    </div>
-    <ion-button (click)="download()">下载</ion-button>
-<!--    <object class="PDF" data="http://temp2.med.wanfangdata.com.cn/web/viewer.html?file=/Pdf/251%e6%89%8b%e8%b6%b3%e5%8f%a3%e7%97%85%e4%b8%b4%e5%ba%8a%e8%b7%af%e5%be%84%ef%bc%882016%e5%b9%b4%e7%89%88%ef%bc%89.pdf" type="application/pdf">
-        <embed src="http://temp2.med.wanfangdata.com.cn/web/viewer.html?file=/Pdf/251%e6%89%8b%e8%b6%b3%e5%8f%a3%e7%97%85%e4%b8%b4%e5%ba%8a%e8%b7%af%e5%be%84%ef%bc%882016%e5%b9%b4%e7%89%88%ef%bc%89.pdf" type="application/pdf" />
-    </object>-->
-
-<iframe src="http://temp2.med.wanfangdata.com.cn/web/viewer.html?file=/Pdf/251%e6%89%8b%e8%b6%b3%e5%8f%a3%e7%97%85%e4%b8%b4%e5%ba%8a%e8%b7%af%e5%be%84%ef%bc%882016%e5%b9%b4%e7%89%88%ef%bc%89.pdf"></iframe>
-
-
-
 </ion-content>

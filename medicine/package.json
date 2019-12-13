@@ -106,7 +106,9 @@
       "cordova-plugin-document-viewer": {},
       "cordova-plugin-appminimize": {},
       "cordova-plugin-browsertab": {},
-      "cordova-plugin-file-opener2": {}
+      "cordova-plugin-file-opener2": {
+        "ANDROID_SUPPORT_V4_VERSION": "27.+"
+      }
     },
     "platforms": [
       "ios",

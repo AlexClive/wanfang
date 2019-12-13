@@ -116,4 +116,19 @@ export class DetailsPage implements OnInit {
         history.back();
     }
 
+    Creator(item) {
+        var text = '';
+        console.log(item)
+        if (item === undefined) {
+            return;
+        }
+        for (let i = 0; i < item.length; i++) {
+            text += item[i].split('$')[1];
+            if (i < item.length - 1) {
+                text += '；';
+            }
+        }
+        return text;
+    }
+
 }

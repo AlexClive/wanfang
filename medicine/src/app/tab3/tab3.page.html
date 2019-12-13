@@ -1,13 +1,41 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Tab Three
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<div class="header mobile">
+    <div class="title" lines="none">
+        <ion-text>精准肿瘤文献库</ion-text>
+        <ion-icon class="iconfont ion-ios-geren5" slot="end"></ion-icon>
+    </div>
+</div>
+
 
 <ion-content>
 
-
+    <div>
+        <div class="item_inner">
+            <ion-label><i class="iconfont ion-ios-tesezhuanti"></i> <span class="title">全部专题</span><span
+                    class="subtitle">SPECIAL SUBJECT</span>
+            </ion-label>
+        </div>
+        <ion-grid>
+            <ion-row>
+                <ion-col *ngFor="let item of thematic.arr1;let i = index" (click)="Goresult(item)">
+                    {{item}}
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col *ngFor="let item of thematic.arr2;let i = index" (click)="Goresult(item)">
+                    {{item}}
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col *ngFor="let item of thematic.arr3;let i = index" (click)="Goresult(item)">
+                    {{item}}
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col *ngFor="let item of thematic.arr4;let i = index" (click)="Goresult(item)">
+                    {{item}}
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
 
 </ion-content>

@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {NavController} from '@ionic/angular';
 import {BrowserTab} from '@ionic-native/browser-tab/ngx';
 
 declare var AlloyCrop;
@@ -10,9 +11,16 @@ declare var AlloyCrop;
 })
 export class Tab3Page {
 
+    public thematic = {
+        arr1: ['肺癌', '乳腺癌', '卵巢癌'],
+        arr2: ['皮肤癌', '肝癌', '宫颈癌'],
+        arr3: ['前列腺癌', '血液肿瘤', '胰腺癌'],
+        arr4: ['肠癌', '脑肿瘤', '食管癌']
+    };
 
     constructor(
-        public browser: BrowserTab
+        public browser: BrowserTab,
+        public navCtrl: NavController
     ) {
         browser.isAvailable().then(isAvailable => {
             if (isAvailable) {
@@ -20,6 +28,18 @@ export class Tab3Page {
             } else {
                 console.log('error');
             }
+        });
+    }
+
+    Goresult(item) {
+        this.navCtrl.navigateForward(['/result'], {
+            queryParams: {
+                search: JSON.stringify({
+                    text: item,
+                    type: {text: '全部', initial: true}
+                })
+            }
+        }).then(r => {
         });
     }
 

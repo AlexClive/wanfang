@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { ResultPage } from './result.page';
 import {FooterModule} from "../module/footer/footer.module";
+import {HeaderTModule} from "../module/header-t/header-t.module";
 
 const routes: Routes = [
   {
@@ -21,7 +22,8 @@ const routes: Routes = [
         FormsModule,
         IonicModule,
         RouterModule.forChild(routes),
-        FooterModule
+        FooterModule,
+        HeaderTModule
     ],
   declarations: [ResultPage]
 })

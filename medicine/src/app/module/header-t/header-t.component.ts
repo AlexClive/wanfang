@@ -16,4 +16,8 @@ export class HeaderTComponent implements OnInit {
     registered() {
         window.location.href = 'http://login.med.wanfangdata.com.cn/Account/Register';
     }
+
+    goBack() {
+        history.back();
+    }
 }
