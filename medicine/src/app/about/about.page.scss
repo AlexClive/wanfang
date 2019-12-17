@@ -41,8 +41,8 @@
 
           .chart {
             width: 964px;
-            height: 224px;
-            margin: 20px auto;
+            height: 258px;
+            margin: 20px auto 0 auto;
           }
 
           .item_chart_flex {
@@ -86,6 +86,9 @@
         }
       }
     }
+  }
+  .highcharts-credits {
+    display: none !important;
   }
 }
 
@@ -175,5 +178,7 @@
       }
     }
   }
-
+  .highcharts-credits {
+    display: none;
+  }
 }

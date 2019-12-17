@@ -66,15 +66,15 @@
                             <span class="chart-button-center">本文</span>
                             <ul class="chart-ref">
                                 <li style="display: list-item;"
-                                    *ngFor="let item of literature['RefYears']['years']; let i =index"
-                                    [ngStyle]="{'width': WidthFn(literature['RefYears']['date'][i],i,'left','0'),'background-color':refPalette[i]}">
-                                    <span>{{literature['RefYears']['date'][i]}}</span><em>{{item}}</em></li>
+                                    *ngFor="let item of literature['RefYearsShort']['years']; let i =index"
+                                    [ngStyle]="{'width': WidthFn1(literature['RefYearsShort']['date'][i],i,'left'),'background-color':refPalette[i]}">
+                                    <span>{{literature['RefYearsShort']['date'][i]}}</span><em>{{item}}</em></li>
                             </ul>
                             <ul class="chart-qot">
                                 <li style="width: 5px; background-color: rgb(119, 199, 255); display: list-item;"
-                                    *ngFor="let item of literature['CiteYears']['years']; let i =index"
-                                    [ngStyle]="{'width': WidthFn(literature['CiteYears']['date'][i],i,'right','0'),'background-color':qotPalette[i]}">
-                                    <span>{{literature['CiteYears']['date'][i]}}</span><em>{{item}}</em></li>
+                                    *ngFor="let item of literature['CiteYearsShort']['years']; let i =index"
+                                    [ngStyle]="{'width': WidthFn1(literature['CiteYearsShort']['date'][i],i,'right'),'background-color':qotPalette[i]}">
+                                    <span>{{literature['CiteYearsShort']['date'][i]}}</span><em>{{item}}</em></li>
                             </ul>
                         </div>
                         <div class="chart-group-item chart-group-ref" *ngIf="position=='left'">

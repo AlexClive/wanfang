@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, Router} from '@angular/router';
 import {NavController} from '@ionic/angular';
-import {CommonService} from "../service/common.service";
-import {ConfigService} from "../service/config.service";
-import * as echarts from 'echarts';
+import {CommonService} from '../service/common.service';
+import {ConfigService} from '../service/config.service';
+import * as Highcharts from 'highcharts';
+import Wordcloud from 'highcharts/modules/wordcloud';
 
-import('echarts-wordcloud');
+Wordcloud(Highcharts);
 
 @Component({
     selector: 'app-about',
@@ -15,9 +16,9 @@ import('echarts-wordcloud');
 export class AboutPage implements OnInit {
 
     public search: any = '';
-    public search_text: any = '';
-    public Initsearch_text: any;
-    public dateOfPublish: string = '';
+    public searchText: any = '';
+    public InitSearchText: any;
+    public dateOfPublish: String = '';
     public sort: object[] = [{text: '全部', initial: true}, {text: '基因', initial: false}, {
         text: '表型',
         initial: false
@@ -36,31 +37,31 @@ export class AboutPage implements OnInit {
         this.activatedRoute.queryParams.subscribe((data: any) => {
             if (data.search === undefined) {
                 const expressionSearch = JSON.parse(data.expressionSearch);
-                this.search_text = '';
+                this.searchText = '';
                 for (let i = 0; i < expressionSearch.qualification.length; i++) {
                     if (expressionSearch.qualification[i].input !== '') {
                         if (expressionSearch.qualification[i].field !== '全部字段') {
                             if (i !== 0) {
                                 switch (expressionSearch.qualification[i].logic) {
                                     case '与':
-                                        this.search_text += ' AND ';
+                                        this.searchText += ' AND ';
                                         break;
                                     case '或':
-                                        this.search_text += ' OR ';
+                                        this.searchText += ' OR ';
                                         break;
                                     case '非':
-                                        this.search_text += ' NOT ';
+                                        this.searchText += ' NOT ';
                                         break;
                                 }
                             }
-                            this.search_text += '(' + expressionSearch.qualification[i].field + '=';
+                            this.searchText += '(' + expressionSearch.qualification[i].field + '=';
                         } else {
-                            this.search_text += '(';
+                            this.searchText += '(';
                         }
                         if (expressionSearch.qualification[i].fuzzy === '精确') {
-                            this.search_text += '"' + expressionSearch.qualification[i].input + '")';
+                            this.searchText += '"' + expressionSearch.qualification[i].input + '")';
                         } else {
-                            this.search_text += expressionSearch.qualification[i].input + ')';
+                            this.searchText += expressionSearch.qualification[i].input + ')';
                         }
 
                     }
@@ -73,13 +74,13 @@ export class AboutPage implements OnInit {
                 this.Clisore(JSON.parse(data.search).type);
                 let type = JSON.parse(data.search).type;
                 if (type !== '' && type.text !== '全部') {
-                    this.search_text = '(' + type.text + '=' + JSON.parse(data.search).text + ')';
+                    this.searchText = '(' + type.text + '=' + JSON.parse(data.search).text + ')';
                 } else {
-                    this.search_text = JSON.parse(data.search).text;
+                    this.searchText = JSON.parse(data.search).text;
                 }
             }
-            this.Initsearch_text = this.search_text;
-            this.httpServe(this.search_text + this.dateOfPublish);
+            this.InitSearchText = this.searchText;
+            this.httpServe(this.searchText + this.dateOfPublish);
         });
     }
 
@@ -87,7 +88,7 @@ export class AboutPage implements OnInit {
     }
 
     httpServe(Value) {
-        this.common.serverPost(this.config.getchart + '?q=' + Value, {}, (data) => {
+        this.common.serverPost(this.config.getchart + '?q=' + encodeURIComponent(Value), {}, (data) => {
             this.TrendsEC(data.Data.Trend);
             this.agencyEC(data.Data.Organ);
             this.publicationEC(data.Data.Periodical);
@@ -96,576 +97,239 @@ export class AboutPage implements OnInit {
         });
     }
 
-    TrendsEC(data) {
+    TrendsEC(Value) {
         /*发文趋势*/
-        const ec = echarts as any;
-        const myPostTrends = ec.init(document.getElementById('postTrends'));
-        const postTrendsOption: any = {
-            // backgroundColor: '#0f375f',
-            grid: {
-                top: '5%',
-                left: '2%',
-                right: 0,
-                bottom: '10%'
+        let chart = Highcharts.chart('postTrends', {
+            chart: {
+                type: 'column'
             },
+            credits: {
+                enabled: false
+            },
+            title: {
+                text: ''
+            },
+
             xAxis: {
-                data: data.xaxis,
-                axisLine: {
-                    show: false
-                },
-                axisTick: {
-                    show: false
-                },
-                axisLabel: {
-                    show: true,
-                    textStyle: {
-                        color: '#333333'
-                    }
+                categories: Value.xaxis,
+                crosshair: false
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: ''
                 }
             },
-            yAxis: [{
-                type: 'value',
-                name: '',
-                nameTextStyle: {
-                    color: '#999999'
-                },
-                splitLine: {
-                    show: true
-                },
-                axisTick: {
-                    show: false
-                },
-                axisLine: {
-                    show: false
-                },
-                axisLabel: {
-                    show: true,
-                    textStyle: {
-                        color: '#333333'
-                    }
+            tooltip: {
+                // head + 每个 point + footer 拼接成完整的 table
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    borderWidth: 0
                 }
             },
-                {
-                    type: 'value',
-                    name: '',
-                    nameTextStyle: {
-                        color: '#333333'
-                    },
-                    position: 'right',
-                    splitLine: {
-                        show: false
-                    },
-                    axisTick: {
-                        show: false
-                    },
-                    axisLine: {
-                        show: false
-                    },
-                    axisLabel: {
-                        show: false,
-                        formatter: '{value} %',
-                        textStyle: {
-                            color: '#333333'
-                        }
-                    }
-                },
-                {
-                    type: 'value',
-                    gridIndex: 0,
-                    min: 50,
-                    max: 100,
-                    splitNumber: 8,
-                    splitLine: {
-                        show: false
-                    },
-                    axisLine: {
-                        show: false
-                    },
-                    axisTick: {
-                        show: false
-                    },
-                    axisLabel: {
-                        show: false
-                    },
-                    splitArea: {
-                        show: true,
-                        areaStyle: {
-                            color: ['rgba(250,250,250,0.0)', 'rgba(250,250,250,0.05)']
-                        }
-                    }
-                }
-            ],
             series: [{
-                name: '',
-                type: 'line',
-                yAxisIndex: 1,
-                smooth: true,
-                showAllSymbol: false,
-                symbol: 'circle',
-                symbolSize: 0,
-                itemStyle: {
-                    color: 'rgba(5,140,255, 0.1)'
-                },
-                lineStyle: {
-                    // color: '#058cff'
-                },
-                areaStyle: {
-                    color: 'rgba(5,140,255, 0.2)'
-                },
-                data: data.series
-            },
-                {
-                    name: '',
-                    type: 'bar',
-                    barWidth: 15,
-                    itemStyle: {
-                        normal: {
-                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                                offset: 0,
-                                color: '#29B6F6'
-                            },
-                                {
-                                    offset: 1,
-                                    color: '#29B6F6'
-                                }
-                            ])
-                        }
-                    },
-                    data: data.series
-                }
-            ]
-        };
-        myPostTrends.setOption(postTrendsOption);
+                name: '发文趋势',
+                data: Value.series,
+                type: 'column',
+            }]
+        });
     }
 
-    WriterEc(data) {
-        this.tableData = data;
-        let serve = [];
-        for (let i = 0; i < data.length; i++) {
-            serve.push([data[i].Count, data[i].CitedCount, data[i].Name]);
-        }
+    WriterEc(Value) {
         /*作者分析*/
-        const ec = echarts as any;
-        const myWriter = ec.init(document.getElementById('writer'));
-        const Writeroption = {
-            tooltip: {
-                trigger: 'axis',
-                showDelay: 0,
-                axisPointer: {
-                    show: true,
-                    type: 'cross',
-                    lineStyle: {
-                        type: 'dashed',
-                        width: 1
-                    }
-                },
-                formatter: function (params, ticket, callback) {
-                    let showHtm = '';
-                    for (let i = 0; i < params.length; i++) {
-                        //x轴名称
-                        let name = params[i]['data'][2];
-                        //名称
-                        let text = params[i]['data'][0];
-                        showHtm += name + '--' + text + '<br>';
-                    }
-                    return showHtm;
-                },
-                zlevel: 1
+        this.tableData = Value;
+        let data = [];
+        for (let i = 0; i < Value.length; i++) {
+            data.push({
+                x: Value[i].Count,
+                y: Value[i].Value,
+                name: Value[i].Name
+            });
+        }
+        let chart = Highcharts.chart('writer', {
+            chart: {
+                type: 'scatter',
+                zoomType: 'xy'
             },
-            grid: {
-                top: '10px',
-                right: '10px',
-                bottom: '30px',
-                left: '100px'
+            credits: {
+                enabled: false
             },
-            xAxis: [
-                {
-                    type: 'value',
-                    scale: true
-                }
-            ],
-            yAxis: [
-                {
-                    type: 'value',
-                    scale: true
-                }
-            ],
-            series: [
-                {
-                    name: '',
-                    type: 'scatter',
-                    large: true,
-                    symbolSize: 3,
-                    data: serve,
-                    color: '#2B4F8C',
-                },
-            ]
-        };
-        myWriter.setOption(Writeroption);
-    }
-
-    agencyEC(data) {
-        /*机构分析*/
-        const ec = echarts as any;
-        const myagency = ec.init(document.getElementById('agency'));
-        const agencyOption = {
-            grid: {
-                top: '5%',
-                left: '5%',
-                right: 0,
-                bottom: '10%'
+            title: {
+                text: ''
             },
             xAxis: {
-                data: data.yaxis,
-                axisLine: {
-                    show: false
+                title: {
+                    enabled: true,
+                    text: ''
                 },
-                axisTick: {
-                    show: false
-                },
-                axisLabel: {
-                    show: true,
-                    textStyle: {
-                        color: '#333333'
-                    }
-                }
+                startOnTick: true,
+                endOnTick: true,
+                showLastLabel: true
             },
-            yAxis: [
-                {
-                    type: 'value',
-                    name: '',
-                    nameTextStyle: {
-                        color: '#999999'
-                    },
-                    splitLine: {
-                        show: true
-                    },
-                    axisTick: {
-                        show: false
-                    },
-                    axisLine: {
-                        show: false
-                    },
-                    axisLabel: {
-                        show: true,
-                        textStyle: {
-                            color: '#333333'
-                        }
-                    }
-                },
-                {
-                    type: 'value',
-                    name: '',
-                    nameTextStyle: {
-                        color: '#333333'
-                    },
-                    position: 'right',
-                    splitLine: {
-                        show: false
-                    },
-                    axisTick: {
-                        show: false
-                    },
-                    axisLine: {
-                        show: false
-                    },
-                    axisLabel: {
-                        show: false,
-                        formatter: '{value} %',
-                        textStyle: {
-                            color: '#333333'
-                        }
-                    }
-                },
-                {
-                    type: 'value',
-                    gridIndex: 0,
-                    min: 50,
-                    max: 100,
-                    splitNumber: 8,
-                    splitLine: {
-                        show: false
-                    },
-                    axisLine: {
-                        show: false
-                    },
-                    axisTick: {
-                        show: false
-                    },
-                    axisLabel: {
-                        show: false
-                    },
-                    splitArea: {
-                        show: true,
-                        areaStyle: {
-                            color: ['rgba(250,250,250,0.0)', 'rgba(250,250,250,0.05)']
-                        }
-                    }
-                }
-            ],
-            series: [
-                {
-                    name: '',
-                    type: 'line',
-                    yAxisIndex: 1,
-                    smooth: true,
-                    showAllSymbol: false,
-                    symbol: 'circle',
-                    symbolSize: 0,
-                    itemStyle: {
-                        color: 'rgba(5,140,255, 0.1)'
-                    },
-                    lineStyle: {
-                        // color: '#058cff'
-                    },
-                    areaStyle: {
-                        color: 'rgba(5,140,255, 0.2)'
-                    },
-                    data: data.series
-                },
-                {
-                    name: '',
-                    type: 'bar',
-                    barWidth: 15,
-                    itemStyle: {
-                        normal: {
-                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                                offset: 0,
-                                color: '#29B6F6'
-                            },
-                                {
-                                    offset: 1,
-                                    color: '#29B6F6'
-                                }
-                            ])
-                        }
-                    },
-                    data: data.series
-                }
-            ]
-        };
-        myagency.setOption(agencyOption);
-    }
-
-    publicationEC(data) {
-        const ec = echarts as any;
-        /*期刊发表频次*/
-        const mypublication = ec.init(document.getElementById('publication'));
-        const publicationOption = {
-            tooltip: {
-                trigger: 'axis',
-                axisPointer: {
-                    lineStyle: {
-                        color: '#57617B'
-                    }
+            yAxis: {
+                title: {
+                    text: ''
                 }
             },
             legend: {
-                icon: 'rect',
-                itemWidth: 14,
-                itemHeight: 5,
-                itemGap: 13,
-                //   data: ['期刊', '期刊一', '哈哈哈'],
-                right: '4%',
-                textStyle: {
-                    fontSize: 12,
-                    color: '#999'
-                }
+                enabled: false
             },
-            grid: {
-                top: '20px',
-                left: '3%',
-                right: '3%',
-                bottom: 0,
-                containLabel: true
-            },
-            xAxis: [{
-                type: 'category',
-                boundaryGap: false,
-                axisLine: {
-                    lineStyle: {
-                        color: '#57617B'
-                    }
-                },
-                data: data.yaxis
-            }],
-            yAxis: [{
-                type: 'value',
-                name: '',
-                axisTick: {
-                    show: false
-                },
-                axisLine: {
-                    lineStyle: {
-                        color: '#57617B'
-                    }
-                },
-                axisLabel: {
-                    margin: 10,
-                    textStyle: {
-                        fontSize: 14
-                    }
-                },
-                splitLine: {
-                    lineStyle: {
-                        color: '#57617B'
-                    }
-                }
-            }],
-            series: [{
-                name: '期刊',
-                type: 'line',
-                smooth: true,
-                symbol: 'circle',
-                symbolSize: 5,
-                showSymbol: false,
-                lineStyle: {
-                    normal: {
-                        width: 2
-                    }
-                },
-                itemStyle: {
-                    normal: {
-                        color: 'rgb(137,189,27)',
-                        borderColor: 'rgba(137,189,2,0.27)',
-                        borderWidth: 12
-
-                    }
-                },
-                data: data.series
-            }, {
-                name: '期刊一',
-                type: 'line',
-                smooth: true,
-                symbol: 'circle',
-                symbolSize: 5,
-                showSymbol: false,
-                lineStyle: {
-                    normal: {
-                        width: 1
-                    }
-                },
-                itemStyle: {
-                    normal: {
-                        color: 'rgb(0,136,212)',
-                        borderColor: 'rgba(0,136,212,0.2)',
-                        borderWidth: 12
-
-                    }
-                },
-                data: [120, 110, 125, 145, 122, 165, 122, 220, 182, 191, 134, 150]
-            }, {
-                name: '哈哈哈',
-                type: 'line',
-                smooth: true,
-                symbol: 'circle',
-                symbolSize: 5,
-                showSymbol: false,
-                lineStyle: {
-                    normal: {
-                        width: 2
-                    }
-                },
-                itemStyle: {
-                    normal: {
-
-                        color: 'rgb(219,50,51)',
-                        borderColor: 'rgba(219,50,51,0.2)',
-                        borderWidth: 12
-                    }
-                },
-                data: [220, 182, 125, 145, 122, 191, 134, 150, 120, 110, 165, 122]
-            }]
-        };
-        mypublication.setOption(publicationOption);
-    }
-
-    keyword(data) {
-        /*关键词热度*/
-        const ec = echarts as any;
-        const myChart = ec.init(document.getElementById('keyWords'));
-        let keydata = [];
-        for (let i = 0; i < data.length; i++) {
-            keydata.push({
-                name: data[i]["Name"],
-                value: Math.ceil(data[i]["Value"]),
-            });
-        }
-        const option = {
-            title: {
-                text: '词云展示',
-                x: 'left',
-                textStyle: {
-                    fontSize: 23,
-                    color: 'rgba(255, 255, 255, 0.8)'
-                }
-
-            },
-            grid: {
-                top: '1%',
-                left: '3%',
-                right: '3%',
-                bottom: 0,
-                containLabel: true
-            },
-            tooltip: {
-                show: true
-            },
-            toolbox: {
-                show: true,
-                showTitle: false, // 隐藏默认文字，否则两者位置会重叠
-                tooltip: { // 和 option.tooltip 的配置项相同
-                    show: true,
-                    formatter(param) {
-                        return;
-                        return '<div>' + param.title + '</div>'; // 自定义的 DOM 结构
-                    },
-                    backgroundColor: '#222',
-                    textStyle: {
-                        fontSize: 12,
-                    },
-                    extraCssText: 'box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);' // 自定义的 CSS 样式
-                }
-            },
-            series: [{
-                name: '关键词',
-                type: 'wordCloud',
-                size: ['3%', '100%'],
-                sizeRange: [6, 33],
-                textRotation: [0, 45, 90, -45],
-                rotationRange: [0, 0], //旋转角度区间
-                rotationStep: 90,
-                shape: 'circle',
-                gridSize: 10,
-                textPadding: 0,
-                width: 800,
-                height: 500,
-                autoSize: {
-                    enable: true,
-                    minSize: 6
-                },
-                textStyle: {
-                    normal: {
-                        color() {
-                            return 'rgb(' + [
-                                /*   Math.round(Math.random() * 105) + 150,
-                                   Math.round(Math.random() * 105) + 150,
-                                   Math.round(Math.random() * 105) + 150*/
-                                Math.round(Math.random() * 160),
-                                Math.round(Math.random() * 160),
-                                Math.round(Math.random() * 160)
-                            ].join(',') + ')';
+            plotOptions: {
+                scatter: {
+                    marker: {
+                        radius: 5,
+                        states: {
+                            hover: {
+                                enabled: false,
+                                lineColor: 'rgb(100,100,100)'
+                            }
                         }
                     },
-                    emphasis: {
-                        shadowBlur: 10,
+                    tooltip: {
+                        headerFormat: '{point.name}',
+                        pointFormat: '{point.name}:<br/>[{point.x}, {point.y}]'
                     }
-                },
-                data: keydata,
-            }]
-        };
-        myChart.setOption(option);
+                }
+            },
+            series: [
+                {
+                    name: '',
+                    color: 'rgba(223, 83, 83, .5)',
+                    data: data,
+                    type: 'scatter',
+                }
+            ]
+        });
     }
+
+    agencyEC(Value) {
+        /*机构分析*/
+        console.log(Value)
+        let chart = Highcharts.chart('agency', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: ''
+            },
+            credits: {
+                enabled: false
+            },
+            xAxis: {
+                categories: Value.yaxis
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: ''
+                }
+            },
+            tooltip: {
+                // head + 每个 point + footer 拼接成完整的 table
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    borderWidth: 0
+                }
+            },
+            series: [
+                {
+                    name: '机构分析',
+                    data: Value.series,
+                    type: 'column'
+                }
+            ]
+        });
+    }
+
+    publicationEC(data) {
+        let series = [];
+        for (let i = 0; i < data.yaxis.length; i++) {
+            series.push({
+                name: data.yaxis[i],
+                data: [data.series[i]]
+            });
+        }
+        console.log(series);
+        /*期刊发表频次*/
+        var chart = Highcharts.chart('publication', {
+            chart: {
+                type: 'line'
+            },
+            credits: {
+                enabled: false
+            },
+            title: {
+                text: ''
+            },
+            xAxis: {
+                categories: data.yaxis
+            },
+            yAxis: {
+                title: {
+                    text: ''
+                }
+            },
+            plotOptions: {
+                line: {
+                    dataLabels: {
+                        // 开启数据标签
+                        enabled: true
+                    },
+                    // 关闭鼠标跟踪，对应的提示框、点击事件会失效
+                    enableMouseTracking: false
+                }
+            },
+            series: [
+                {
+                    name: data.yaxis[0],
+                    data: data.series,
+                    type: 'line'
+                }
+            ]
+        });
+
+    }
+
+    keyword(value) {
+        /*词云图*/
+        /*
+        * {name: "Lorem", weight: 1}
+        * */
+        let data = [];
+        for (let i = 0; i < value.length; i++) {
+            data.push({
+                name: value[i].Name, weight: value[i].Count
+            });
+        }
+        Highcharts.chart('keyWords', {
+            credits: {
+                enabled: false
+            },
+            series: [{
+                type: 'wordcloud',
+                data: data
+            }],
+            title: {
+                text: ''
+            }
+        });
+
+    }
+
 
     Clisore(item) {
         /*选择类型*/

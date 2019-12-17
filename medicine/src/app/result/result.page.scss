@@ -516,13 +516,13 @@
                   display: block;
                   border-left: 1px solid #CBCCCC;
                   border-right: 1px solid #CBCCCC;
-                  border-bottom: 1px solid #CBCCCC;
+                  border-top: 1px solid #CBCCCC;
                   margin: 0;
                   background: #fff;
                   width: 54px;
                   position: absolute;
                   left: -1px;
-                  top: 23px;
+                  bottom: 23px;
 
                   li {
                     width: 100%;
@@ -790,6 +790,56 @@
             border: 1px solid #01B76C;
             border-radius: 3px;
             margin: 0 16px 0 0;
+          }
+        }
+      }
+
+      .related {
+        background-color: #ffffff;
+
+        .item_inner {
+          padding: 10px 10px;
+          margin: 0;
+
+          .iconfont {
+            width: 16px;
+            font-size: 16px;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(90deg, #35CAED, #83F379);
+          }
+
+          .title {
+            font-size: 18px;
+            font-family: Microsoft YaHei;
+            font-weight: Bold;
+            color: rgba(51, 51, 51, 1);
+            margin: 0 10px;
+          }
+
+          .subtitle {
+            font-size: 14px;
+            font-family: Helvetica Neue;
+            font-weight: Bold;
+            color: rgba(1, 203, 127, 1);
+          }
+        }
+
+        .ion-row {
+          font-size: 18px;
+          font-family: Microsoft YaHei;
+          line-height: 44px;
+          cursor: pointer;
+          text-align: center;
+          overflow: hidden;
+
+          p {
+            float: left;
+            margin: 0 20px;
+            width: 90px;
+            overflow:hidden; //超出的文本隐藏
+            text-overflow:ellipsis; //溢出用省略号显示
+            white-space:nowrap; //溢出不换行
           }
         }
       }

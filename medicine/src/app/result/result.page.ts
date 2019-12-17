@@ -67,6 +67,8 @@ export class ResultPage implements OnInit {
 
     public export = false;
     public isPC = false;
+    public typeClass: number = 0;
+    public eventLoadFn: any;
 
     constructor(
         public route: Router,
@@ -130,26 +132,37 @@ export class ResultPage implements OnInit {
                 }
             }
             this.Initsearch_text = this.search_text;
-            this.dataServe(this.search_text + this.dateOfPublish);
+            this.dataServe(this.search_text + this.dateOfPublish, undefined);
         });
     }
 
-    dataServe(Value) {
+    dataServe(Value, genre) {
         this.form.entry = [];
         this.form.isChecked = false;
         this.form.num = 0;
-        this.common.serverPost(this.config.search + '?q=' + Value, {}, (data) => {
+        this.common.serverPost(this.config.search + '?q=' + encodeURIComponent(Value), {}, (data) => {
             if (data.Massage === null) {
                 if (data.Data.ListItem.length > 0) {
-                    this.contentDate.ListItem = data.Data.ListItem;
-                    this.search_Num = data.Data.TotalCount;
-                    this.pageNumArry = [];
-                    for (let i = 0; i < Math.ceil(this.search_Num / this.AmountText); i++) {
-                        this.pageNumArry.push(i + 1);
+                    if (genre === undefined) {
+                        this.contentDate.ListItem = data.Data.ListItem;
+                        this.search_Num = data.Data.TotalCount;
+                        this.pageNumArry = [];
+                        for (let i = 0; i < Math.ceil(this.search_Num / this.AmountText); i++) {
+                            this.pageNumArry.push(i + 1);
+                        }
+                        this.contentDate.LeftData = [];
+                        this.contentDate.navRightDate = [];
+                        this.form.entry = [];
+                    } else {
+                        this.contentDate.ListItem = this.contentDate.ListItem.concat(data.Data.ListItem);
+                        this.search_Num = data.Data.TotalCount;
+                        for (let i = 0; i < Math.ceil(this.search_Num / this.AmountText); i++) {
+                            this.pageNumArry.push(i + 1);
+                        }
+                        if (data.Data.ListItem.length < 10) {
+                            genre.target.disabled = true;
+                        }
                     }
-                    this.contentDate.LeftData = [];
-                    this.contentDate.navRightDate = [];
-                    this.form.entry = [];
                     for (let key in data.Data) {
                         // tslint:disable-next-line:max-line-length
                         if (key === 'DBIDCluster' || key === 'CLCShortCluster' || key === 'DateCluster' || key === 'PeriodicalCluster' || key === 'CreatorCluster' || key === 'OrganCluster') {
@@ -161,12 +174,14 @@ export class ResultPage implements OnInit {
                     for (let i = 0; i < this.contentDate.ListItem.length; i++) {
                         this.form.entry.push(false);
                     }
+
                 } else {
                     this.common.presentToast('抱歉系统没有检索到相关记录！', 'top');
                     this.contentDate.ListItem = [];
                     this.contentDate.LeftData = [];
                     this.contentDate.navRightDate = [];
                     this.form.entry = [];
+                    this.search_Num = 0;
                 }
 
             } else {
@@ -176,7 +191,6 @@ export class ResultPage implements OnInit {
                 this.contentDate.navRightDate = [];
                 this.form.entry = [];
             }
-
         });
     }
 
@@ -210,7 +224,7 @@ export class ResultPage implements OnInit {
         } else {
             this.Parametric.AmountText = '';
         }
-        this.dataServe(this.search_text + this.dateOfPublish + this.Parametric.AmountText + this.Parametric.sort);
+        this.dataServe(this.search_text + this.dateOfPublish + this.Parametric.AmountText + this.Parametric.sort, undefined);
         $event.stopPropagation();
     }
 
@@ -221,26 +235,26 @@ export class ResultPage implements OnInit {
     pageGo(num, $event) {
         this.pageNum = num;
         this.pageBoo = false;
-        this.dataServe(this.search_text + this.dateOfPublish + '&p=' + num);
+        this.dataServe(this.search_text + this.dateOfPublish + '&p=' + num, undefined);
         $event.stopPropagation();
     }
 
     leftCut() {
         if (this.pageNum !== 1) {
             this.pageNum--;
-            this.dataServe(this.search_text + this.dateOfPublish + '&p=' + this.pageNum);
+            this.dataServe(this.search_text + this.dateOfPublish + '&p=' + this.pageNum, undefined);
         }
     }
 
     pageNumGO(num) {
         this.pageNum = num;
-        this.dataServe(this.search_text + this.dateOfPublish + '&p=' + this.pageNum + this.Parametric.AmountText + this.Parametric.sort);
+        this.dataServe(this.search_text + this.dateOfPublish + '&p=' + this.pageNum + this.Parametric.AmountText + this.Parametric.sort, undefined);
     }
 
     rightAdd() {
         if (this.pageNum > this.search_Num - 10) {
             this.pageNum++;
-            this.dataServe(this.search_text + this.dateOfPublish + '&p=' + this.pageNum);
+            this.dataServe(this.search_text + this.dateOfPublish + '&p=' + this.pageNum, undefined);
         }
     }
 
@@ -309,7 +323,7 @@ export class ResultPage implements OnInit {
         for (let key in this.searchobj) {
             this.search_text += this.searchobj[key];
         }
-        this.dataServe(this.search_text + this.dateOfPublish + this.Parametric.sort + this.Parametric.AmountText);
+        this.dataServe(this.search_text + this.dateOfPublish + this.Parametric.sort + this.Parametric.AmountText, undefined);
     }
 
     selectionPeriod(num, title) {
@@ -326,7 +340,7 @@ export class ResultPage implements OnInit {
         for (let key in this.searchobj) {
             this.search_text += this.searchobj[key];
         }
-        this.dataServe(this.search_text + this.dateOfPublish + this.Parametric.sort + this.Parametric.AmountText);
+        this.dataServe(this.search_text + this.dateOfPublish + this.Parametric.sort + this.Parametric.AmountText, undefined);
     }
 
     itemCheck(m, index) {
@@ -386,10 +400,10 @@ export class ResultPage implements OnInit {
     sortGo(i) {
         if (Number(i) === 0) {
             this.Parametric['sort'] = '&sort=Date desc';
-            this.dataServe(this.search_text + this.dateOfPublish + this.Parametric.sort + this.Parametric.AmountText);
+            this.dataServe(this.search_text + this.dateOfPublish + this.Parametric.sort + this.Parametric.AmountText, undefined);
         } else {
             this.Parametric['sort'] = '';
-            this.dataServe(this.search_text + this.dateOfPublish + this.Parametric.sort + this.Parametric.AmountText);
+            this.dataServe(this.search_text + this.dateOfPublish + this.Parametric.sort + this.Parametric.AmountText, undefined);
         }
     }
 
@@ -405,27 +419,28 @@ export class ResultPage implements OnInit {
 
     loadData(event) {
         if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
-            if (this.pageNum >= this.search_Num - 10) {
-                event.target.disabled = true;
-                setTimeout(() => {
-                    event.target.disabled = false;
-                }, 2000)
-                return;
+            if (this.pageNum === 0) {
+                ++this.pageNum;
+            } else {
+                this.pageNum = 2;
             }
-            this.dataServe(this.search_text + this.dateOfPublish + '&p=' + this.pageNum);
+            this.dataServe(this.search_text + this.dateOfPublish + '&p=' + this.pageNum, event);
+            event.target.complete();
         } else {
             event.target.disabled = true;
         }
 
+        this.eventLoadFn = event;
     }
 
     doRefresh(event) {
         this.pageNum = 1;
-        this.dataServe(this.search_text + this.dateOfPublish + '&p=' + this.pageNum);
+        this.dataServe(this.search_text + this.dateOfPublish + '&p=' + this.pageNum, undefined);
         setTimeout(() => {
-            console.log('Async operation has ended');
             event.target.complete();
         }, 2000);
+
+        this.eventLoadFn.target.disabled = false;
     }
 
     async presentActionSheet(title) {
@@ -528,11 +543,12 @@ export class ResultPage implements OnInit {
 
     AllExportFn(Class) {
         //批量导出
-        console.log(Class);
         if (this.form.num === 0) {
             this.common.presentToast('没有选中导出记录', top);
             return false;
         }
+        window.location.href = '/api/paper/exportto?artilceIds=' + "sxhlzz201803019" + '&exportType=' + Class
+
     }
 
     ExportFn() {
@@ -632,6 +648,12 @@ export class ResultPage implements OnInit {
         }
 
     }
+
+
+    TabFn(num) {
+        this.typeClass = num;
+    }
+
 
 }
 

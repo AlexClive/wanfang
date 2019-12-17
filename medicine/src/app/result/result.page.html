@@ -24,7 +24,7 @@
                                                      href="javascript:void 0">{{item.text}}</a></li>
                 </ul>
                 <div class="search_input">
-                    <input type="text" [(ngModel)]="search.text">
+                    <input type="text" [(ngModel)]="search.text" (keypress)="($event.keyCode === 13)?advancedSearch():0">
                     <button (click)="advancedSearch()"><i
                             class="iconfont ion-ios-sousuo"></i><span>检索</span></button>
                     <ion-text [routerLink]="['/search']">高级检索</ion-text>
@@ -306,11 +306,14 @@
     <div class="content mobile">
 
         <ul class="tabs">
-            <li class="active">
+            <li [ngClass]="{'active': typeClass === 0}" (click)="TabFn(0)">
                 <ion-text>筛选</ion-text>
             </li>
-            <li>
+            <li [ngClass]="{'active': typeClass === 1}" (click)="TabFn(1)">
                 <ion-text>相关</ion-text>
+            </li>
+            <li (click)="GOAbout()">
+                <ion-text>计量分析</ion-text>
             </li>
         </ul>
         <!--下拉刷新-->
@@ -318,27 +321,49 @@
             <ion-refresher-content>
             </ion-refresher-content>
         </ion-refresher>
-        <div class="item_list" *ngFor="let item of contentDate.ListItem; let i = index">
-            <p class="title">{{i + 1}}.<span>独家</span>{{item.Title}}</p>
-            <p class="name">
-                <ion-text>【{{typeFn(item.DBID)}}】</ion-text>
-                {{Creator(item.Creator)}}
-            </p>
-            <p class="journal">《{{item.Source}}》{{item.Year}}年{{item.Volume}}卷{{item.Issue}}期 {{item.Page}}页
-                <span *ngIf="item.DBID === 'JZ_WF_QK'">被引{{item.CitedCount}}次</span></p>
-            <p class="keyword"><small *ngFor="let citem of item.Included">{{citem}}</small></p>
-            <p class="summary">
-                <ion-text>【摘要】</ion-text>
-                {{AbstractFn(item.Abstract)}}
-            </p>
-            <div class="buttons">
-                <button (click)="presentActionSheet(item.Title)"><i
-                        class="iconfont ion-ios-fenxiang"></i><span>分享</span></button>
-                <button [routerLink]="['/details']"
-                        [queryParams]="{Id:item.Id,DBID:item.DBID}"><i
-                        class="iconfont ion-ios-chakan"></i><span>查看</span></button>
+        <div *ngIf="typeClass === 0">
+            <div class="item_list"
+                 *ngFor="let item of contentDate.ListItem; let i = index">
+                <p class="title" [routerLink]="['/details']"
+                   [queryParams]="{Id:item.Id,DBID:item.DBID}">{{i + 1}}.<span>独家</span>{{item.Title}}</p>
+                <p class="name">
+                    <ion-text>【{{typeFn(item.DBID)}}】</ion-text>
+                    {{Creator(item.Creator)}}
+                </p>
+                <p class="journal">《{{item.Source}}》{{item.Year}}年{{item.Volume}}卷{{item.Issue}}期 {{item.Page}}页
+                    <span *ngIf="item.DBID === 'JZ_WF_QK'">被引{{item.CitedCount}}次</span></p>
+                <p class="keyword"><small *ngFor="let citem of item.Included">{{citem}}</small></p>
+                <p class="summary">
+                    <ion-text>【摘要】</ion-text>
+                    {{AbstractFn(item.Abstract)}}
+                </p>
+                <div class="buttons">
+                    <button (click)="presentActionSheet(item.Title)"><i
+                            class="iconfont ion-ios-fenxiang"></i><span>分享</span></button>
+                    <button [routerLink]="['/details']"
+                            [queryParams]="{Id:item.Id,DBID:item.DBID}"><i
+                            class="iconfont ion-ios-chakan"></i><span>查看</span></button>
+                </div>
             </div>
         </div>
+
+        <div *ngIf="typeClass === 1">
+            <div class="related">
+                <div *ngFor="let item of contentDate.navRightDate;let num = index">
+                    <div class="item_inner">
+                        <ion-label>
+                            <span class="title">{{item.Title}}</span>
+                        </ion-label>
+                    </div>
+                    <div class="ion-row">
+                        <p *ngFor="let Citem of item.ListItem; let i = index">
+                            {{Citem.Text}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!--上拉加载-->
         <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
             <ion-infinite-scroll-content

@@ -28,13 +28,13 @@ export class Tab1Page {
         public common: CommonService,
         public config: ConfigService
     ) {
-        console.log(config);
         console.log('我进入tab1页面了');
-        console.log(this.config.doLogin);
-        this.common.serveGet(this.config.doLogin, (data) => {
-            //console.log(data);
+        this.common.serveGet('http://login.test.med.wanfangdata.com.cn/', (data) => {
+            console.log(data);
         });
-        console.log(domainconfig);
+        this.common.serveGet('http://local.med.wanfangdata.com.cn:32542/api/user/get', (data) => {
+            console.log(data);
+        });
     }
 
     login() {
