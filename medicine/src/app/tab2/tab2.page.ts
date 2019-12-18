@@ -137,10 +137,9 @@ export class Tab2Page {
             fuzzy: ['模糊', '精确'],
         });
         this.conditionISHide.push({
-            logic: '与',
-            field: '全部字段',
-            input: '',
-            fuzzy: '模糊'
+            logic: false,
+            field: false,
+            fuzzy: false
         });
         this.consequence.qualification.push({
             logic: '与',

@@ -42,6 +42,13 @@ export class DetailsPage implements OnInit {
     public Id = '';
     public dbid = '';
 
+    public references: any = {
+        id: '',
+        text: ''
+    };
+
+    public export = false;
+
     constructor(
         public activatedRoute: ActivatedRoute,
         public config: ConfigService,
@@ -126,7 +133,6 @@ export class DetailsPage implements OnInit {
         return StrWidth + '%';
     }
 
-
     WidthFn1(item, index, event) {
         let StrWidth = 0;
         let num = 0;
@@ -141,8 +147,13 @@ export class DetailsPage implements OnInit {
             }
             StrWidth = Math.floor(this.literature.CiteYearsShort.date[index] / num * 100);
         }
-
-        return StrWidth + '%';
+        let Width: any;
+        if (item > 1) {
+            Width = StrWidth <= 10 ? 12 : StrWidth - item;
+        } else {
+            Width = StrWidth <= 10 ? 12 : StrWidth;
+        }
+        return Width + '%';
     }
 
     download() {
@@ -169,6 +180,20 @@ export class DetailsPage implements OnInit {
             }
         }
         return text;
+    }
+
+    ExportFn(id, text) {
+        this.references.id = id;
+        this.references.text = text;
+        this.export = true;
+    }
+
+    expressFn(Class) {
+        window.open('/api/paper/exportto?artilceIds=' + this.references.id + '&exportType=' + Class);
+    }
+
+    closeExport() {
+        this.export = false;
     }
 
 }

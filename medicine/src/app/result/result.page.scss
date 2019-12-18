@@ -1,4 +1,4 @@
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 1200px) {
   ion-content {
     min-width: 1200px;
 
@@ -80,6 +80,7 @@
             padding: 0;
             height: 56px;
             margin: -16px 0 0 0;
+            position: relative;
 
             input {
               width: 709px;
@@ -125,6 +126,38 @@
               margin: 0 0 0 10px;
               cursor: pointer;
             }
+
+            .associate {
+              position: absolute;
+              top: 56px;
+              left: -10px;
+              background: #ffffff;
+              z-index: 99;
+              height: auto;
+              width: 710px;
+              border-left: 2px solid transparent !important;
+              border-right: 2px solid transparent !important;
+              border-bottom: 2px solid transparent !important;
+              -webkit-border-image: -webkit-gradient(linear, right top, left top, from(#35caed), to(#83f379)) !important;
+              -webkit-border-image: linear-gradient(to left, #35caed, #83f379) !important;
+              -o-border-image: linear-gradient(to left, #35caed, #83f379) !important;
+              border-image: -webkit-gradient(linear, right top, left top, from(#35caed), to(#83f379)) !important;
+              border-image: linear-gradient(to left, #35caed, #83f379) !important;
+              border-image-slice: 2 !important;
+
+              li {
+                width: 100%;
+                float: unset;
+                cursor: pointer;
+                padding: 0 20px;
+                height: 30px;
+                line-height: 30px;
+              }
+
+              li:hover{
+                background: #eeeeee;
+              }
+            }
           }
         }
       }
@@ -137,7 +170,7 @@
         background: #fff;
 
         .bg {
-          padding: 5px;
+          padding: 5px 5px 50px 5px;
 
           .left-card-item, .right-card-item {
             padding: 5px;
@@ -602,7 +635,6 @@
         z-index: 100;
 
         .title {
-
           background-color: #68c598;
           border-radius: 2px 2px 0 0;
           color: #fff;
@@ -676,7 +708,716 @@
 
   }
 }
+@media screen and (min-width: 1000px)and (max-width:1200px) {
+  ion-content {
+    min-width: 1000px;
 
+    .header_item {
+      position: relative;
+
+      .header_item_bg {
+        width: 100%;
+        height: 386px;
+        background: url("../../assets/image/header/bg.jpg") no-repeat center;
+        background-size: 100% 100%;
+
+        .logo_item {
+          width: 1000px;
+          margin: 0 auto;
+          overflow: hidden;
+
+          .logo {
+            float: left;
+            margin: 43px 0 0 0;
+            width: 247px;
+            height: 58px;
+            background: url("../../assets/image/header/logo.png");
+          }
+
+          .sign {
+            float: right;
+
+            .btn {
+              margin: 60px 0 0 15px;
+              width: 85px !important;
+              height: 35px !important;
+              background-color: transparent;
+              border: 1px solid #fff;
+              border-radius: 50px;
+              font-size: 16px;
+              color: #fff;
+            }
+
+            .login {
+              font-family: Microsoft YaHei Bold;
+              color: rgba(1, 183, 108, 1);
+              background: #fff;
+            }
+          }
+        }
+
+        .search_item {
+          width: 930px;
+          margin: 90px auto 0 auto;
+
+          ul {
+            height: 31px;
+            margin: 0 0 16px 10px;
+            padding: 0;
+
+            li {
+              width: 83px;
+              list-style: none;
+              float: left;
+              height: 31px;
+
+              a {
+                display: inline-block;
+                height: 100%;
+                color: #fff;
+                text-decoration: none;
+              }
+
+              a.active {
+                font-weight: bolder;
+                border-bottom: 4px solid #01CB7F;
+              }
+
+            }
+          }
+
+          .search_input {
+            padding: 0;
+            height: 56px;
+            margin: -16px 0 0 0;
+            position: relative;
+
+            input {
+              width: 709px;
+              padding: 0 20px;
+              height: 40px;
+              opacity: 0.77;
+              background: rgba(255, 255, 255, 0.77);
+              border: 1px solid #fff;
+            }
+
+            button {
+              width: 100px;
+              height: 40px;
+              opacity: 1;
+              border-radius: 5px;
+              font-size: 16px;
+              color: #01B76C;
+              background: #FFFFFF;
+              margin: 0 0 0 10px;
+
+              i {
+                font-size: 21px;
+              }
+
+              span {
+                vertical-align: baseline;
+                display: inline-block;
+                margin: 0 0 0 8px;
+              }
+            }
+
+            button:hover {
+              background: #00c574;
+              color: #fff;
+            }
+
+            ion-text {
+              text-decoration: none;
+              font-size: 16px;
+              font-family: Microsoft YaHei Regular;
+              color: rgba(247, 255, 250, 1);
+              line-height: 72px;
+              margin: 0 0 0 10px;
+              cursor: pointer;
+            }
+
+            .associate {
+              position: absolute;
+              top: 56px;
+              left: -10px;
+              background: #ffffff;
+              z-index: 99;
+              height: auto;
+              width: 710px;
+              border-left: 2px solid transparent !important;
+              border-right: 2px solid transparent !important;
+              border-bottom: 2px solid transparent !important;
+              -webkit-border-image: -webkit-gradient(linear, right top, left top, from(#35caed), to(#83f379)) !important;
+              -webkit-border-image: linear-gradient(to left, #35caed, #83f379) !important;
+              -o-border-image: linear-gradient(to left, #35caed, #83f379) !important;
+              border-image: -webkit-gradient(linear, right top, left top, from(#35caed), to(#83f379)) !important;
+              border-image: linear-gradient(to left, #35caed, #83f379) !important;
+              border-image-slice: 2 !important;
+
+              li {
+                width: 100%;
+                float: unset;
+                cursor: pointer;
+                padding: 0 20px;
+                height: 30px;
+                line-height: 30px;
+              }
+
+              li:hover{
+                background: #eeeeee;
+              }
+            }
+          }
+        }
+      }
+
+      ion-card {
+        width: 1000px;
+        margin: 0 auto;
+        position: relative;
+        bottom: 62px;
+        background: #fff;
+
+        .bg {
+          padding: 5px 5px 50px 5px;
+
+          .left-card-item, .right-card-item {
+            padding: 5px;
+            background: #F3F8FC;
+
+            h5 {
+              font-size: 14px;
+              font-family: Microsoft YaHei;
+              font-weight: bold;
+              color: rgba(51, 51, 51, 1);
+              margin: 0;
+              padding: 12px 5px;
+            }
+
+            ul {
+              margin: 0;
+              padding: 0;
+
+              li {
+                list-style: none;
+                padding: 14px 10px;
+                background: #fff;
+                cursor: pointer;
+                border-top: 1px solid #fff;
+                border-bottom: 1px solid #fff;
+
+                input {
+                  width: 39px;
+                  height: 20px;
+                  opacity: 1;
+                  border: 1px solid rgba(204, 204, 204, 1);
+                  border-radius: 3px 3px 3px 3px;
+                  text-align: center;
+                  font-size: 12px;
+                }
+
+                ion-text {
+                  padding: 0 5px;
+                }
+
+                button {
+                  width: 39px;
+                  height: 20px;
+                  opacity: 1;
+                  font-size: 12px;
+                  margin: 0 0 0 10px;
+                  border: 1px solid rgba(204, 204, 204, 1);
+                  border-radius: 3px 3px 3px 3px;
+                  background: #ffffff;
+                  color: #000000;
+                }
+
+                span {
+                  font-size: 14px;
+                  font-family: Microsoft YaHei Regular;
+                  color: rgba(102, 102, 102, 1);
+                }
+
+                em {
+                  font-style: normal;
+                  float: right;
+                }
+              }
+
+              .active {
+                color: #01B76C;
+                background: #E5F8EB;
+                border-top: 1px solid #CCF1DB;
+                border-bottom: 1px solid #CCF1DB;
+
+                span {
+                  color: #01B76C;
+                }
+              }
+            }
+          }
+
+          .col-right {
+            width: 143px;
+
+            .right-card-item {
+
+
+              h5 {
+                padding: 7px 5px;
+              }
+
+              ul {
+                li {
+                  background: transparent;
+                  padding: 7px 5px;
+                  border-top: 1px solid #F3F8FC;
+                  border-bottom: 1px solid #F3F8FC;
+
+                  em {
+                    float: unset;
+                    margin: 0 10px;
+                  }
+                }
+              }
+            }
+          }
+
+          .content {
+            .item-header {
+              ion-text {
+                font-size: 14px;
+                font-family: Microsoft YaHei Regular;
+                color: #666666;
+                margin: 0 12px 0 0;
+              }
+
+              .search_text {
+                max-width: 505px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+              }
+
+              .link {
+                font-size: 14px;
+                color: #01B76C;
+                cursor: pointer;
+              }
+            }
+
+            .item-secondary {
+              margin: 10px 0 10px 16px;
+              border-bottom: 1px solid #ccc;
+              padding: 0 0 15px 0;
+
+              ion-text {
+                font-size: 14px;
+                color: #333333;
+              }
+
+              ion-checkbox {
+                width: 14px;
+                height: 14px;
+                margin: 0 0 0 0;
+                vertical-align: middle;
+              }
+
+              button {
+                padding: 6px 9px;
+                background: #fff;
+                color: #01B76C;
+                border: 1px solid #01B76C;
+                border-radius: 3px;
+                margin: 0 16px 0 0;
+              }
+
+              .mark {
+                margin: 0 15px;
+              }
+
+              .AllExport {
+                display: inline-block;
+                position: relative;
+
+                ul {
+                  display: none;
+                  border-left: 1px solid #01B76C;
+                  border-right: 1px solid #01B76C;
+                  border-bottom: 1px solid #01B76C;
+                  border-radius: 3px;
+                  padding: 0;
+                  margin: 0;
+                  position: absolute;
+                  top: 25px;
+                  left: 0;
+                  background: #ffffff;
+                  z-index: 200;
+
+                  li {
+                    text-align: center;
+                    list-style: none;
+                    padding: 6px 0;
+                    margin: 0;
+                    cursor: pointer;
+                    font-size: 12px;
+                  }
+                }
+              }
+
+              .AllExport:hover ul {
+                display: block;
+              }
+
+              .item-secondary-right {
+                float: right;
+
+                margin: 0 15px 0 0;
+
+                div {
+                  display: inline-block;
+                  border: 1px solid #CCCCCC;
+                  padding: 6px 10px;
+                  margin: 0 0 15px 0;
+                  position: relative;
+
+                  ion-text {
+                    margin: 0 15px 0 0;
+                  }
+
+                  i {
+                    margin: 0 0 0 -6px;
+                  }
+
+                  ul {
+                    padding: 0;
+                    margin: 0;
+                    position: absolute;
+                    top: 31px;
+                    left: -1px;
+                    background: #fff;
+                    border-left: 1px solid #CCCCCC;
+                    border-right: 1px solid #CCCCCC;
+                    border-bottom: 1px solid #CCCCCC;
+                    z-index: 10;
+
+                    li {
+                      padding: 0;
+                      margin: 0;
+                      list-style: none;
+                      width: 75px;
+                      height: 24px;
+                      text-indent: 0.8em;
+                      cursor: pointer;
+                    }
+                  }
+                }
+
+                button {
+                  color: #000;
+                  border: 1px solid #CCCCCC;
+                  border-radius: unset;
+                }
+
+                button.active {
+                  background: #fff;
+                  color: #01B76C;
+                  border: 1px solid #01B76C;
+                }
+              }
+
+            }
+
+            .item-context {
+              display: flex;
+
+              .checkbox {
+                width: 28px;
+              }
+
+              .item-text {
+                flex: 1;
+                position: relative;
+
+                p {
+                  margin: 0 0 18px 0;
+                }
+
+                .title {
+                  font-size: 16px;
+                  color: #01B76C;
+                  font-family: Microsoft YaHei;
+                  font-weight: bold;
+                  cursor: pointer;
+                }
+
+                .subtitle {
+                  font-size: 14px;
+                  color: #999999;
+                  font-family: Microsoft YaHei Regular;
+                }
+
+                .journal {
+                  font-size: 14px;
+                  color: #999999;
+                  font-family: Microsoft YaHei Regular;
+
+                  span {
+                    color: #01B76C;
+                  }
+                }
+
+                .summary {
+                  line-height: 30px;
+                  color: #999999;
+
+                  span {
+                    color: #000;
+                    font-weight: bold;
+                  }
+                }
+
+                .keyword {
+                  color: #000;
+                  padding: 10px 0 0 0;
+                  margin: 0;
+                }
+
+                .buttons {
+                  position: absolute;
+                  right: 0;
+                  bottom: -8px;
+                  display: flex;
+
+                  .risk {
+                    position: relative;
+
+                    ul {
+                      display: none;
+                      z-index: 50;
+                      background: #ffffff;
+                      position: absolute;
+                      margin: 0;
+                      padding: 6px 15px;
+                      color: #01B76C;
+                      border: 1px solid #01B76C;
+                      border-radius: 3px;
+
+                      li {
+                        text-align: center;
+                        list-style: none;
+                        padding: 6px 0 0 0;
+                        cursor: pointer;
+                      }
+                    }
+                  }
+
+                  .risk:hover ul {
+                    display: block;
+                  }
+
+                  span {
+                    padding: 0 10px;
+                  }
+                }
+
+              }
+            }
+
+
+            .pagination {
+              float: right;
+              display: flex;
+              font-family: Microsoft YaHei Regular;
+              font-size: 12px;
+              line-height: 25px;
+
+              ion-text {
+                color: #333333;
+                margin: 0 5px;
+              }
+
+              .pageNum {
+                border: 1px solid #CBCCCC;
+                width: 54px;
+                height: 25px;
+                line-height: 25px;
+                text-align: center;
+                cursor: pointer;
+                position: relative;
+
+                span {
+                  margin: 0 10px 0 0;
+                }
+
+                i {
+                  vertical-align: sub;
+                }
+
+                ul {
+                  display: block;
+                  border-left: 1px solid #CBCCCC;
+                  border-right: 1px solid #CBCCCC;
+                  border-top: 1px solid #CBCCCC;
+                  margin: 0;
+                  background: #fff;
+                  width: 54px;
+                  position: absolute;
+                  left: -1px;
+                  bottom: 23px;
+
+                  li {
+                    width: 100%;
+                    list-style: none;
+                    height: 25px;
+                    line-height: 25px;
+                    text-indent: -2em;
+                  }
+                }
+              }
+
+              ul {
+                display: flex;
+                margin: 3px 10px;
+                padding: 0;
+
+                li {
+                  list-style: none;
+                  width: 18px;
+                  height: 18px;
+                  line-height: 18px;
+                  text-align: center;
+                  cursor: pointer;
+                }
+
+                .leftBtn {
+                  transform: rotate(180deg);
+                  -ms-transform: rotate(180deg);
+                  -webkit-transform: rotate(180deg);
+                  -o-transform: rotate(180deg);
+                  -moz-transform: rotate(180deg)
+                }
+
+                .active {
+                  color: #fff;
+                  background: #BDC0C6;
+                }
+              }
+            }
+          }
+
+          .sky {
+            i.skyText {
+              margin: 50px 0 0 0;
+              color: #cccccc;
+              text-align: center;
+              display: block;
+              font-size: 60px;
+            }
+
+            p {
+              color: #cccccc;
+              text-align: center;
+              font-size: 16px;
+            }
+          }
+        }
+
+      }
+    }
+
+    .mode {
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: rgba(0, 0, 0, .15);
+
+      .export {
+        position: fixed;
+        top: 30%;
+        left: 35%;
+        width: 632px;
+        height: 233px;
+        background: #ffffff;
+        z-index: 100;
+
+        .title {
+          background-color: #68c598;
+          border-radius: 2px 2px 0 0;
+          color: #fff;
+          padding: 10px;
+
+          svg {
+            float: right;
+            cursor: pointer;
+          }
+        }
+
+        .content {
+          border: 1px #68c598 solid;
+          border-top: 0;
+          border-radius: 0 0 2px 2px;
+          background-color: #fff;
+          overflow: hidden;
+          font-size: 14px;
+
+          P {
+            padding: 10px 20px;
+          }
+
+          ion-item {
+            font-size: 14px;
+            padding: 0 0 10px 0;
+            margin: 0;
+            border: none !important;
+
+            ion-label {
+              font-weight: bold;
+            }
+
+            ion-textarea {
+              border: 1px solid #0e97be;
+              padding: 5px 10px;
+            }
+          }
+
+          .buts {
+            margin: 10px auto;
+            padding: 0 20px;
+            overflow: hidden;
+
+            ion-label {
+              font-weight: bold;
+              float: left;
+            }
+
+            a {
+              float: left;
+              border: 1px #68c598 solid;
+              color: #3ab176;
+              border-radius: 2px;
+              padding: 0 15px 0 15px;
+              height: 26px;
+              line-height: 26px;
+              margin: 0 15px 0 0;
+              text-decoration: none;
+            }
+
+            a:hover {
+              color: #fff;
+              background-color: #68c598;
+              text-decoration: none;
+            }
+          }
+        }
+      }
+    }
+
+  }
+}
 @media screen and (max-width: 1000px) {
   ion-content {
     background-color: #EFF7FF !important;

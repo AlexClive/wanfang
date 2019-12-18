@@ -123,10 +123,9 @@ export class SearchPage implements OnInit {
             fuzzy: ['模糊', '精确'],
         });
         this.conditionISHide.push({
-            logic: '与',
-            field: '全部字段',
-            input: '',
-            fuzzy: '模糊'
+            logic: false,
+            field: false,
+            fuzzy: false
         });
         this.consequence.qualification.push({
             logic: '与',
@@ -247,7 +246,6 @@ export class SearchPage implements OnInit {
 
     focusFn(index) {
         // 获取焦点
-        console.log(index)
         if (this.conditionISHide.length - 1 === index && index < 4) {
             this.addField();
         }

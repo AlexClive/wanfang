@@ -6,6 +6,8 @@ import {ConfigService} from "../service/config.service";
 import {IonInfiniteScroll} from '@ionic/angular';
 import {ActionSheetController} from '@ionic/angular';
 
+declare var domainconfig;
+
 @Component({
     selector: 'app-result',
     templateUrl: './result.page.html',
@@ -69,6 +71,13 @@ export class ResultPage implements OnInit {
     public isPC = false;
     public typeClass: number = 0;
     public eventLoadFn: any;
+    public references: any = {
+        id: '',
+        text: ''
+    };
+    public ISLogin = true;
+
+    public IsHidelenovo = false;
 
     constructor(
         public route: Router,
@@ -78,6 +87,13 @@ export class ResultPage implements OnInit {
         public config: ConfigService,
         public actionSheetController: ActionSheetController
     ) {
+        this.common.serveGet(this.config.doLogin, (data) => {
+            console.log(data);
+            if (data.IsLogin !== false) {
+                this.ISLogin = false;
+            }
+        });
+
         if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
             this.isPC = true;
         } else {
@@ -136,6 +152,14 @@ export class ResultPage implements OnInit {
         });
     }
 
+    login() {
+        window.location.href = domainconfig.domain.login + 'Account/LogOn?ReturnUrl=' + window.location.href;
+    }
+
+    registered() {
+        window.location.href = domainconfig.domain.login + 'Account/Register?ReturnUrl=' + window.location.href;
+    }
+
     dataServe(Value, genre) {
         this.form.entry = [];
         this.form.isChecked = false;
@@ -176,7 +200,6 @@ export class ResultPage implements OnInit {
                     }
 
                 } else {
-                    this.common.presentToast('抱歉系统没有检索到相关记录！', 'top');
                     this.contentDate.ListItem = [];
                     this.contentDate.LeftData = [];
                     this.contentDate.navRightDate = [];
@@ -185,7 +208,6 @@ export class ResultPage implements OnInit {
                 }
 
             } else {
-                this.common.presentToast(data.Massage, 'top');
                 this.contentDate.ListItem = [];
                 this.contentDate.LeftData = [];
                 this.contentDate.navRightDate = [];
@@ -252,7 +274,7 @@ export class ResultPage implements OnInit {
     }
 
     rightAdd() {
-        if (this.pageNum > this.search_Num - 10) {
+        if (this.pageNum < Math.ceil(this.search_Num / 10)) {
             this.pageNum++;
             this.dataServe(this.search_text + this.dateOfPublish + '&p=' + this.pageNum, undefined);
         }
@@ -547,12 +569,25 @@ export class ResultPage implements OnInit {
             this.common.presentToast('没有选中导出记录', top);
             return false;
         }
-        window.location.href = '/api/paper/exportto?artilceIds=' + "sxhlzz201803019" + '&exportType=' + Class
+        let artilceIds: string = '';
+        for (let i = 0; i < this.form.entry.length; i++) {
+            if (this.form.entry[i] === true) {
+                artilceIds += this.contentDate.ListItem[i]['Id'] + ',';
+            }
+        }
+        artilceIds = artilceIds.substring(0, artilceIds.length - 1);
+        window.open('/api/paper/exportto?artilceIds=' + artilceIds + '&exportType=' + Class);
 
     }
 
-    ExportFn() {
+    ExportFn(id, text) {
+        this.references.id = id;
+        this.references.text = text;
         this.export = true;
+    }
+
+    expressFn(Class) {
+        window.open('/api/paper/exportto?artilceIds=' + this.references.id + '&exportType=' + Class);
     }
 
     closeExport() {
@@ -654,6 +689,17 @@ export class ResultPage implements OnInit {
         this.typeClass = num;
     }
 
+
+    lenovoFn() {
+        if (this.search.text !== '') {
+            this.IsHidelenovo = true;
+        }
+    }
+
+    lenovoTextFn(text) {
+        this.search.text = text;
+        this.IsHidelenovo = false;
+    }
 
 }
 

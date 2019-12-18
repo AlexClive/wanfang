@@ -1,0 +1,11 @@
+{
+  "/": {
+    "target": "http://precisionarticle.test.med.wanfangdata.com.cn/",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/": ""
+    }
+  }
+}

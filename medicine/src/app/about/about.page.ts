@@ -211,7 +211,6 @@ export class AboutPage implements OnInit {
 
     agencyEC(Value) {
         /*机构分析*/
-        console.log(Value)
         let chart = Highcharts.chart('agency', {
             chart: {
                 type: 'column'
@@ -263,7 +262,6 @@ export class AboutPage implements OnInit {
                 data: [data.series[i]]
             });
         }
-        console.log(series);
         /*期刊发表频次*/
         var chart = Highcharts.chart('publication', {
             chart: {

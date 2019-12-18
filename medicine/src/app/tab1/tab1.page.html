@@ -11,7 +11,7 @@
         <div class="header_item_bg">
             <div class="logo_item pc">
                 <div class="logo"></div>
-                <div class="sign">
+                <div class="sign" *ngIf="ISLogin">
                     <button class="btn login" (click)="login()">登录</button>
                     <button class="btn registered" (click)="enrol()">注册</button>
                 </div>
@@ -24,7 +24,13 @@
                 </ul>
                 <div class="search_input">
                     <input type="text" [(ngModel)]="search.text"
-                           (keypress)="($event.keyCode === 13)?advancedSearch():0">
+                           (keypress)="($event.keyCode === 13)?advancedSearch():0"
+                    (keyup)="lenovoFn()">
+                    <ul class="associate" *ngIf="IsHidelenovo">
+                        <li (click)="lenovoTextFn('肿瘤')">肿瘤</li>
+                        <li (click)="lenovoTextFn('顶顶顶')">顶顶顶</li>
+                        <li (click)="lenovoTextFn('踩踩踩踩踩踩')">踩踩踩踩踩踩</li>
+                    </ul>
                     <button (click)="advancedSearch()" class="pc"><i
                             class="iconfont ion-ios-sousuo"></i><span>检索</span></button>
                     <ion-text [routerLink]="['/search']" class="pc">高级检索</ion-text>

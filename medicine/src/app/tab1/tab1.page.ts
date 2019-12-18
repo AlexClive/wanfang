@@ -22,18 +22,19 @@ export class Tab1Page {
         text: '',
         type: '',
     };
+    public ISLogin = true;
+    public IsHidelenovo = false;
 
     constructor(
         public navCtrl: NavController,
         public common: CommonService,
         public config: ConfigService
     ) {
-        console.log('我进入tab1页面了');
-        this.common.serveGet('http://login.test.med.wanfangdata.com.cn/', (data) => {
+        this.common.serveGet(this.config.doLogin, (data) => {
             console.log(data);
-        });
-        this.common.serveGet('http://local.med.wanfangdata.com.cn:32542/api/user/get', (data) => {
-            console.log(data);
+            if (data.IsLogin !== false) {
+                this.ISLogin = false;
+            }
         });
     }
 
@@ -43,10 +44,6 @@ export class Tab1Page {
 
     enrol() {
         window.location.href = domainconfig.domain.login + 'Account/Register?ReturnUrl=' + window.location.href;
-    }
-
-    GoSearch() {
-        this.navCtrl.navigateBack('/about',);
     }
 
     Clisore(item) {
@@ -74,6 +71,17 @@ export class Tab1Page {
         }
         this.common.presentToast('请输入搜索关键词', 'top').then(r => {
         });
+    }
+
+    lenovoFn() {
+        if (this.search.text !== '') {
+            this.IsHidelenovo = true;
+        }
+    }
+
+    lenovoTextFn(text) {
+        this.search.text = text;
+        this.IsHidelenovo = false;
     }
 
     Goresult(item) {

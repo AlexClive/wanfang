@@ -1,9 +1,9 @@
 <div class="pc">
   <div class="header_item_bg">
     <div class="logo_item">
-      <div class="logo"></div>
-      <div class="sign">
-        <button class="btn login">登录</button>
+      <div class="logo" (click)="GoHome()"></div>
+      <div class="sign" *ngIf="ISLogin">
+        <button class="btn login" (click)="login()">登录</button>
         <button class="btn registered" (click)="registered()">注册</button>
       </div>
     </div>

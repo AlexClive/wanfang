@@ -5,6 +5,9 @@
 
     .breadcrumb {
       padding: 14px 0 0 0;
+      ion-text{
+        cursor: pointer;
+      }
     }
 
     ion-card {
@@ -146,7 +149,6 @@
 
             .table {
               flex: 1;
-              padding: 30px 50px 0 0;
 
               table {
                 width: 100%;

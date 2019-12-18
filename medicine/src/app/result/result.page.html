@@ -12,9 +12,9 @@
         <div class="header_item_bg pc">
             <div class="logo_item">
                 <div class="logo" [routerLink]="['/tabs/tab1']"></div>
-                <div class="sign">
-                    <button class="btn login">登录</button>
-                    <button class="btn registered">注册</button>
+                <div class="sign" *ngIf="ISLogin">
+                    <button class="btn login" (click)="login()">登录</button>
+                    <button class="btn registered" (click)="registered()">注册</button>
                 </div>
             </div>
             <div class="search_item">
@@ -24,7 +24,14 @@
                                                      href="javascript:void 0">{{item.text}}</a></li>
                 </ul>
                 <div class="search_input">
-                    <input type="text" [(ngModel)]="search.text" (keypress)="($event.keyCode === 13)?advancedSearch():0">
+                    <input type="text" [(ngModel)]="search.text"
+                           (keypress)="($event.keyCode === 13)?advancedSearch():0"
+                           (keyup)="lenovoFn()">
+                    <ul class="associate" *ngIf="IsHidelenovo">
+                        <li (click)="lenovoTextFn('肿瘤')">肿瘤</li>
+                        <li (click)="lenovoTextFn('顶顶顶')">顶顶顶</li>
+                        <li (click)="lenovoTextFn('踩踩踩踩踩踩')">踩踩踩踩踩踩</li>
+                    </ul>
                     <button (click)="advancedSearch()"><i
                             class="iconfont ion-ios-sousuo"></i><span>检索</span></button>
                     <ion-text [routerLink]="['/search']">高级检索</ion-text>
@@ -135,8 +142,9 @@
                                             </ul>
                                         </div>
 
-                                        <button (click)="ExportFn()"><i
-                                                class="iconfont ion-ios-icon-"></i><span>导出</span></button>
+                                        <button (click)="ExportFn(item.Id,Creator(item.Creator)+item.Source+item.Year+item.Volume)">
+                                            <i
+                                                    class="iconfont ion-ios-icon-"></i><span>导出</span></button>
                                     </div>
                                 </div>
                             </div>
@@ -388,15 +396,14 @@
                 <p>您可以直接复制参考文献内容，或按指定格式导出。</p>
                 <ion-item>
                     <ion-label>参考文献：</ion-label>
-                    <ion-textarea
-                            value="[1]陈万青,郑荣寿,张思维,曾红梅,左婷婷,贾漫漫,夏昌发,邹小农,赫捷.2012年中国恶性肿瘤发病和死亡分析[J].中国肿瘤,2016,25(1):1-8."></ion-textarea>
+                    <ion-textarea [(ngModel)]="references.text"></ion-textarea>
                 </ion-item>
                 <div class="buts">
                     <ion-label>指定格式：</ion-label>
-                    <a href="javascript:void 0">NoteExpress</a>
-                    <a href="javascript:void 0">EndNote</a>
-                    <a href="javascript:void 0">RefWorks</a>
-                    <a href="javascript:void 0">NoteFirst</a>
+                    <a href="javascript:void 0" (click)="expressFn('NoteExpress')">NoteExpress</a>
+                    <a href="javascript:void 0" (click)="expressFn('EndNote')">EndNote</a>
+                    <a href="javascript:void 0" (click)="expressFn('RefWorks')">RefWorks</a>
+                    <a href="javascript:void 0" (click)="expressFn('NoteFirst')">NoteFirst</a>
                 </div>
             </div>
         </div>

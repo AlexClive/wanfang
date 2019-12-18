@@ -34,8 +34,6 @@ export class CommonService {
         this.http.get(api).subscribe(respones => {
             callback(respones);
         }, error => {
-            this.presentToast(error.message, 'bottom').then(r => {
-            });
         });
     }
 
@@ -48,8 +46,6 @@ export class CommonService {
         this.http.post(api, data, httpOptions).subscribe(respones => {
             callback(respones);
         }, error => {
-            this.presentToast(error.message, 'bottom').then(r => {
-            });
         });
     }
 

@@ -1,4 +1,10 @@
 import {Component, OnInit} from '@angular/core';
+import {NavController} from '@ionic/angular';
+import {ActivatedRoute, Router} from '@angular/router';
+import {CommonService} from '../../service/common.service';
+import {ConfigService} from '../../service/config.service';
+
+declare var domainconfig;
 
 @Component({
     selector: 'app-header-t',
@@ -7,17 +13,39 @@ import {Component, OnInit} from '@angular/core';
 })
 export class HeaderTComponent implements OnInit {
 
-    constructor() {
+    public ISLogin = true;
+
+    constructor(
+        public route: Router,
+        public activatedRoute: ActivatedRoute,
+        public navCtrl: NavController,
+        public common: CommonService,
+        public config: ConfigService,
+    ) {
+        this.common.serveGet(this.config.doLogin, (data) => {
+            console.log(data);
+            if (data.IsLogin !== false) {
+                this.ISLogin = false;
+            }
+        });
     }
 
     ngOnInit() {
     }
 
+    login() {
+        window.location.href = domainconfig.domain.login + 'Account/LogOn?ReturnUrl=' + window.location.href;
+    }
+
     registered() {
-        window.location.href = 'http://login.med.wanfangdata.com.cn/Account/Register';
+        window.location.href = domainconfig.domain.login + 'Account/Register?ReturnUrl=' + window.location.href;
     }
 
     goBack() {
         history.back();
+    }
+
+    GoHome() {
+        window.location.href = '/';
     }
 }
