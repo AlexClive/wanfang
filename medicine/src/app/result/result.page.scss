@@ -1574,8 +1574,11 @@
           text-align: center;
           overflow: hidden;
 
+          .active{
+            color: #01B76C;
+          }
+
           p {
-            float: left;
             margin: 0 20px;
             width: 90px;
             overflow:hidden; //超出的文本隐藏

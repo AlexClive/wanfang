@@ -314,6 +314,7 @@ export class ResultPage implements OnInit {
     }
 
     leftSelect(num, index, title, item) {
+        this.typeClass = 0;
         let make = 0;
         this.search_text = this.Initsearch_text;
         for (let i = 0; i < this.leftArryActive.length; i++) {
@@ -686,7 +687,16 @@ export class ResultPage implements OnInit {
 
 
     TabFn(num) {
-        this.typeClass = num;
+        if (num === -1 && this.typeClass === -1) {
+            this.typeClass = 0;
+            return;
+        } else if (num === 1 && this.typeClass === 1) {
+            this.typeClass = 0;
+            return;
+        }
+
+        this
+            .typeClass = num;
     }
 
 
