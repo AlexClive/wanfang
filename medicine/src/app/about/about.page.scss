@@ -5,7 +5,8 @@
 
     .breadcrumb {
       padding: 14px 0 0 0;
-      ion-text{
+
+      ion-text {
         cursor: pointer;
       }
     }
@@ -62,18 +63,20 @@
 
               table {
                 width: 100%;
-                background: #eeeeee;
+                background: #ffffff;
+                color: #666666;
 
                 tr {
-                  border: 1px solid #ccc;
+                  border: 1px solid #c9d3d3;
 
                   th {
-                    border: 1px solid #ccc;
+                    border: 1px solid #c9d3d3;
+                    font-weight: normal;
                   }
 
                   td {
                     text-align: center;
-                    border-bottom: 1px solid #ccc;
+                    border-bottom: 1px solid #c9d3d3;
                   }
                 }
               }
@@ -144,7 +147,7 @@
 
             #writer {
               width: 95%;
-              height: 224px;
+              height: 230px;
             }
 
             .table {
@@ -152,18 +155,20 @@
 
               table {
                 width: 100%;
-                background: #eeeeee;
+                background: #ffffff;
 
                 tr {
-                  border: 1px solid #ccc;
+                  border: 1px solid #c9d3d3;
 
                   th {
-                    border: 1px solid #ccc;
+                    border: 1px solid #c9d3d3;
+                    font-weight: normal;
                   }
 
                   td {
                     text-align: center;
                     border-bottom: 1px solid #ccc;
+                    color: #666666;
                   }
                 }
               }

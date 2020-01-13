@@ -1,7 +1,8 @@
 import {Component} from '@angular/core';
 import {NavController} from "@ionic/angular";
 import {CommonService} from "../service/common.service";
-
+import {ConfigService} from "../service/config.service";
+declare var domainconfig;
 @Component({
     selector: 'app-tab2',
     templateUrl: 'tab2.page.html',
@@ -14,12 +15,12 @@ export class Tab2Page {
 
     public condition: object[] = [{
         logic: ['与', '或', '非'],
-        field: ['全部字段', '基因', '表型', '疾病', '药物', '作者', '刊名', '机构名'],
+        field: ['全部字段', '基因', '疾病', '药物', '作者', '刊名', '机构名'],
         input: '',
         fuzzy: ['模糊', '精确'],
     }, {
         logic: ['与', '或', '非'],
-        field: ['全部字段', '基因', '表型', '疾病', '药物', '作者', '刊名', '机构名'],
+        field: ['全部字段', '基因', '疾病', '药物', '作者', '刊名', '机构名'],
         input: '',
         fuzzy: ['模糊', '精确'],
     }];
@@ -86,7 +87,8 @@ export class Tab2Page {
 
     constructor(
         public navCtrl: NavController,
-        public Common: CommonService
+        public Common: CommonService,
+        public config: ConfigService
     ) {
         if (document.body.clientHeight > 788) {
             this.height = document.body.clientHeight - 104 - 179 - 107 + 'px';
@@ -104,8 +106,8 @@ export class Tab2Page {
         /*减去*/
         let lavishly: object[] = [];
         if (this.condition.length > 2) {
-            this.consequence.qualification.splice(index);
-            this.conditionISHide.splice(index);
+            this.consequence.qualification.splice(index, 1);
+            this.conditionISHide.splice(index, 1);
             for (let i = 0; i < this.condition.length; i++) {
                 if (index !== i) {
                     lavishly.push(this.condition[i]);
@@ -115,7 +117,7 @@ export class Tab2Page {
         } else {
             let list: any = {
                 logic: ['与', '或', '非'],
-                field: ['全部字段', '基因', '表型', '疾病', '药物', '作者', '刊名', '机构名'],
+                field: ['全部字段', '基因', '疾病', '药物', '作者', '刊名', '机构名'],
                 input: '',
                 fuzzy: ['模糊', '精确'],
             };
@@ -125,6 +127,11 @@ export class Tab2Page {
                 input: '',
                 fuzzy: '模糊'
             };
+            this.conditionISHide[index] = {
+                logic: false,
+                field: false,
+                fuzzy: false
+            };
             this.condition[index] = list;
         }
     }
@@ -132,7 +139,7 @@ export class Tab2Page {
     addField() {
         this.condition.push({
             logic: ['与', '或', '非'],
-            field: ['全部字段', '基因', '表型', '疾病', '药物', '作者', '刊名', '机构名'],
+            field: ['全部字段', '基因', '疾病', '药物', '作者', '刊名', '机构名'],
             input: '',
             fuzzy: ['模糊', '精确'],
         });
@@ -286,4 +293,13 @@ export class Tab2Page {
     goBack() {
         history.back();
     }
+
+    login() {
+        this.Common.serveGet(this.config.doLogin, (data) => {
+            if (data.IsLogin !== false) {
+                return false;
+            } else {
+                window.location.href = domainconfig.domain.login + 'Account/LogOn?ReturnUrl=' + encodeURIComponent(window.location.href);
+            }
+        });}
 }

@@ -3,6 +3,7 @@ import {NavController} from '@ionic/angular';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CommonService} from '../../service/common.service';
 import {ConfigService} from '../../service/config.service';
+import {StorageService} from '../../service/storage.service';
 
 declare var domainconfig;
 
@@ -21,11 +22,14 @@ export class HeaderTComponent implements OnInit {
         public navCtrl: NavController,
         public common: CommonService,
         public config: ConfigService,
+        public storage: StorageService
     ) {
         this.common.serveGet(this.config.doLogin, (data) => {
-            console.log(data);
             if (data.IsLogin !== false) {
                 this.ISLogin = false;
+                this.storage.setStorage('Login', 1);
+            } else {
+                this.storage.setStorage('Login', 0);
             }
         });
     }
@@ -34,11 +38,17 @@ export class HeaderTComponent implements OnInit {
     }
 
     login() {
-        window.location.href = domainconfig.domain.login + 'Account/LogOn?ReturnUrl=' + window.location.href;
+        this.common.serveGet(this.config.doLogin, (data) => {
+            if (data.IsLogin !== false) {
+                return false;
+            } else {
+                window.location.href = domainconfig.domain.login + 'Account/LogOn?ReturnUrl=' + encodeURIComponent(window.location.href);
+            }
+        });
     }
 
     registered() {
-        window.location.href = domainconfig.domain.login + 'Account/Register?ReturnUrl=' + window.location.href;
+        window.location.href = domainconfig.domain.login + 'Account/Register?ReturnUrl=' + encodeURI(window.location.href);
     }
 
     goBack() {

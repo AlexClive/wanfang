@@ -1,7 +1,7 @@
 <div class="header mobile">
     <div class="title" lines="none">
         <ion-text>精准肿瘤文献库</ion-text>
-        <ion-icon class="iconfont ion-ios-geren5" slot="end"></ion-icon>
+        <ion-icon class="iconfont ion-ios-geren5" slot="end" (click)="login()"></ion-icon>
     </div>
 </div>
 
@@ -16,22 +16,22 @@
         </div>
         <ion-grid>
             <ion-row>
-                <ion-col *ngFor="let item of thematic.arr1;let i = index" (click)="Goresult(item)">
+                <ion-col *ngFor="let item of thematic.arr1;let i = index" (click)="Gothematic(item)">
                     {{item}}
                 </ion-col>
             </ion-row>
             <ion-row>
-                <ion-col *ngFor="let item of thematic.arr2;let i = index" (click)="Goresult(item)">
+                <ion-col *ngFor="let item of thematic.arr2;let i = index" (click)="Gothematic(item)">
                     {{item}}
                 </ion-col>
             </ion-row>
             <ion-row>
-                <ion-col *ngFor="let item of thematic.arr3;let i = index" (click)="Goresult(item)">
+                <ion-col *ngFor="let item of thematic.arr3;let i = index" (click)="Gothematic(item)">
                     {{item}}
                 </ion-col>
             </ion-row>
             <ion-row>
-                <ion-col *ngFor="let item of thematic.arr4;let i = index" (click)="Goresult(item)">
+                <ion-col *ngFor="let item of thematic.arr4;let i = index" (click)="Gothematic(item)">
                     {{item}}
                 </ion-col>
             </ion-row>

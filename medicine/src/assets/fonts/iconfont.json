@@ -1,6 +1,6 @@
 {
   "id": "1534810",
-  "name": "精准文献库",
+  "name": "精准肿瘤文献库",
   "font_family": "iconfont",
   "css_prefix_text": "ion-ios-",
   "description": "",
@@ -88,6 +88,13 @@
       "font_class": "wushuju",
       "unicode": "e642",
       "unicode_decimal": 58946
+    },
+    {
+      "icon_id": "2486605",
+      "name": "文件",
+      "font_class": "wenjian",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
     },
     {
       "icon_id": "3216591",

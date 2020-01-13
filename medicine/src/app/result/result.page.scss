@@ -154,7 +154,7 @@
                 line-height: 30px;
               }
 
-              li:hover{
+              li:hover {
                 background: #eeeeee;
               }
             }
@@ -212,7 +212,7 @@
                 }
 
                 button {
-                  width: 39px;
+                  width: 44px;
                   height: 20px;
                   opacity: 1;
                   font-size: 12px;
@@ -529,7 +529,6 @@
               }
 
               .pageNum {
-                border: 1px solid #CBCCCC;
                 width: 54px;
                 height: 25px;
                 line-height: 25px;
@@ -537,33 +536,15 @@
                 cursor: pointer;
                 position: relative;
 
-                span {
-                  margin: 0 10px 0 0;
-                }
-
-                i {
-                  vertical-align: sub;
-                }
-
-                ul {
-                  display: block;
-                  border-left: 1px solid #CBCCCC;
-                  border-right: 1px solid #CBCCCC;
-                  border-top: 1px solid #CBCCCC;
-                  margin: 0;
-                  background: #fff;
+                input {
                   width: 54px;
-                  position: absolute;
-                  left: -1px;
-                  bottom: 23px;
+                  height: 25px;
+                  text-align: center;
+                  border: 1px solid #CBCCCC;
+                }
 
-                  li {
-                    width: 100%;
-                    list-style: none;
-                    height: 25px;
-                    line-height: 25px;
-                    text-indent: -2em;
-                  }
+                button{
+                  font-size: 12px;
                 }
               }
 
@@ -574,8 +555,7 @@
 
                 li {
                   list-style: none;
-                  width: 18px;
-                  height: 18px;
+                  padding: 1px 5px;
                   line-height: 18px;
                   text-align: center;
                   cursor: pointer;
@@ -630,7 +610,6 @@
         top: 30%;
         left: 35%;
         width: 632px;
-        height: 233px;
         background: #ffffff;
         z-index: 100;
 
@@ -708,7 +687,8 @@
 
   }
 }
-@media screen and (min-width: 1000px)and (max-width:1200px) {
+
+@media screen and (min-width: 1000px) and (max-width: 1200px) {
   ion-content {
     min-width: 1000px;
 
@@ -864,7 +844,7 @@
                 line-height: 30px;
               }
 
-              li:hover{
+              li:hover {
                 background: #eeeeee;
               }
             }
@@ -1418,6 +1398,7 @@
 
   }
 }
+
 @media screen and (max-width: 1000px) {
   ion-content {
     background-color: #EFF7FF !important;
@@ -1574,16 +1555,16 @@
           text-align: center;
           overflow: hidden;
 
-          .active{
+          .active {
             color: #01B76C;
           }
 
           p {
             margin: 0 20px;
             width: 90px;
-            overflow:hidden; //超出的文本隐藏
-            text-overflow:ellipsis; //溢出用省略号显示
-            white-space:nowrap; //溢出不换行
+            overflow: hidden; //超出的文本隐藏
+            text-overflow: ellipsis; //溢出用省略号显示
+            white-space: nowrap; //溢出不换行
           }
         }
       }

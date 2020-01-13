@@ -154,7 +154,7 @@
                 line-height: 30px;
               }
 
-              li:hover{
+              li:hover {
                 background: #eeeeee;
               }
             }
@@ -221,7 +221,8 @@
   }
 
 }
-@media screen and (min-width: 1000px)and (max-width:1200px){
+
+@media screen and (min-width: 1000px) and (max-width: 1200px) {
   ion-content {
     min-width: 1000px;
 
@@ -377,7 +378,7 @@
                 line-height: 30px;
               }
 
-              li:hover{
+              li:hover {
                 background: #eeeeee;
               }
             }
@@ -444,9 +445,25 @@
   }
 
 }
+
 @media screen and (max-width: 1000px) {
   .ion-toolbar {
     background-color: #1E53E5;
+    text-align: center;
+    font-size: 18px;
+    color: #ffffff;
+    font-family: "PingFang SC";
+    height: 50px;
+
+    ion-text {
+      line-height: 50px;
+    }
+
+    .iconfont {
+      font-size: 24px;
+      float: right;
+      margin: 12px 12px 0 0;
+    }
   }
 
   .Textbg {
@@ -504,7 +521,8 @@
           padding: 0 16px;
           height: 56px;
           position: relative;
-
+          border-radius: 100px;
+          overflow: hidden;
           input {
             width: 100%;
             display: block;
@@ -515,6 +533,19 @@
             background: rgba(255, 255, 255, 0.77);
             border: 1px solid #fff;
             border-radius: 100px;
+          }
+
+          input:focus, textarea:focus {
+            outline: none;
+            border-radius: 100px;
+          }
+
+          input:focus,textarea:focus {
+
+            outline: none;
+            border-radius: 100px;
+            border: 1px solid transparent !important;
+
           }
 
           ion-text {

@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ConfigService} from "../service/config.service";
-import {CommonService} from "../service/common.service";
+import {ConfigService} from '../service/config.service';
+import {CommonService} from '../service/common.service';
+import {StorageService} from '../service/storage.service';
 
 declare var domainconfig;
 
@@ -19,6 +20,10 @@ export class DetailsPage implements OnInit {
 
     public refPalette: any[] = ['#d43737', '#dc5c3e', '#e08351', '#fec351', '#e95656', '#af3533', '#ce6557', '#e9ad4a', '#eecc4e', '#db9959']; // 参考文献
     public qotPalette: any[] = ['#77c7ff', '#5bb3d2', '#86cbee', '#4cade0', '#2983b2', '#5ea4d5', '#8cbed3', '#9fd7e5', '#68ccf0', '#2b83c0']; // 引证文献
+    // tslint:disable-next-line:ban-types
+    public qotPaletteSky: String = '#c8e0f0';
+    // tslint:disable-next-line:ban-types
+    public refPaletteSky: String = '#e9ad4a';
     public literature: any = {
         RefYearsShort: {
             years: [],
@@ -52,7 +57,8 @@ export class DetailsPage implements OnInit {
     constructor(
         public activatedRoute: ActivatedRoute,
         public config: ConfigService,
-        public common: CommonService
+        public common: CommonService,
+        public storage: StorageService
     ) {
     }
 
@@ -148,20 +154,34 @@ export class DetailsPage implements OnInit {
             StrWidth = Math.floor(this.literature.CiteYearsShort.date[index] / num * 100);
         }
         let Width: any;
-        if (item > 1) {
-            Width = StrWidth <= 10 ? 12 : StrWidth - item;
+        if (item > 1 && event === 'left') {
+            Width = StrWidth <= 10 ? 12 : StrWidth - 2;
         } else {
             Width = StrWidth <= 10 ? 12 : StrWidth;
+        }
+
+        if (item > 1 && event === 'right') {
+            Width = StrWidth <= 12 ? 12 : StrWidth - 2;
         }
         return Width + '%';
     }
 
     download() {
-        window.location.href = this.address + 'PercisionArticleFullText?inline=True&Id=PeriodicalPaper_' + this.Id;
+        let loginStorage = this.storage.getStorage('Login');
+        if (loginStorage === '1') {
+            window.location.href = this.address + 'FullText?Id=PeriodicalPaper_' + this.Id;
+        } else {
+            window.location.href = domainconfig.domain.login + 'Account/LogOn?ReturnUrl=' + encodeURIComponent(window.location.href);
+        }
     }
 
     reading() {
-        window.location.href = this.address + 'PercisionArticleFullText?Id=PeriodicalPaper_' + this.Id;
+        let loginStorage = this.storage.getStorage('Login');
+        if (loginStorage === '1') {
+            window.location.href = this.address + 'FullText?inline=True&Id=PeriodicalPaper_' + this.Id;
+        } else {
+            window.location.href = domainconfig.domain.login + 'Account/LogOn?ReturnUrl=' + encodeURIComponent(window.location.href);
+        }
     }
 
     goBack() {
@@ -170,13 +190,19 @@ export class DetailsPage implements OnInit {
 
     Creator(item) {
         var text = '';
-        if (item === undefined) {
-            return;
-        }
-        for (let i = 0; i < item.length; i++) {
-            text += item[i].split('$')[1];
-            if (i < item.length - 1) {
-                text += '；';
+        if (item !== null) {
+            if (item === undefined) {
+                return;
+            }
+            for (let i = 0; i < item.length; i++) {
+                if (item[i].indexOf('$') !== -1) {
+                    text += item[i].split('$')[1];
+                    if (i < item.length - 1) {
+                        text += '；';
+                    }
+                } else {
+                    text += item[i];
+                }
             }
         }
         return text;

@@ -10,12 +10,12 @@ import {CommonService} from "../service/common.service";
 export class SearchPage implements OnInit {
     public condition: object[] = [{
         logic: ['与', '或', '非'],
-        field: ['全部字段', '基因', '表型', '疾病', '药物', '作者', '刊名', '机构名'],
+        field: ['全部字段', '基因', '疾病', '药物', '作者', '刊名', '机构名'],
         input: '',
         fuzzy: ['模糊', '精确'],
     }, {
         logic: ['与', '或', '非'],
-        field: ['全部字段', '基因', '表型', '疾病', '药物', '作者', '刊名', '机构名'],
+        field: ['全部字段', '基因', '疾病', '药物', '作者', '刊名', '机构名'],
         input: '',
         fuzzy: ['模糊', '精确'],
     }];
@@ -101,7 +101,7 @@ export class SearchPage implements OnInit {
         } else {
             let list: any = {
                 logic: ['与', '或', '非'],
-                field: ['全部字段', '基因', '表型', '疾病', '药物', '作者', '刊名', '机构名'],
+                field: ['全部字段', '基因', '疾病', '药物', '作者', '刊名', '机构名'],
                 input: '',
                 fuzzy: ['模糊', '精确'],
             };
@@ -118,7 +118,7 @@ export class SearchPage implements OnInit {
     addField() {
         this.condition.push({
             logic: ['与', '或', '非'],
-            field: ['全部字段', '基因', '表型', '疾病', '药物', '作者', '刊名', '机构名'],
+            field: ['全部字段', '基因', '疾病', '药物', '作者', '刊名', '机构名'],
             input: '',
             fuzzy: ['模糊', '精确'],
         });

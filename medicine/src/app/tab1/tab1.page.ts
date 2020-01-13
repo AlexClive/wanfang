@@ -11,10 +11,10 @@ declare var domainconfig;
     styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
-    public sort: object[] = [{text: '全部', initial: true}, {text: '基因', initial: false}, {
+    public sort: object[] = [{text: '全部', initial: true}, {text: '基因', initial: false}, /*{
         text: '表型',
         initial: false
-    }, {text: '疾病', initial: false}, {text: '药物', initial: false}];
+    },*/ {text: '疾病', initial: false}, {text: '药物', initial: false}];
     public HOT: string[] = ['癌症', '乳腺癌', '卵巢癌', '皮肤癌', '肝癌', '宫颈癌', '', ''];
     public thematic: string[] = ['肺癌', '乳腺癌', '卵巢癌', '皮肤癌', '肝癌', '宫颈癌', '前列腺癌', '血液肿瘤'];
     public thematic1: string[] = ['胰腺癌', '肠癌', '脑肿瘤', '食管癌', '', '', '', ''];
@@ -39,11 +39,18 @@ export class Tab1Page {
     }
 
     login() {
-        window.location.href = domainconfig.domain.login + 'Account/LogOn?ReturnUrl=' + window.location.href;
+        this.common.serveGet(this.config.doLogin, (data) => {
+            if (data.IsLogin !== false) {
+                return false;
+            } else {
+                window.location.href = domainconfig.domain.login + 'Account/LogOn?ReturnUrl=' + encodeURIComponent(window.location.href);
+            }
+        });
+
     }
 
     enrol() {
-        window.location.href = domainconfig.domain.login + 'Account/Register?ReturnUrl=' + window.location.href;
+        window.location.href = domainconfig.domain.login + 'Account/Register?ReturnUrl=' + encodeURI(window.location.href);
     }
 
     Clisore(item) {
@@ -75,7 +82,7 @@ export class Tab1Page {
 
     lenovoFn() {
         if (this.search.text !== '') {
-            this.IsHidelenovo = true;
+            // this.IsHidelenovo = true; 联想词功能暂时关闭
         }
     }
 
@@ -91,6 +98,16 @@ export class Tab1Page {
                     text: item,
                     type: {text: '全部', initial: true}
                 })
+            }
+        }).then(r => {
+        });
+    }
+
+    Gothematic(item) {
+        this.navCtrl.navigateForward(['/thematic'], {
+            queryParams: {
+                Subject: '相关专题',
+                keywords: item
             }
         }).then(r => {
         });

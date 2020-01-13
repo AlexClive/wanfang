@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {NavController} from '@ionic/angular';
+import {NavController, IonContent} from '@ionic/angular';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CommonService} from "../service/common.service";
 import {ConfigService} from "../service/config.service";
@@ -7,6 +7,10 @@ import {IonInfiniteScroll} from '@ionic/angular';
 import {ActionSheetController} from '@ionic/angular';
 
 declare var domainconfig;
+
+
+// @ts-ignore
+const viewChild = ViewChild(IonContent);
 
 @Component({
     selector: 'app-result',
@@ -16,17 +20,16 @@ declare var domainconfig;
 export class ResultPage implements OnInit {
     // @ts-ignore
     @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
-    public sort: object[] = [{text: '全部', initial: true}, {text: '基因', initial: false}, {
+    @viewChild content: IonContent;
+    public sort: object[] = [{text: '全部', initial: true}, {text: '基因', initial: false}, /* {
         text: '表型',
         initial: false
-    }, {text: '疾病', initial: false}, {text: '药物', initial: false}];
+    },*/ {text: '疾病', initial: false}, {text: '药物', initial: false}];
     public search: any = {
         text: '',
         type: '',
     };
     public searchobj: any = {};
-    public navLeftDate: object[] = [];
-    public navRightDate: object[] = [];
     public Initsearch_text: string = '';
     public search_text: string = '';
     public dateOfPublish: string = '';
@@ -50,7 +53,9 @@ export class ResultPage implements OnInit {
         RightStr: ['更多>>', '更多>>', '更多>>', '更多>>']
     };
     public pageNumArry: number[] = [];
-    public leftArryActive: any = [0, 1, 2, 3, 4, 5, 6, 7];
+    public showPageList: number[] = [];
+    public PageIsChange: boolean = true;
+    public leftArryActive: any = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     public Parametric = {
         sort: '',
         AmountText: ''
@@ -65,7 +70,7 @@ export class ResultPage implements OnInit {
     public time = {
         start: '1998',
         end: new Date().getFullYear()
-    }
+    };
 
     public export = false;
     public isPC = false;
@@ -88,7 +93,6 @@ export class ResultPage implements OnInit {
         public actionSheetController: ActionSheetController
     ) {
         this.common.serveGet(this.config.doLogin, (data) => {
-            console.log(data);
             if (data.IsLogin !== false) {
                 this.ISLogin = false;
             }
@@ -103,68 +107,119 @@ export class ResultPage implements OnInit {
 
     ngOnInit() {
         this.activatedRoute.queryParams.subscribe((data: any) => {
-            if (data.search === undefined) {
-                const expressionSearch = JSON.parse(data.expressionSearch);
-                this.search_text = '';
-                for (let i = 0; i < expressionSearch.qualification.length; i++) {
-                    if (expressionSearch.qualification[i].input !== '') {
-                        if (expressionSearch.qualification[i].field !== '全部字段') {
-                            if (i !== 0) {
-                                switch (expressionSearch.qualification[i].logic) {
-                                    case '与':
-                                        this.search_text += ' AND ';
-                                        break;
-                                    case '或':
-                                        this.search_text += ' OR ';
-                                        break;
-                                    case '非':
-                                        this.search_text += ' NOT ';
-                                        break;
-                                }
-                            }
-                            this.search_text += '(' + expressionSearch.qualification[i].field + '=';
-                        } else {
-                            this.search_text += '(';
-                        }
-                        if (expressionSearch.qualification[i].fuzzy === "精确") {
-                            this.search_text += '"' + expressionSearch.qualification[i].input + '")';
-                        } else {
-                            this.search_text += expressionSearch.qualification[i].input + ')';
-                        }
-
-                    }
-                }
-                if (expressionSearch.time.start !== '开始' || expressionSearch.time.end !== '结束') {
-                    this.dateOfPublish = '&出版时间_f=' + expressionSearch.time.start + '-' + expressionSearch.time.end;
-                }
-            } else {
-                this.search = JSON.parse(data.search);  /*//此时的search存的就是上个页面传过来的值*/
-                this.Clisore(JSON.parse(data.search).type);
-                let type = JSON.parse(data.search).type;
-                if (type !== '' && type.text !== '全部') {
-                    this.search_text = '(' + type.text + '=' + JSON.parse(data.search).text + ')';
-                } else {
-                    this.search_text = JSON.parse(data.search).text;
-                }
-            }
-            this.Initsearch_text = this.search_text;
-            this.dataServe(this.search_text + this.dateOfPublish, undefined);
+            this.parameterAcquisition(data);
         });
     }
 
+    parameterAcquisition(data: any) {
+        this.AmountText = 10;
+        this.PageIsChange = true;
+        this.pageNum = 1;
+        this.search_text = '';
+        this.dateOfPublish = '';
+        this.leftArryActive = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        if (data.search === undefined) {
+            this.search.text = '';
+            const expressionSearch = JSON.parse(data.expressionSearch);
+            this.search_text = '';
+            for (let i = 0; i < expressionSearch.qualification.length; i++) {
+                if (expressionSearch.qualification[i].input !== '') {
+                    if (expressionSearch.qualification[i].field !== '全部字段') {
+                        if (i !== 0) {
+                            switch (expressionSearch.qualification[i].logic) {
+                                case '与':
+                                    this.search_text += ' AND ';
+                                    break;
+                                case '或':
+                                    this.search_text += ' OR ';
+                                    break;
+                                case '非':
+                                    this.search_text += ' NOT ';
+                                    break;
+                            }
+                        }
+                        this.search_text += '(' + expressionSearch.qualification[i].field + '=';
+                    } else {
+                        if (i !== 0) {
+                            switch (expressionSearch.qualification[i].logic) {
+                                case '与':
+                                    this.search_text += ' AND ';
+                                    break;
+                                case '或':
+                                    this.search_text += ' OR ';
+                                    break;
+                                case '非':
+                                    this.search_text += ' NOT ';
+                                    break;
+                            }
+                        }
+                        this.search_text += '(';
+                    }
+                    if (expressionSearch.qualification[i].fuzzy === '精确') {
+                        this.search_text += '"' + expressionSearch.qualification[i].input + '")';
+                    } else {
+                        this.search_text += expressionSearch.qualification[i].input + ')';
+                    }
+
+                }
+            }
+            if (expressionSearch.time.start !== '开始' || expressionSearch.time.end !== '结束') {
+                this.dateOfPublish = '&出版时间_f=' + expressionSearch.time.start + '-' + expressionSearch.time.end;
+            }
+        } else {
+            this.search = JSON.parse(data.search);  /*//此时的search存的就是上个页面传过来的值*/
+            this.Clisore(JSON.parse(data.search).type);
+            let type = JSON.parse(data.search).type;
+            if (type !== '' && type.text !== '全部') {
+                this.search_text = '(' + type.text + '=' + JSON.parse(data.search).text + ')';
+            } else {
+                this.search_text = JSON.parse(data.search).text;
+            }
+        }
+        this.Initsearch_text = this.search_text;
+        this.dataServe(this.search_text + this.dateOfPublish, undefined);
+    }
+
     login() {
-        window.location.href = domainconfig.domain.login + 'Account/LogOn?ReturnUrl=' + window.location.href;
+        this.common.serveGet(this.config.doLogin, (data) => {
+            if (data.IsLogin !== false) {
+                return false;
+            } else {
+                window.location.href = domainconfig.domain.login + 'Account/LogOn?ReturnUrl=' + encodeURIComponent(window.location.href);
+            }
+        });
     }
 
     registered() {
-        window.location.href = domainconfig.domain.login + 'Account/Register?ReturnUrl=' + window.location.href;
+        window.location.href = domainconfig.domain.login + 'Account/Register?ReturnUrl=' + encodeURI(window.location.href);
     }
+
+    showPageListFn() {
+        if (this.PageIsChange !== false) {
+            if (this.pageNumArry.length > 10) {
+                this.showPageList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+            } else {
+                console.log(this.pageNumArry);
+                this.showPageList = this.pageNumArry;
+            }
+            this.pageNum = 1;
+            this.PageIsChange = false;
+        }
+    }
+
 
     dataServe(Value, genre) {
         this.form.entry = [];
         this.form.isChecked = false;
         this.form.num = 0;
         this.common.serverPost(this.config.search + '?q=' + encodeURIComponent(Value), {}, (data) => {
+            // tslint:disable-next-line:only-arrow-functions
+            if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+            } else {
+                this.content.scrollToTop(0).then(r => {
+                });
+            }
+
             if (data.Massage === null) {
                 if (data.Data.ListItem.length > 0) {
                     if (genre === undefined) {
@@ -177,6 +232,7 @@ export class ResultPage implements OnInit {
                         this.contentDate.LeftData = [];
                         this.contentDate.navRightDate = [];
                         this.form.entry = [];
+                        this.showPageListFn();
                     } else {
                         this.contentDate.ListItem = this.contentDate.ListItem.concat(data.Data.ListItem);
                         this.search_Num = data.Data.TotalCount;
@@ -186,6 +242,7 @@ export class ResultPage implements OnInit {
                         if (data.Data.ListItem.length < 10) {
                             genre.target.disabled = true;
                         }
+                        this.showPageListFn();
                     }
                     for (let key in data.Data) {
                         // tslint:disable-next-line:max-line-length
@@ -213,6 +270,7 @@ export class ResultPage implements OnInit {
                 this.contentDate.navRightDate = [];
                 this.form.entry = [];
             }
+
         });
     }
 
@@ -246,6 +304,7 @@ export class ResultPage implements OnInit {
         } else {
             this.Parametric.AmountText = '';
         }
+        this.PageIsChange = true;
         this.dataServe(this.search_text + this.dateOfPublish + this.Parametric.AmountText + this.Parametric.sort, undefined);
         $event.stopPropagation();
     }
@@ -254,22 +313,48 @@ export class ResultPage implements OnInit {
         this.pageBoo = !this.pageBoo;
     }
 
-    pageGo(num, $event) {
-        this.pageNum = num;
-        this.pageBoo = false;
-        this.dataServe(this.search_text + this.dateOfPublish + '&p=' + num, undefined);
-        $event.stopPropagation();
+    pagination(num) {
+        if (num >= 10 && num !== this.showPageList[0] && this.pageNumArry.length > 10 && this.showPageList.length >= 10) {
+            this.showPageList = [];
+            this.showPageList.push(num);
+            for (let i = num; i < this.pageNumArry.length; i++) {
+                if (i <= num + 9) {
+                    this.showPageList.push(this.pageNumArry[i]);
+                }
+
+            }
+        } else if (num <= this.showPageList[0] && this.showPageList[0] != 1) {
+            this.showPageList = [];
+            let NumIndex = this.pageNumArry.indexOf(num);
+            console.log(NumIndex - 9);
+            if (NumIndex - 9 < 0) {
+                this.showPageList = this.pageNumArry.slice(0, Math.abs(NumIndex - 9) + NumIndex);
+            } else {
+                this.showPageList = this.pageNumArry.slice(NumIndex - 9, NumIndex + 1);
+            }
+        }
+    }
+
+    pageGo(pageSize: HTMLInputElement) {
+        if (this.pageNumArry.length >= Number(pageSize.value) && Number(pageSize.value) > 0) {
+            this.pageNum = Number(pageSize.value);
+            this.pageBoo = false;
+            this.pagination(this.pageNum);
+            this.dataServe(this.search_text + this.dateOfPublish + '&p=' + this.pageNum, undefined);
+        }
     }
 
     leftCut() {
         if (this.pageNum !== 1) {
             this.pageNum--;
             this.dataServe(this.search_text + this.dateOfPublish + '&p=' + this.pageNum, undefined);
+            this.pagination(this.pageNum);
         }
     }
 
     pageNumGO(num) {
         this.pageNum = num;
+        this.pagination(this.pageNum);
         this.dataServe(this.search_text + this.dateOfPublish + '&p=' + this.pageNum + this.Parametric.AmountText + this.Parametric.sort, undefined);
     }
 
@@ -277,18 +362,37 @@ export class ResultPage implements OnInit {
         if (this.pageNum < Math.ceil(this.search_Num / 10)) {
             this.pageNum++;
             this.dataServe(this.search_text + this.dateOfPublish + '&p=' + this.pageNum, undefined);
+            this.pagination(this.pageNum);
         }
     }
 
     GOAbout() {
-        this.navCtrl.navigateForward(['/about'], {queryParams: {search: JSON.stringify(this.search)}}).then(r => {
-        });
+        console.log(this.search);
+        if (this.search.text === '') {
+            this.navCtrl.navigateForward(['/about'], {queryParams: {search2: this.search_text}}).then(r => {
+            });
+        } else {
+            this.navCtrl.navigateForward(['/about'], {queryParams: {search: JSON.stringify(this.search)}}).then(r => {
+            });
+        }
     }
 
     advancedSearch() {
+        this.PageIsChange = true;
         if (this.search.text !== '') {
-            this.navCtrl.navigateForward(['/result'], {queryParams: {search: JSON.stringify(this.search)}}).then(r => {
-            });
+            if (this.search.text !== this.search_text && this.search_text.indexOf('AND') === -1) {
+                this.navCtrl.navigateForward('/result', {
+                    queryParams: {
+                        search: JSON.stringify(this.search)
+                    }
+                }).then(r => {
+                });
+                return;
+            }
+            let data = {
+                search: JSON.stringify(this.search)
+            };
+            this.parameterAcquisition(data);
             return;
         }
         this.common.presentToast('请输入搜索关键词', 'top').then(r => {
@@ -296,20 +400,37 @@ export class ResultPage implements OnInit {
     }
 
     AbstractFn(text) {
-        if (text.length) {
+        if (text !== null && text.length) {
             text = text.substring(0, 200) + '……';
         }
         return text;
     }
 
     Creator(item) {
-        var text = '';
-        for (let i = 0; i < item.length; i++) {
-            text += item[i].split('$')[1];
-            if (i < item.length - 1) {
-                text += '；';
+        let text = '';
+        if (item !== null) {
+            if (typeof (item) !== 'string') {
+                let len = item.length <= 4 ? item.length : 4;
+                for (let i = 0; i < len; i++) {
+                    if (item[i].indexOf('$') !== -1) {
+                        text += item[i].split('$')[1];
+                        if (i < item.length - 1) {
+                            text += '；';
+                        }
+                    } else {
+                        text += item[i];
+                    }
+
+                }
+            } else {
+                if (item.indexOf('$') !== -1) {
+                    text = item.split('$')[1];
+                } else {
+                    text = item;
+                }
             }
         }
+
         return text;
     }
 
@@ -321,19 +442,24 @@ export class ResultPage implements OnInit {
             if (isNaN(this.leftArryActive[i])) {
                 let oldNum = this.leftArryActive[i].substring(0, this.leftArryActive[i].indexOf('-'));
                 if (Number(oldNum) === num) {
-                    this.leftArryActive[i] = num + '-' + index;
+                    if (this.leftArryActive[i] !== num + '-' + item.Text) {
+                        this.leftArryActive[i] = num + '-' + item.Text;
+                    } else {
+                        this.leftArryActive[i] = i;
+                    }
                     make = 1;
                 }
             }
         }
 
         if (make === 0) {
-            this.leftArryActive[num] = num + '-' + index;
+            this.leftArryActive[num] = num + '-' + item.Text;
         }
-        //判读是否存在
+        //判断是否存在
         if (this.dateOfPublish.indexOf(title) === -1) {
             this.dateOfPublish += '&' + title + '_f=' + item.Key;
         } else {
+            let flag = this.dateOfPublish.indexOf(item.Key);
             let intermediateProcessing = this.dateOfPublish.split('&');
             this.dateOfPublish = '';
             for (var i = 0; i < intermediateProcessing.length; i++) {
@@ -341,11 +467,14 @@ export class ResultPage implements OnInit {
                     this.dateOfPublish += '&' + intermediateProcessing[i];
                 }
             }
-            this.dateOfPublish += '&' + title + '_f=' + item.Key;
+            if (flag === -1) {
+                this.dateOfPublish += '&' + title + '_f=' + item.Key;
+            }
         }
         for (let key in this.searchobj) {
             this.search_text += this.searchobj[key];
         }
+        this.PageIsChange = true;
         this.dataServe(this.search_text + this.dateOfPublish + this.Parametric.sort + this.Parametric.AmountText, undefined);
     }
 
@@ -442,17 +571,12 @@ export class ResultPage implements OnInit {
 
     loadData(event) {
         if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
-            if (this.pageNum === 0) {
-                ++this.pageNum;
-            } else {
-                this.pageNum = 2;
-            }
+            ++this.pageNum;
             this.dataServe(this.search_text + this.dateOfPublish + '&p=' + this.pageNum, event);
             event.target.complete();
         } else {
             event.target.disabled = true;
         }
-
         this.eventLoadFn = event;
     }
 
@@ -462,67 +586,21 @@ export class ResultPage implements OnInit {
         setTimeout(() => {
             event.target.complete();
         }, 2000);
-
-        this.eventLoadFn.target.disabled = false;
+        if (this.eventLoadFn !== undefined) {
+            this.eventLoadFn.target.disabled = false;
+        }
     }
 
-    async presentActionSheet(title) {
+    async presentActionSheet(title, ID, DBID) {
+        console.log(title);
         const actionSheet = await this.actionSheetController.create({
             header: '分享',
             buttons: [{
-                text: 'QQ好友',
-                handler: () => {
-                    console.log('QQ好友');
-                    var test = window.location.href;
-                    let p = {
-                        url: test,/*获取URL，可加上来自分享到QQ标识，方便统计*/
-                        desc: '精准肿瘤知识库', /*分享理由(风格应模拟用户对话),支持多分享语随机展现（使用|分隔）*/
-                        title: title,/*分享标题(可选)*/
-                        summary: title,/*分享描述(可选)*/
-                        pics: 'http://med.wanfangdata.com.cn/Content/Images/rwd/hf/logo-MED-lg-top.png',/*分享图片(可选)*/
-                        flash: '', /*视频地址(可选)*/
-                        //commonClient : true, /*客户端嵌入标志*/
-                        site: '精准肿瘤知识库'/*分享来源 (可选) ，如：QQ分享*/
-                    };
-                    let s = [];
-                    for (let i in p) {
-                        s.push(i + '=' + encodeURIComponent(p[i] || ''));
-                    }
-                    let target_url = "http://connect.qq.com/widget/shareqq/iframe_index.html?" + s.join('&');
-                    window.open(target_url, 'qq',
-                        'height=520, width=720');
-                }
-            }, {
-                text: 'QQ空间',
-                handler: () => {
-                    console.log('QQ空间');
-                    let test = window.location.href;
-                    let p = {
-                        url: test,
-                        showcount: '1',/*是否显示分享总数,显示：'1'，不显示：'0' */
-                        desc: title,/*默认分享理由(可选)*/
-                        summary: title,/*分享摘要(可选)*/
-                        title: title,/*分享标题(可选)*/
-                        site: title,/*分享来源 如：腾讯网(可选)summary*/
-                        pics: 'http://med.wanfangdata.com.cn/Content/Images/rwd/hf/logo-MED-lg-top.png', /*分享图片的路径(可选)*/
-                        style: '101',
-                        width: 199,
-                        height: 30
-                    };
-                    console.log(p);
-                    let s = [];
-                    for (var i in p) {
-                        s.push(i + '=' + encodeURIComponent(p[i] || ''));
-                    }
-                    let target_url = "http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?" + s.join('&');
-                    window.open(target_url, 'qZone',
-                        'height=430, width=400');
-                }
-            }, {
                 text: '朋友圈',
                 handler: () => {
-                    console.log('朋友圈');
-                    var target_url = "http://qr.liantu.com/api.php?text=" + window.location.href;
+                    let dizhi = window.location.protocol + window.location.host + "/#/details" + encodeURIComponent("?Id=" + ID + "DBID=" + DBID);
+                    let target_url = "http://qr.liantu.com/api.php?text=" + dizhi;
+                    console.log(target_url);
                     window.open(target_url, 'weixin',
                         'height=320, width=320');
                 }
@@ -547,7 +625,7 @@ export class ResultPage implements OnInit {
                     }
                     var temp = [];
                     for (var p in param) {
-                        temp.push(p + '=' + encodeURIComponent(param[p] || ''))
+                        temp.push(p + '=' + encodeURIComponent(param[p] || ''));
                     }
                     var target_url = "http://service.weibo.com/share/share.php?" + temp.join('&');
                     window.open(target_url, 'sinaweibo',
@@ -662,6 +740,9 @@ export class ResultPage implements OnInit {
                     'height=430, width=400');
                 break;
             default:
+                var target_url = "http://qr.liantu.com/api.php?text=" + window.location.href;
+                window.open(target_url, 'weixin',
+                    'height=320, width=320');
                 break;
         }
     }
@@ -671,18 +752,35 @@ export class ResultPage implements OnInit {
         history.back();
     }
 
-    special(title) {
-        if (title === '相关基因') {
-            this.navCtrl.navigateForward(['/special'], {queryParams: {'expressionSearch': ''}}).then(r => {
-            });
-        } else if (title === '相关疾病') {
-            this.navCtrl.navigateForward(['/disease'], {queryParams: {'expressionSearch': ''}}).then(r => {
-            });
-        } else if (title === '相关药物') {
-            this.navCtrl.navigateForward(['/disease'], {queryParams: {'expressionSearch': ''}}).then(r => {
+    SpecialFn(txt) {
+        if (this.search_text.indexOf(txt) === -1) {
+            this.search_text += ' AND ' + txt;
+            this.PageIsChange = true;
+            this.dataServe(this.search_text + this.dateOfPublish, undefined);
+        }
+    }
+
+    special(title, item) {
+        if (title === '相关基因' || title === '相关疾病' || title === '相关药物') {
+            if (title !== '相关基因') {
+                this.SpecialFn(title.substring(2) + '=' + item.Text
+                )
+                ;
+            } else {
+                this.SpecialFn('基因="' + item.ID + '"');
+            }
+
+            this.typeClass = 0;
+        } else {
+            let keywords = this.Creator(item.Text);
+            this.navCtrl.navigateForward(['/thematic'], {
+                queryParams: {
+                    Subject: title,
+                    keywords: keywords
+                }
+            }).then(r => {
             });
         }
-
     }
 
 
@@ -702,7 +800,7 @@ export class ResultPage implements OnInit {
 
     lenovoFn() {
         if (this.search.text !== '') {
-            this.IsHidelenovo = true;
+            //   this.IsHidelenovo = true; 联想词功能暂不开启
         }
     }
 

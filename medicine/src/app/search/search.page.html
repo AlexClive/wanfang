@@ -39,7 +39,8 @@
                                             (click)="qualificationconfirm(i,fieldT,'field',$event)">{{fieldT}}</li>
                                     </ul>
                                 </div>
-                                <div class="search"><input type="text" [(ngModel)]="consequence.qualification[i].input" (focus)="focusFn(i)">
+                                <div class="search"><input type="text" [(ngModel)]="consequence.qualification[i].input"
+                                                           (focus)="focusFn(i)">
                                 </div>
                                 <div class="fuzzy" (click)="qualificationISShow(i,'fuzzy',$event)">
                                     <div>
@@ -74,6 +75,7 @@
                                 <ion-text>{{consequence.time.start}}</ion-text>
                                 <i class="iconfont ion-ios-icon11"></i>
                                 <ul *ngIf="IsHideTime.start">
+                                    <li *ngIf="consequence.time.start !=='开始'" (click)="Timeconfirm(0,'开始',$event)">开始</li>
                                     <li *ngFor="let item of while"
                                         (click)="Timeconfirm(0,item,$event)">{{item}}</li>
                                 </ul>
@@ -83,6 +85,7 @@
                                 <ion-text>{{consequence.time.end}}</ion-text>
                                 <i class="iconfont ion-ios-icon11"></i>
                                 <ul *ngIf="IsHideTime.end">
+                                    <li *ngIf="consequence.time.end !=='结束'" (click)="Timeconfirm(1,'结束',$event)">结束</li>
                                     <li *ngFor="let item of while" (click)="Timeconfirm(1,item,$event)">{{item}}</li>
                                 </ul>
                             </div>

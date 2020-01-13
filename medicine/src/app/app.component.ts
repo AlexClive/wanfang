@@ -4,8 +4,6 @@ import {Platform} from '@ionic/angular';
 import {NavigationEnd, Router} from '@angular/router';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
-import {UniqueDeviceID} from '@ionic-native/unique-device-id/ngx';
-import {StorageService} from './service/storage.service';
 import {AppMinimize} from '@ionic-native/app-minimize/ngx';
 
 @Component({
@@ -22,22 +20,12 @@ export class AppComponent {
         private route: Router,
         private splashScreen: SplashScreen,
         private statusBar: StatusBar,
-        private uniqueDeviceID: UniqueDeviceID,
-        private storageService: StorageService,
         private appMinimize: AppMinimize
     ) {
         this.initializeApp();
-        this.UUID();
         this.platform.backButton.subscribe(() => {
             this.physicalReturn();
         });
-
-        this.route.events.subscribe((data: any) => {
-            if (data instanceof NavigationEnd) {
-                this.url = data.url;
-            }
-        });
-
     }
 
     initializeApp() {
@@ -45,16 +33,6 @@ export class AppComponent {
             this.statusBar.styleDefault();
             this.splashScreen.hide();
         });
-    }
-
-    UUID() {
-        this.uniqueDeviceID.get()
-            .then((uuid: any) => {
-                console.log('我的唯一编码是：'+uuid);
-            })
-            .catch((error: any) => {
-                this.storageService.setStorage('wasp', 1);
-            });
     }
 
     physicalReturn() {

@@ -36,39 +36,7 @@ export class AboutPage implements OnInit {
     ionViewDidEnter() {
         this.activatedRoute.queryParams.subscribe((data: any) => {
             if (data.search === undefined) {
-                const expressionSearch = JSON.parse(data.expressionSearch);
-                this.searchText = '';
-                for (let i = 0; i < expressionSearch.qualification.length; i++) {
-                    if (expressionSearch.qualification[i].input !== '') {
-                        if (expressionSearch.qualification[i].field !== '全部字段') {
-                            if (i !== 0) {
-                                switch (expressionSearch.qualification[i].logic) {
-                                    case '与':
-                                        this.searchText += ' AND ';
-                                        break;
-                                    case '或':
-                                        this.searchText += ' OR ';
-                                        break;
-                                    case '非':
-                                        this.searchText += ' NOT ';
-                                        break;
-                                }
-                            }
-                            this.searchText += '(' + expressionSearch.qualification[i].field + '=';
-                        } else {
-                            this.searchText += '(';
-                        }
-                        if (expressionSearch.qualification[i].fuzzy === '精确') {
-                            this.searchText += '"' + expressionSearch.qualification[i].input + '")';
-                        } else {
-                            this.searchText += expressionSearch.qualification[i].input + ')';
-                        }
-
-                    }
-                }
-                if (expressionSearch.time.start !== '开始' || expressionSearch.time.end !== '结束') {
-                    this.dateOfPublish = '&出版时间=' + expressionSearch.time.start + '-' + expressionSearch.time.end;
-                }
+                this.searchText =  data.search2;
             } else {
                 this.search = JSON.parse(data.search);  /*//此时的search存的就是上个页面传过来的值*/
                 this.Clisore(JSON.parse(data.search).type);
@@ -124,7 +92,7 @@ export class AboutPage implements OnInit {
                 // head + 每个 point + footer 拼接成完整的 table
                 headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
                 pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                    '<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
                 footerFormat: '</table>',
                 shared: true,
                 useHTML: true
@@ -149,71 +117,72 @@ export class AboutPage implements OnInit {
         for (let i = 0; i < Value.length; i++) {
             data.push({
                 x: Value[i].Count,
-                y: Value[i].Value,
+                y: Value[i].CitedCount,
                 name: Value[i].Name
             });
         }
         let chart = Highcharts.chart('writer', {
-            chart: {
-                type: 'scatter',
-                zoomType: 'xy'
-            },
-            credits: {
-                enabled: false
-            },
-            title: {
-                text: ''
-            },
-            xAxis: {
+                chart: {
+                    type: 'scatter',
+                    zoomType: 'xy'
+                },
+                credits: {
+                    enabled: false
+                },
                 title: {
-                    enabled: true,
                     text: ''
                 },
-                startOnTick: true,
-                endOnTick: true,
-                showLastLabel: true
-            },
-            yAxis: {
-                title: {
-                    text: ''
-                }
-            },
-            legend: {
-                enabled: false
-            },
-            plotOptions: {
-                scatter: {
-                    marker: {
-                        radius: 5,
-                        states: {
-                            hover: {
-                                enabled: false,
-                                lineColor: 'rgb(100,100,100)'
-                            }
-                        }
+                xAxis: {
+                    title: {
+                        enabled: true,
+                        text: ''
                     },
-                    tooltip: {
-                        headerFormat: '{point.name}',
-                        pointFormat: '{point.name}:<br/>[{point.x}, {point.y}]'
+                    startOnTick: true,
+                    endOnTick: true,
+                    showLastLabel: true
+                },
+                yAxis: {
+                    title: {
+                        text: ''
                     }
-                }
-            },
-            series: [
-                {
-                    name: '',
-                    color: 'rgba(223, 83, 83, .5)',
-                    data: data,
-                    type: 'scatter',
-                }
-            ]
-        });
+                },
+                legend: {
+                    enabled: false
+                },
+                plotOptions: {
+                    scatter: {
+                        marker: {
+                            radius: 5,
+                            states: {
+                                hover: {
+                                    enabled: false,
+                                    lineColor: 'rgb(100,100,100)'
+                                }
+                            }
+                        },
+                        tooltip: {
+                            headerFormat: '{point.name}',
+                            pointFormat: '{point.name}:<br/>[发文总数：{point.x}, 引用数：{point.y}]'
+                        }
+                    }
+                },
+                series: [
+                    {
+                        name: '',
+                        color: 'rgba(223, 83, 83, .5)',
+                        data: data,
+                        type: 'scatter',
+                    }
+                ]
+            })
+        ;
     }
 
     agencyEC(Value) {
         /*机构分析*/
         let chart = Highcharts.chart('agency', {
             chart: {
-                type: 'column'
+                type: 'bar'
             },
             title: {
                 text: ''
@@ -222,12 +191,15 @@ export class AboutPage implements OnInit {
                 enabled: false
             },
             xAxis: {
-                categories: Value.yaxis
+                categories: Value.yaxis,
+                title: {
+                    text: null
+                }
             },
             yAxis: {
                 min: 0,
                 title: {
-                    text: ''
+                    text: null
                 }
             },
             tooltip: {
@@ -310,7 +282,7 @@ export class AboutPage implements OnInit {
         let data = [];
         for (let i = 0; i < value.length; i++) {
             data.push({
-                name: value[i].Name, weight: value[i].Count
+                name: value[i].Name, weight: value[i].Value
             });
         }
         Highcharts.chart('keyWords', {

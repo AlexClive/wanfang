@@ -10,15 +10,16 @@
         <ion-card>
             <ion-card-content>
                 <p class="title_inner">
-                    <span><small>肠癌</small></span><span>INESTINAL CANCER</span>
+                    <span><small>{{tabsList.title}}</small></span><span>{{tabsList.EnName}}</span>
                 </p>
 
                 <div class="cont_item">
                     <div class="tabs">
-                        <ion-text *ngIf="margin!==0" class="iconfont ion-ios-gengduo leftBtn" (click)="leftFn()"></ion-text>
+                        <ion-text *ngIf="margin!==0" class="iconfont ion-ios-gengduo leftBtn"
+                                  (click)="leftFn()"></ion-text>
                         <div class="item_tabs">
-                            <ul [ngStyle]="{'width':width+'px', 'margin-left': '-'+margin+'px'}">
-                                <li *ngFor="let item of tabsList.list" (click)="tansFn(item)">{{item}}
+                            <ul [ngStyle]="{'width':width+'px','display':display, 'margin-left': '-'+margin+'px'}">
+                                <li *ngFor="let item of tabsList.list" (click)="tansFn(item)">{{item.title}}
                                     <small *ngIf="tabsList.IsActive === item"></small>
                                 </li>
                             </ul>
@@ -26,8 +27,8 @@
                         <ion-text class="iconfont ion-ios-gengduo rightBtn" (click)="rightFn()"></ion-text>
                     </div>
 
-                    <div class="item_list">
-                        <p class="pc">易感性大肠癌</p>
+                    <div class="item_list" style="display: none">
+                        <p class="pc">{{tabsList.IsActive.title}}</p>
                         <ul>
                             <li><span>疾病类别</span><span>内分泌系统疾病；肿瘤</span></li>
                             <li><span>数据来源</span><span>OMIM</span></li>
@@ -37,51 +38,118 @@
                     </div>
 
                     <div class="item_list">
-                        <div class="title"><span class="name">易感性大肠杆菌</span><span>相关基因</span></div>
+                        <div class="title"><span class="name"
+                                                 (click)="Godetails('相关基因')">{{tabsList.IsActive.title}}</span><span>遗传基因</span>
+                        </div>
                         <table class="item_cont pc">
                             <thead>
                             <tr>
                                 <th>基因</th>
                                 <th>基因全称</th>
-                                <th>查看证据</th>
+                                <th>位置</th>
+                                <th>表型</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>TP53</td>
-                                <td>肿瘤蛋白P53</td>
-                                <td><span>38</span></td>
-                            </tr>
-                            <tr>
-                                <td>TP53</td>
-                                <td>肿瘤蛋白P53</td>
-                                <td><span>38</span></td>
-                            </tr>
-                            <tr>
-                                <td>TP53</td>
-                                <td>肿瘤蛋白P53</td>
-                                <td><span>38</span></td>
+                            <tr *ngFor="let item of ListOmimHgnc; let i = index">
+                                <td *ngIf="i<moreData[0]['num']">{{item.Symbol}}</td>
+                                <td *ngIf="i<moreData[0]['num']">{{item.Name}}</td>
+                                <td *ngIf="i<moreData[0]['num']">{{item.Location}}</td>
+                                <td *ngIf="i<moreData[0]['num']">{{Creator(item.Phenotype)}}</td>
                             </tr>
                             </tbody>
                         </table>
-                        <ul class="item_cont mobile">
-                            <li>结肠恶性肿瘤</li>
-                            <li><span>疾病类型</span><ion-text>恶性肿瘤；消化系统疾病</ion-text></li>
-                            <li><span>共享基因数：<small>3</small></span><span>文献数：<small>18</small></span></li>
-                        </ul>
-                        <ul class="item_cont mobile">
-                            <li>结肠恶性肿瘤</li>
-                            <li><span>疾病类型</span><ion-text>恶性肿瘤；消化系统疾病</ion-text></li>
-                            <li><span>共享基因数：<small>3</small></span><span>文献数：<small>18</small></span></li>
+                        <ul class="item_cont mobile" *ngFor="let item of ListOmimHgnc; let i = index">
+                            <li *ngIf="i<moreData[0]['num']">{{item.Symbol}}</li>
+                            <li *ngIf="i<moreData[0]['num']"><span>基因全称呼</span>
+                                <ion-text>{{item.Name}}</ion-text>
+                            </li>
+                            <li *ngIf="i<moreData[0]['num']"><span>位置：<small>{{item.Location}}</small></span></li>
                         </ul>
 
                         <div class="item_footer">
-                            <ion-text>更多 <i class="iconfont ion-ios-gengduo"></i></ion-text>
+                            <ion-text (click)="more('遗传基因')"><span *ngIf="moreData[0]['num']>5">收起</span><span
+                                    *ngIf="moreData[0]['num']===5">更多</span> <i class="iconfont ion-ios-gengduo"></i>
+                            </ion-text>
                         </div>
                     </div>
 
                     <div class="item_list">
-                        <div class="title">与<span class="name">易感性大肠杆菌</span><span>共享基因的其他疾病</span></div>
+                        <div class="title"><span class="name"
+                                                 (click)="Godetails('相关基因')">{{tabsList.IsActive.title}}</span><span>相关基因</span>
+                        </div>
+                        <table class="item_cont pc">
+                            <thead>
+                            <tr>
+                                <th>基因</th>
+                                <th>表型</th>
+                                <th>文献数</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let item of ListHpoHgnc; let i = index">
+                                <td *ngIf="i<moreData[1]['num']">{{item.Symbol}}</td>
+                                <td *ngIf="i<moreData[1]['num']">{{Creator(item.Phenotype)}}</td>
+                                <td *ngIf="i<moreData[1]['num']"><span
+                                        (click)="literature(item,'相关基因')">{{item.ArticleCount}}</span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <ul class="item_cont mobile" *ngFor="let item of ListHpoHgnc; let i = index">
+                            <li *ngIf="i<moreData[1]['num']">{{item.Symbol}}</li>
+                            <li *ngIf="i<moreData[1]['num']"><span>表型</span>
+                                <ion-text>{{Creator(item.Phenotype)}}</ion-text>
+                            </li>
+                            <li *ngIf="i<moreData[1]['num']" (click)="literature(item,'相关基因')">
+                                <span>文献数：<small>{{item.ArticleCount}}</small></span></li>
+                        </ul>
+
+                        <div class="item_footer">
+                            <ion-text (click)="more('相关基因')"><span *ngIf="moreData[1]['num']>5">收起</span><span
+                                    *ngIf="moreData[1]['num']===5">更多</span> <i class="iconfont ion-ios-gengduo"></i>
+                            </ion-text>
+                        </div>
+                    </div>
+
+                    <div class="item_list">
+                        <div class="title">与<span class="name"
+                                                  (click)="Godetails('相关疾病')">{{tabsList.IsActive.title}}</span><span>共享基因疾病</span>
+                        </div>
+                        <table class="item_cont pc">
+                            <thead>
+                            <tr>
+                                <th>疾病名称</th>
+                                <th>共享基因</th>
+                                <th>文献数</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let item of ListShareDisease; let i = index">
+                                <td *ngIf="i<moreData[2]['num']">{{item.Topic}}</td>
+                                <td *ngIf="i<moreData[2]['num']">{{Creator(item.Hgnc)}}</td>
+                                <td *ngIf="i<moreData[2]['num']"><span
+                                        (click)="literature(item,'共享基因')">{{item.ArticleCount}}</span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <ul class="item_cont mobile" *ngFor="let item of ListShareDisease; let i = index">
+                            <li *ngIf="i<moreData[2]['num']">{{item.Topic}}</li>
+                            <li *ngIf="i<moreData[2]['num']"><span>共享基因</span>
+                                <ion-text>{{Creator(item.Hgnc)}}</ion-text>
+                            </li>
+                            <li *ngIf="i<moreData[2]['num']" (click)="literature(item,'共享基因')">
+                                <span>文献数：<small>{{item.ArticleCount}}</small></span></li>
+                        </ul>
+                        <div class="item_footer">
+                            <ion-text (click)="more('共享基因疾病')"><span *ngIf="moreData[2]['num']>5">收起</span><span
+                                    *ngIf="moreData[2]['num']===5">更多</span> <i class="iconfont ion-ios-gengduo"></i>
+                            </ion-text>
+                        </div>
+                    </div>
+
+                    <div class="item_list" style="display: none">
+                        <div class="title"><span
+                                class="name">{{tabsList.IsActive.title}}</span><span>基因-表型-变异-药物关联关系</span></div>
                         <table class="item_cont pc">
                             <thead>
                             <tr>
@@ -110,12 +178,16 @@
                         </table>
                         <ul class="item_cont mobile">
                             <li>结肠恶性肿瘤</li>
-                            <li><span>疾病类型</span><ion-text>恶性肿瘤；消化系统疾病</ion-text></li>
+                            <li><span>疾病类型</span>
+                                <ion-text>恶性肿瘤；消化系统疾病</ion-text>
+                            </li>
                             <li><span>共享基因数：<small>3</small></span><span>文献数：<small>18</small></span></li>
                         </ul>
                         <ul class="item_cont mobile">
                             <li>结肠恶性肿瘤</li>
-                            <li><span>疾病类型</span><ion-text>恶性肿瘤；消化系统疾病</ion-text></li>
+                            <li><span>疾病类型</span>
+                                <ion-text>恶性肿瘤；消化系统疾病</ion-text>
+                            </li>
                             <li><span>共享基因数：<small>3</small></span><span>文献数：<small>18</small></span></li>
                         </ul>
                         <div class="item_footer">
@@ -123,8 +195,10 @@
                         </div>
                     </div>
 
-                    <div class="item_list">
-                        <div class="title"><span class="name">易感性大肠杆菌</span><span>基因-表型-变异-药物关联关系</span></div>
+                    <div class="item_list" style="display: none">
+                        <div class="title"><span class="name"
+                                                 (click)="Godetails('相关药物')">{{tabsList.IsActive.title}}</span><span>诊断-治疗-预后-药物关联关系</span>
+                        </div>
                         <table class="item_cont pc">
                             <thead>
                             <tr>
@@ -153,12 +227,16 @@
                         </table>
                         <ul class="item_cont mobile">
                             <li>结肠恶性肿瘤</li>
-                            <li><span>疾病类型</span><ion-text>恶性肿瘤；消化系统疾病</ion-text></li>
+                            <li><span>疾病类型</span>
+                                <ion-text>恶性肿瘤；消化系统疾病</ion-text>
+                            </li>
                             <li><span>共享基因数：<small>3</small></span><span>文献数：<small>18</small></span></li>
                         </ul>
                         <ul class="item_cont mobile">
                             <li>结肠恶性肿瘤</li>
-                            <li><span>疾病类型</span><ion-text>恶性肿瘤；消化系统疾病</ion-text></li>
+                            <li><span>疾病类型</span>
+                                <ion-text>恶性肿瘤；消化系统疾病</ion-text>
+                            </li>
                             <li><span>共享基因数：<small>3</small></span><span>文献数：<small>18</small></span></li>
                         </ul>
                         <div class="item_footer">
@@ -166,52 +244,9 @@
                         </div>
                     </div>
 
-                    <div class="item_list">
-                        <div class="title"><span class="name">易感性大肠杆菌</span><span>诊断-治疗-预后-药物关联关系</span></div>
-                        <table class="item_cont pc">
-                            <thead>
-                            <tr>
-                                <th>基因</th>
-                                <th>基因全称</th>
-                                <th>文献数</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>TP53</td>
-                                <td>肿瘤蛋白P53</td>
-                                <td><span>38</span></td>
-                            </tr>
-                            <tr>
-                                <td>TP53</td>
-                                <td>肿瘤蛋白P53</td>
-                                <td><span>38</span></td>
-                            </tr>
-                            <tr>
-                                <td>TP53</td>
-                                <td>肿瘤蛋白P53</td>
-                                <td><span>38</span></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <ul class="item_cont mobile">
-                            <li>结肠恶性肿瘤</li>
-                            <li><span>疾病类型</span><ion-text>恶性肿瘤；消化系统疾病</ion-text></li>
-                            <li><span>共享基因数：<small>3</small></span><span>文献数：<small>18</small></span></li>
-                        </ul>
-                        <ul class="item_cont mobile">
-                            <li>结肠恶性肿瘤</li>
-                            <li><span>疾病类型</span><ion-text>恶性肿瘤；消化系统疾病</ion-text></li>
-                            <li><span>共享基因数：<small>3</small></span><span>文献数：<small>18</small></span></li>
-                        </ul>
-                        <div class="item_footer">
+                    <div class="item_list" style="display: none">
+                        <div class="title"><span class="name">{{tabsList.IsActive.title}}</span><span>最新文献</span>
                             <ion-text>更多 <i class="iconfont ion-ios-gengduo"></i></ion-text>
-                        </div>
-                    </div>
-
-                    <div class="item_list pc">
-                        <div class="title"><span class="name">易感性大肠杆菌</span><span>最新文献</span>
-                                <ion-text>更多 <i class="iconfont ion-ios-gengduo"></i></ion-text>
                         </div>
                         <table class="item_cont">
                             <tbody>

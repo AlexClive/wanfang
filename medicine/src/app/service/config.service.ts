@@ -11,6 +11,7 @@ export class ConfigService {
     public details = this.baseAddress + '/api/paper/detail';
     public refandciteyears = this.baseAddress + '/api/paper/refandciteyears';
     public getchart = this.baseAddress + '/api/general/getchart';
+    public topic = this.baseAddress + '/api/topic/get';
 
     constructor() {
     }

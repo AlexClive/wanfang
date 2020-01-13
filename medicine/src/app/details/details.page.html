@@ -10,12 +10,13 @@
         </div>
         <div class="card">
             <ion-card-content>
-                <p class="title">{{Data.Title[0]}}</p>
-                <p class="subtitle"> {{Data.Title[1]}}</p>
+                <p class="title" *ngIf="Data.DBID !== 'JZ_WF_NSTL'">{{Data.Title[0]}}</p>
+                <p class="subtitle"  *ngIf="Data.DBID !== 'JZ_WF_NSTL'"> {{Data.Title[1]}}</p>
+                <p class="title" *ngIf="Data.DBID !== 'JZ_WF_QK'">{{Data.Title}}</p>
                 <div class="tabs">
                     <button class="pc" (click)="ExportFn(Data.Id,Creator(Data.Creator)+Data.PeriodicalIssue+Data.ISSN+Data.Volume+Data.Page)"><i class="iconfont ion-ios-icon-"></i>导出</button>
-                    <button (click)="reading()"><i class="iconfont ion-ios-pdf"></i>PDF阅读</button>
-                    <button (click)="download()"><i class="iconfont ion-ios-xiazai"></i>下载全文</button>
+                    <button (click)="reading()" *ngIf="dbid !== 'JZ_WF_NSTL'"><i class="iconfont ion-ios-pdf"></i>PDF阅读</button>
+                    <button (click)="download()" *ngIf="dbid !== 'JZ_WF_NSTL'"><i class="iconfont ion-ios-xiazai"></i>下载全文</button>
                 </div>
                 <div class="summary">
                     <span class="pc">摘要：</span>
@@ -33,10 +34,10 @@
                             class="cont-text"><small>《{{Data.PeriodicalIssue}}》</small>
                         <small style="margin: 0 10px">{{Data.ISSN}}卷{{Data.Volume}}期</small>  {{Data.Page}}页</span>
                     </li>
-                    <li><span class="autograph">主题词：</span><span
+                    <li *ngIf="Data.Keyword"><span class="autograph">主题词：</span><span
                             class="cont-text"><small>{{Data.Keyword}}</small></span>
                     </li>
-                    <li><span class="autograph">分类号：</span><span class="cont-text"><small>R5</small></span></li>
+                    <li *ngIf="Data.CLCNumber"><span class="autograph">分类号：</span><span class="cont-text"><small>{{Data.CLCNumber}}</small></span></li>
                     <li><span class="autograph">栏目名称：</span><span class="cont-text">{{Data.Column}}</span></li>
                     <li><span class="autograph">DOI：</span><span
                             class="cont-text">{{Data.DOI}}</span></li>
@@ -64,36 +65,55 @@
                             <span class="chart-button-left" (click)="openFn('left')">展开</span>
                             <span class="chart-button-right" (click)="openFn('right')">展开</span>
                             <span class="chart-button-center">本文</span>
-                            <ul class="chart-ref">
+                            <ul class="chart-ref" *ngIf="literature['RefYearsShort']['years'].length>0">
                                 <li style="display: list-item;"
                                     *ngFor="let item of literature['RefYearsShort']['years']; let i =index"
                                     [ngStyle]="{'width': WidthFn1(literature['RefYearsShort']['date'][i],i,'left'),'background-color':refPalette[i]}">
                                     <span>{{literature['RefYearsShort']['date'][i]}}</span><em>{{item}}</em></li>
                             </ul>
-                            <ul class="chart-qot">
-                                <li style="width: 5px; background-color: rgb(119, 199, 255); display: list-item;"
+                            <ul  class="chart-ref"  *ngIf="literature['RefYearsShort']['years'].length===0">
+                                <li  style="display: list-item;"
+                                     [ngStyle]="{'width': '100%','background-color':refPaletteSky}"><em>全部年份</em></li>
+                            </ul>
+                            <ul class="chart-qot" *ngIf="literature['CiteYearsShort']['years'].length>0">
+                                <li style="background-color: rgb(119, 199, 255); display: list-item;"
                                     *ngFor="let item of literature['CiteYearsShort']['years']; let i =index"
                                     [ngStyle]="{'width': WidthFn1(literature['CiteYearsShort']['date'][i],i,'right'),'background-color':qotPalette[i]}">
                                     <span>{{literature['CiteYearsShort']['date'][i]}}</span><em>{{item}}</em></li>
                             </ul>
+                            <ul  class="chart-qot" *ngIf="literature['CiteYearsShort']['years'].length===0">
+                                <li  style="display: list-item;"
+                                     [ngStyle]="{'width': '100%','background-color':qotPaletteSky}"><em>全部年份</em></li>
+                            </ul>
                         </div>
                         <div class="chart-group-item chart-group-ref" *ngIf="position=='left'">
                             <span class="chart-button-center" (click)="openFn('')">返回</span>
-                            <ul class="chart-ref">
+                            <ul class="chart-ref" *ngIf="literature['RefYears']['years'].length>0">
                                 <li style="display: list-item;"
                                     *ngFor="let item of literature['RefYears']['years']; let i =index"
                                     [ngStyle]="{'width': WidthFn(literature['RefYears']['date'][i],i,'left','1'),'background-color':refPalette[i]}">
                                     <span>{{literature['RefYears']['date'][i]}}</span><em>{{item}}</em>
                                 </li>
                             </ul>
+                            <ul class="chart-ref" *ngIf="literature['RefYears']['years'].length===0">
+                                <li style="display: list-item;"
+                                    [ngStyle]="{'width': '100%','background-color':refPaletteSky}">
+                                   <em>全部年份</em>
+                                </li>
+                            </ul>
                         </div>
                         <div class="chart-group-item chart-group-qot" *ngIf="position=='right'">
                             <span class="chart-button-center" (click)="openFn('')">返回</span>
-                            <ul class="chart-qot">
+                            <ul class="chart-qot" *ngIf=" literature['CiteYears']['years'].length>0">
                                 <li style="width: 5px; background-color: rgb(119, 199, 255); display: list-item;"
                                     *ngFor="let item of literature['CiteYears']['years']; let i =index"
                                     [ngStyle]="{'width': WidthFn(literature['CiteYears']['date'][i],i,'right','1'),'background-color':qotPalette[i]}">
                                     <span>{{literature['CiteYears']['date'][i]}}</span><em>{{item}}</em></li>
+                            </ul>
+                            <ul class="chart-qot" *ngIf=" literature['CiteYears']['years'].length===0">
+                                <li style="width: 5px; background-color: rgb(119, 199, 255); display: list-item;"
+                                    [ngStyle]="{'width': '100%','background-color':qotPaletteSky}">
+                                    <em>全部年份</em></li>
                             </ul>
                         </div>
                     </div>
@@ -118,7 +138,7 @@
                             </ion-item>
                             <div class="buts">
                                 <ion-label>指定格式：</ion-label>
-                                <a href="javascript:void 0" (click)="expressFn('NoteExpress')">NoteExpress</a>
+                                <a href="javascript:void 0" (click)="expressFn('noteexpress')">NoteExpress</a>
                                 <a href="javascript:void 0" (click)="expressFn('EndNote')">EndNote</a>
                                 <a href="javascript:void 0" (click)="expressFn('RefWorks')">RefWorks</a>
                                 <a href="javascript:void 0" (click)="expressFn('NoteFirst')">NoteFirst</a>

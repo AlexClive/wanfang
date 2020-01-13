@@ -2,7 +2,7 @@
     <div class="title" lines="none">
         <ion-icon slot="icon-only" name="arrow-back" (click)="goBack()" class="start"></ion-icon>
         <ion-text>精准肿瘤文献库</ion-text>
-        <ion-icon class="iconfont ion-ios-geren5" slot="end"></ion-icon>
+        <ion-icon class="iconfont ion-ios-geren5" slot="end" (click)="login()"></ion-icon>
     </div>
 </div>
 
@@ -49,7 +49,7 @@
                                 <ul>
                                     <ng-container *ngFor="let Citem of item.ListItem; let i = index">
                                         <li *ngIf="i < contentMore.leftArry[num]"
-                                            [ngClass]="{'active':leftArryActive[num] === num+'-'+i}"
+                                            [ngClass]="{'active':leftArryActive[num] === num+'-'+Citem.Text}"
                                             (click)="leftSelect(num,i,item.Title,Citem)">
                                             <span>{{Citem.Text}}</span><em>{{Citem.Count}}</em>
                                         </li>
@@ -84,8 +84,8 @@
                                 <div class="AllExport">
                                     <button>批量导出</button>
                                     <ul>
-                                        <li (click)="AllExportFn('参考文献')">参考文献</li>
-                                        <li (click)="AllExportFn('NoteExpress')">NoteExpress</li>
+                                        <li (click)="AllExportFn('reference')">参考文献</li>
+                                        <li (click)="AllExportFn('noteexpress')">NoteExpress</li>
                                         <li (click)="AllExportFn('EndNote')">EndNote</li>
                                         <li (click)="AllExportFn('RefWorks')">RefWorks</li>
                                         <li (click)="AllExportFn('NoteFirst')">NoteFirst</li>
@@ -125,20 +125,21 @@
                                     <p class="subtitle">{{Creator(item.Creator)}}</p>
                                     <p class="journal"><span>{{item.Source}}.</span> {{item.Year}}；{{item.Volume}}
                                         ({{item.Issue}})：{{item.Page}} </p>
-                                    <div class="summary"><span>摘要：</span>
+                                    <div class="summary" *ngIf="item.Abstract!==null"><span>摘要：</span>
                                         {{AbstractFn(item.Abstract)}}
                                     </div>
                                     <p class="keyword"><span>关键词：</span>
                                         <span *ngFor="let keyword of item.Keyword; let i = index"><span
-                                                *ngIf="i < 5">{{keyword}}；</span></span>
+                                                *ngIf="i < 3">{{keyword}}；</span></span>
                                     </p>
                                     <div class="buttons">
                                         <div class="risk">
-                                            <button><i class="iconfont ion-ios-fenxiang"></i><span>分享</span></button>
+                                          <!--  <button><i class="iconfont ion-ios-fenxiang"></i><span>分享</span></button>-->
                                             <ul>
-                                                <li (click)="risk('QQ好友',item.Title)">QQ好友</li>
-                                                <li (click)="risk('QQ空间',item.Title)">QQ空间</li>
+                                                <!--   <li (click)="risk('QQ好友',item.Title)">QQ好友</li>
+                                                   <li (click)="risk('QQ空间',item.Title)">QQ空间</li>-->
                                                 <li (click)="risk('微博',item.Title)">微博</li>
+                                                <li (click)="risk('朋友圈',item.Title)">朋友圈</li>
                                             </ul>
                                         </div>
 
@@ -150,20 +151,26 @@
                             </div>
                             <div class="pagination" *ngIf="pageNumArry.length !== 1">
                                 <ion-text>共{{pageNumArry.length}}页</ion-text>
-                                <ion-text>跳转：</ion-text>
-                                <div class="pageNum" (click)="pageFn()"><span>{{pageNum}}</span><i
-                                        class="iconfont ion-ios-icon11"></i>
-                                    <ul *ngIf="pageBoo">
-                                        <li *ngFor="let num of pageNumArry;"
-                                            (click)="pageGo(num,$event)">{{num}}</li>
-                                    </ul>
-                                </div>
                                 <ul>
                                     <li (click)="leftCut()" class="iconfont ion-ios-gengduo leftBtn"></li>
-                                    <li *ngFor="let num of pageNumArry"
-                                        [ngClass]="{'active': num===pageNum}" (click)="pageNumGO(num)">{{num}}</li>
+                                    <li class="page-item left-more-page" title="查看更多"
+                                        *ngIf="pageNumArry.length > 10 && pageNum > 9 && showPageList[0]!==1">
+                                        <span>…</span></li>
+                                    <li *ngFor="let num of showPageList;let i = index"
+                                        [ngClass]="{'active': num===pageNum}" (click)="pageNumGO(num)">{{num}}
+                                    </li>
+                                    <li class="page-item left-more-page" title="查看更多"
+                                        *ngIf="pageNumArry.length > 10 && showPageList[showPageList.length-1] !== pageNumArry[pageNumArry.length-1]">
+                                        <span>…</span></li>
+
                                     <li (click)="rightAdd()" class="iconfont ion-ios-gengduo"></li>
                                 </ul>
+                                <ion-text>跳转：</ion-text>
+                                <div class="pageNum" (click)="pageFn()"><input [ngModel]="pageNum" type="text"
+                                                                               (keypress)="($event.keyCode === 13)?pageGo(pageSize):0"
+                                                                               #pageSize/>
+                                </div>
+                                <button (click)="pageGo(pageSize)">跳转</button>
                             </div>
                         </ion-col>
                         <div class="col-right" style="width: 143px">
@@ -172,8 +179,9 @@
                                 <h5>{{item.Title}}</h5>
                                 <ul>
                                     <ng-container *ngFor="let Citem of item.ListItem; let i = index">
-                                        <li *ngIf="i < contentMore.RightArry[num]" (click)="special(item.Title)">
-                                            <span>{{Citem.Text}}</span><em>({{Citem.Count}})</em>
+                                        <li *ngIf="i < contentMore.RightArry[num]"
+                                            (click)="special(item.Title,Citem)">
+                                            <span>{{Creator(Citem.Text)}}</span><em>({{Citem.Count}})</em>
                                         </li>
                                     </ng-container>
                                     <li *ngIf="item.ListItem.length>3"
@@ -363,13 +371,13 @@
                 <p class="journal">《{{item.Source}}》{{item.Year}}年{{item.Volume}}卷{{item.Issue}}期 {{item.Page}}页
                     <span *ngIf="item.DBID === 'JZ_WF_QK'">被引{{item.CitedCount}}次</span></p>
                 <p class="keyword"><small *ngFor="let citem of item.Included">{{citem}}</small></p>
-                <p class="summary">
+                <p class="summary" *ngIf="item.Abstract!==null">
                     <ion-text>【摘要】</ion-text>
                     {{AbstractFn(item.Abstract)}}
                 </p>
                 <div class="buttons">
-                    <button (click)="presentActionSheet(item.Title)"><i
-                            class="iconfont ion-ios-fenxiang"></i><span>分享</span></button>
+          <!--          <button (click)="presentActionSheet(item.Title,item.Id,item.DBID)"><i
+                            class="iconfont ion-ios-fenxiang"></i><span>分享</span></button>-->
                     <button [routerLink]="['/details']"
                             [queryParams]="{Id:item.Id,DBID:item.DBID}"><i
                             class="iconfont ion-ios-chakan"></i><span>查看</span></button>
@@ -393,8 +401,9 @@
                         </ion-label>
                     </div>
                     <div class="ion-row">
-                        <ion-item *ngFor="let Citem of item.ListItem; let i = index"  (click)="special(item.Title)">
-                            <ion-text>{{Citem.Text}}</ion-text>
+                        <ion-item *ngFor="let Citem of item.ListItem; let i = index"
+                                  (click)="special(item.Title,Citem)">
+                            <ion-text>{{Creator(Citem.Text)}}</ion-text>
                             <span slot="end">
                                ({{Citem.Count}})
                             </span>
@@ -426,8 +435,8 @@
                 </ion-item>
                 <div class="buts">
                     <ion-label>指定格式：</ion-label>
-                    <a href="javascript:void 0" (click)="expressFn('NoteExpress')">NoteExpress</a>
-                    <a href="javascript:void 0" (click)="expressFn('EndNote')">EndNote</a>
+                    <a href="javascript:void 0" (click)="expressFn('noteexpress')">NoteExpress</a>
+                    <a href="javascript:void 0" (click)="expressFn('endnote')">EndNote</a>
                     <a href="javascript:void 0" (click)="expressFn('RefWorks')">RefWorks</a>
                     <a href="javascript:void 0" (click)="expressFn('NoteFirst')">NoteFirst</a>
                 </div>
